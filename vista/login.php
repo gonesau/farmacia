@@ -10,6 +10,16 @@
     <link rel="stylesheet" type="text/css" href="../css/css/all.min.css">
     <title>Login</title>
 </head>
+
+<?php
+session_start();
+if(!empty($_SESSION['us_tipo'])){
+    header('Location: ../controlador/LoginController.php');
+}
+else{
+    session_destroy();
+?>
+
 <body>
     <img class="wave" src="../img/wave.png" alt="">
     <div class="contenedor">
@@ -46,3 +56,6 @@
 </body>
 <script src="../js/login.js"></script>
 </html>
+<?php
+}
+?>
