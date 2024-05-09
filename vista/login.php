@@ -17,7 +17,7 @@
             <img src="../img/farmacia.svg" alt="">
         </div>
         <div class="contenido-login">
-            <form action="">
+            <form action="../controlador/LoginController.php" method="post">
                 <img src="../img/medicine.png" alt="">
                 <h2>Farmacia</h2>
                 <div class="input-div dui">
