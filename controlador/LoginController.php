@@ -34,7 +34,7 @@ else{
         }
     }
     else{
-        header('Location: ../vista/login.php');
+        header('Location: ../index.php');
     }
 }
 

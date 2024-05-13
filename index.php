@@ -6,29 +6,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/css/all.min.css">
     <title>Login</title>
 </head>
 
 <?php
 session_start();
 if(!empty($_SESSION['us_tipo'])){
-    header('Location: ../controlador/LoginController.php');
+    header('Location: controlador/LoginController.php');
 }
 else{
     session_destroy();
 ?>
 
 <body>
-    <img class="wave" src="../img/wave.png" alt="">
+    <img class="wave" src="img/wave.png" alt="">
     <div class="contenedor">
         <div class="img">
-            <img src="../img/farmacia.svg" alt="">
+            <img src="img/farmacia.svg" alt="">
         </div>
         <div class="contenido-login">
-            <form action="../controlador/LoginController.php" method="post">
-                <img src="../img/medicine.png" alt="">
+            <form action="controlador/LoginController.php" method="post">
+                <img src="img/medicine.png" alt="">
                 <h2>Farmacia</h2>
                 <div class="input-div dui">
                     <div class="i">
@@ -54,7 +54,7 @@ else{
         </div>
     </div>
 </body>
-<script src="../js/login.js"></script>
+<script src="js/login.js"></script>
 </html>
 <?php
 }
