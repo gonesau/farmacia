@@ -114,10 +114,46 @@ if($_SESSION['us_tipo']==1){
                   <h3 class="card-title">Editar Datos Personales</h3>
                 </div>
                 <div class="card-body">
-
+                  <form action="" class="form-horizontal">
+                    <div class="form-group row">
+                      <label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" id="telefono" placeholder="Telefono">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="residencia" class="col-sm-2 col-form-label">Residencia</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="residencia" placeholder="Residencia">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="correo" class="col-sm-2 col-form-label">Correo</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="correo" placeholder="Correo">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="sexo" class="col-sm-2 col-form-label">Sexo</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="sexo" placeholder="Sexo">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="adicional" class="col-sm-2 col-form-label">Información Adicional</label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control" id="adicional" placeholder="Información Adicional"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10 float-right">
+                        <button type="submit" class="btn btn-block btn-outline-success">Guardar</button>
+                      </div>
+                    </div>    
+                  </form>
                 </div>
                 <div class="card-footer">
-                  
+                  <p class="text-muted text-center">Verifique los datos a ingresar</p>
                 </div>
               </div>      
           </div>
