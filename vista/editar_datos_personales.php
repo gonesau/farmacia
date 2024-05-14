@@ -34,29 +34,28 @@ if($_SESSION['us_tipo']==1){
               <div class="card card-success card-outline">
                 <div class="card-body box-profile">
                   <div class="text-center">
+                    <input id="id_usuario" type="hidden" value="<?php echo $_SESSION['usuario']?>">
                     <img id="avatar4"src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
                   </div>
-                  <h3 class="profile-username text-center text-success">
-                      <?php
-                        echo $_SESSION['us_nombre'];
-                      ?>
+                  <h3 id="nombre_us" class="profile-username text-center text-success">
+                    Nombre
                   </h3>
-                  <p class="text-muted text-center">
+                  <p id="apellidos_us " class="text-muted text-center">
                     Apellido
                   </p>
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                      <b style="color:#0b7300">Edad</b> <a href="" class="float-right">
+                      <b style="color:#0b7300">Edad</b> <a id="edad" href="" class="float-right">
                         23
                       </a>
                     </li>
                     <li class="list-group-item">
-                      <b style="color:#0b7300">DUI</b> <a href="" class="float-right">
+                      <b style="color:#0b7300">DUI</b> <a id="dui_us"href="" class="float-right">
                         06097163-5
                       </a>
                     </li>
                     <li class="list-group-item">
-                      <b style="color:#0b7300">Tipo Usuario</b> <span class="badge-primary float-right">
+                      <b style="color:#0b7300">Tipo Usuario</b> <span id="" class="badge-primary float-right">
                         Administrador
                       </span>
                     </li>
@@ -71,31 +70,31 @@ if($_SESSION['us_tipo']==1){
                   <strong style="color:#0b7300">
                     <i class="fas fa-phone mr-1"></i> Telefono
                   </strong>
-                  <p class="text-muted">
+                  <p id="telefono_us" class="text-muted">
                     2222-2222
                   </p>
                   <strong style="color:#0b7300">
                     <i class="fas fa-map-marker-alt mr-1"></i> Residencia
                   </strong>
-                  <p class="text-muted">
+                  <p id="residencia_us" class="text-muted">
                     El Salvador
                   </p>
                   <strong style="color:#0b7300">
                     <i class="fas fa-at mr-1"></i> Email
                   </strong>
-                  <p class="text-muted">
+                  <p id="correo_us" class="text-muted">
                     gonesau@outlook.es
                   </p>
                   <strong style="color:#0b7300">
                     <i class="fas fa-smile-wink mr-1"></i> Sexo
                   </strong>
-                  <p class="text-muted">
+                  <p id="sexo_us" class="text-muted">
                     Otro
                   </p>
                   <strong style="color:#0b7300">
                     <i class="fas fa-pencil-alt mr-1"></i> Información Adicional
                   </strong>
-                  <p class="text-muted">
+                  <p id="adicional_us" class="text-muted">
                     Otro
                   </p>
 
@@ -172,3 +171,5 @@ else{
     header('Location: ../index.php');
 }
 ?>
+
+<script src="../js/usuario.js"></script>
