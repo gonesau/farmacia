@@ -98,7 +98,7 @@ if($_SESSION['us_tipo']==1){
                     Otro
                   </p>
 
-                  <button class="btn btn-block bg-gradient-danger">
+                  <button class="edit btn btn-block bg-gradient-danger">
                     Editar
                   </button>
                 </div>
@@ -111,9 +111,15 @@ if($_SESSION['us_tipo']==1){
               <div class="card card-success">
                 <div class="card-header">
                   <h3 class="card-title">Editar Datos Personales</h3>
-                </div>
+                </div>            
                 <div class="card-body">
-                  <form action="" class="form-horizontal">
+                  <div class="alert alert-success text-center" id="editado" style="display:none;">
+                    <span><i class="fas fa-check m-1"></i>Datos Actualizados</span>
+                  </div>
+                  <div class="alert alert-danger text-center" id="noeditado" style="display:none;">
+                    <span><i class="fas fa-times m-1"></i>Edición Deshabilitada</span>
+                  </div>
+                  <form id="form-usuario" class="form-horizontal">
                     <div class="form-group row">
                       <label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
                       <div class="col-sm-10">
