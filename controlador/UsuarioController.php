@@ -1,14 +1,14 @@
 <?php
 include_once '../modelo/usuario.php';
 $usuario = new usuario();
-if($_POST(['funcion'])=='buscar_usuario'){
+if($_POST['funcion']=='buscar_usuario'){
     $json = array();
     $usuario->obtener_datos($_POST['dato']);
     foreach($usuario->objetos as $objeto){
         $json[] = array(
             'nombre'=>$objeto->nombre_us,
-            'apellido'=>$objeto->apellido_us,
-            'edad'=>$objeto->edad_us,
+            'apellidos'=>$objeto->apellidos_us,
+            'edad'=>$objeto->edad,
             'dui'=>$objeto->dui_us,
             'tipo'=>$objeto->nombre_tipo,
             'telefono'=>$objeto->telefono_us,

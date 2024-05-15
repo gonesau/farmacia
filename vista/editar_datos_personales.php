@@ -38,10 +38,10 @@ if($_SESSION['us_tipo']==1){
                     <img id="avatar4"src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
                   </div>
                   <h3 id="nombre_us" class="profile-username text-center text-success">
-                    Nombre
+                    
                   </h3>
-                  <p id="apellidos_us " class="text-muted text-center">
-                    Apellido
+                  <p id="apellidos_us" class="text-muted text-center">
+                    
                   </p>
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
@@ -55,7 +55,7 @@ if($_SESSION['us_tipo']==1){
                       </a>
                     </li>
                     <li class="list-group-item">
-                      <b style="color:#0b7300">Tipo Usuario</b> <span id="" class="badge-primary float-right">
+                      <b style="color:#0b7300">Tipo Usuario</b> <span id="us_tipo" class="badge-primary float-right">
                         Administrador
                       </span>
                     </li>
