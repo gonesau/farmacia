@@ -79,5 +79,28 @@ $(document).ready(function(){
             $('#form-usuario').trigger('reset');
         }
         e.preventDefault();
-    })    
+    });    
+
+    $('#form-pass').submit(e => {
+        e.preventDefault();       
+        let oldpass = $('#oldpass').val();
+        let newpass = $('#newpass').val();
+        funcion = 'cambiar_contra';
+        $.post('../controlador/UsuarioController.php',{id_usuario, funcion, oldpass, newpass},(response)=>{
+            if(response == 'update'){
+                $('#update').hide('slow');
+                $('#update').show(1000);
+                $('#update').hide(2000);
+                $('#form-pass').trigger('reset');
+            }
+            else{
+                $('#noupdate').hide('slow');
+                $('#noupdate').show(1000);
+                $('#noupdate').hide(2000);
+                $('#form-pass').trigger('reset');
+            }
+        })
+    });
+    
+
 });
