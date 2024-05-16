@@ -1,6 +1,9 @@
 <?php
 include_once '../modelo/usuario.php';
 $usuario = new usuario();
+session_start();
+$id_usuario = $_SESSION['usuario'];
+
 if($_POST['funcion']=='buscar_usuario'){
     $json = array();
     $fecha_actual = new DateTime();
@@ -19,7 +22,8 @@ if($_POST['funcion']=='buscar_usuario'){
             'residencia'=>$objeto->residencia_us,
             'correo'=>$objeto->correo_us,
             'sexo'=>$objeto->sexo_us,
-            'adicional'=>$objeto->adicional_us
+            'adicional'=>$objeto->adicional_us,
+            'avatar'=>'../img/'.$objeto->avatar 
         );
     }
     $jsonstring = json_encode($json[0]);
@@ -61,6 +65,31 @@ if($_POST['funcion']=='cambiar_contra'){
     $usuario->cambiar_contra($id_usuario, $oldpass, $newpass);
 }
 
-
+if($_POST['funcion']=='cambiar_foto'){
+    if($_FILES['foto']['type']=='image/jpeg' || $_FILES['foto']['type']=='image/png' || $_FILES['foto']['type']=='image/jpg'){
+        $nombre = uniqid().'-'.$_FILES['foto']['name'];
+        $ruta = '../img/'.$nombre;
+        move_uploaded_file($_FILES['foto']['tmp_name'], $ruta);   
+        $usuario->cambiar_foto($id_usuario, $nombre);
+        foreach($usuario->objetos as $objeto){
+            unlink('../img/'.$objeto->avatar);
+        }
+        $json = array();
+        $json[] = array(
+            'ruta'=>$ruta,
+            'alert'=>'edit'
+        );
+        $jsonstring = json_encode($json[0]);
+        echo $jsonstring;
+    }
+    else{
+        $json = array();
+        $json[] = array(
+            'alert'=>'noedit'
+        );
+        $jsonstring = json_encode($json[0]);
+        echo $jsonstring;
+    }
+}
 
 ?>

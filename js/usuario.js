@@ -30,6 +30,8 @@ $(document).ready(function(){
             adicional += `${usuario.adicional}`;
             $('#nombre_us').html(nombre);
             $('#apellidos_us').html(apellidos);
+            $('#nombre_us_foto').html(nombre); // Cambiado a nombre_us_foto
+            $('#apellidos_us_foto').html(apellidos); // Cambiado a apellidos_us_foto
             $('#edad').html(edad);
             $('#dui_us').html(dui);
             $('#us_tipo').html(tipo);
@@ -38,6 +40,10 @@ $(document).ready(function(){
             $('#correo_us').html(correo);
             $('#sexo_us').html(sexo);
             $('#adicional_us').html(adicional);
+            $('#avatar3').attr('src', usuario.avatar);
+            $('#avatar1').attr('src', usuario.avatar);
+            $('#avatar2').attr('src', usuario.avatar);
+            $('#avatar4').attr('src', usuario.avatar);
         })
     }
     $(document).on('click', '.edit', (e)=>{
@@ -103,4 +109,33 @@ $(document).ready(function(){
     });
     
 
+    $('#form-foto').submit(e => {
+        let formData = new FormData($('#form-foto')[0]);
+        $.ajax({
+            url: '../controlador/UsuarioController.php',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function(response){
+            console.log(response);
+            const json = JSON.parse(response);
+            if(json.alert == 'edit'){
+                $('#avatar2').attr('src', json.ruta);
+                $('#edit').hide('slow');
+                $('#edit').show(1000);
+                $('#edit').hide(2000);
+                $('#form-foto').trigger('reset');
+                buscar_usuario(id_usuario);
+            }
+            else if(json.alert == 'noedit'){
+                $('#noedit').hide('slow');
+                $('#noedit').show(1000);
+                $('#noedit').hide(2000);
+                $('#form-foto').trigger('reset');
+            }
+        });
+        e.preventDefault();
+    }); 
 });
