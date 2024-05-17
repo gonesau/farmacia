@@ -57,5 +57,25 @@ class usuario{
 
         return $this->objetos;
     }
+
+    function buscar(){
+        if(!empty($_POST['consulta'])){ 
+            $consulta = $_POST['consulta'];
+            //$sql = "SELECT * FROM usuario join tipo_us on us_tipo=id_tipo_us WHERE nombre_us LIKE :consulta";
+            $sql = "SELECT * FROM usuario join tipo_us on us_tipo=id_tipo_us WHERE nombre_us LIKE :consulta OR apellidos_us LIKE :consulta OR dui_us LIKE :consulta OR nombre_tipo LIKE :consulta";
+            $query = $this->acceso->prepare($sql);
+            $query->execute(array(':consulta'=>"%$consulta%"));
+            $this->objetos = $query->fetchall();
+            return $this->objetos;
+        }
+        else{
+            $sql = "SELECT * FROM usuario join tipo_us on us_tipo=id_tipo_us WHERE nombre_us NOT LIKE '' ORDER BY id_usuario DESC LIMIT 25";
+            $query = $this->acceso->prepare($sql);
+            $query->execute();
+            $this->objetos = $query->fetchall();
+            return $this->objetos;
+        }
+    }
+    
 }
 ?>

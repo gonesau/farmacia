@@ -85,15 +85,16 @@ if ($_SESSION['us_tipo'] == 1) {
                         <h3 class="card-title fs-5">Buscar Usuario</h3>
                         <div class="input-group">
                             <input type="text" id="buscar" class="form-control float-left mt-2"
-                                placeholder="Ingrese el nombre del usuario">
+                                placeholder="Ingrese Nombre, Apellido o DUI del usuario">
                             <div class="input-group-append">
-                                <button class="btn btn-primary mt-2" id="btn_buscar_usuario"><i class="fas fa-search"></i>
-                                    Buscar</button>
+                                <button class="btn btn-primary mt-2" id="btn_buscar_usuario"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-
+                        <div id="usuarios" class="row d-flex align-items-stretch">
+                            
+                        </div>
                     </div>
                     <div class="card-footer">
 
@@ -114,4 +115,5 @@ if ($_SESSION['us_tipo'] == 1) {
 ?>
 
 <script src="../js/usuario.js"></script>
+<script src="../js/gestion_usuario.js"></script>
 
