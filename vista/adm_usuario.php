@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION['us_tipo'] == 1) {
+if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo']==3) {
     include_once 'layouts/header.php';
     ?>
 
@@ -65,6 +65,9 @@ if ($_SESSION['us_tipo'] == 1) {
                     <div class="col-sm-6">
                         <h1>Gestionar Usuarios <button data-toggle="modal" data-target="#crearusuario" type="button"
                                 class="btn bg-gradient-primary ml-2"> Crear usuario </button> </h1>
+                        <input type="hidden" id="tipo_de_usuario" value="<?php
+                            echo $_SESSION['us_tipo'];
+                        ?>">
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">

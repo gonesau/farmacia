@@ -1,6 +1,7 @@
 $(document).ready(function(){
     // Funcion para buscar un usuario
     var funcion;
+    var tipo_de_usuario = $('#tipo_de_usuario').val();
     function buscar_datos(consulta){   
         funcion = "buscar_usuario_adm";
         $.post('../controlador/UsuarioController.php',{consulta, funcion}, (response) => {
@@ -32,17 +33,36 @@ $(document).ready(function(){
                   </div>
                 </div>
                 <div class="card-footer">
-                  <div class="text-right">
-                    <button class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Eliminar
-                    </button>
-                    <button class="btn btn-primary">
-                        <i class="fas fa-edit"></i> Editar
-                    </button>
+                  <div class="text-right">`;
+                  if(tipo_de_usuario==3){
+                    if(usuario.tipo_de_usuario!=3){
+                      template += `
+                      <button class="btn btn-danger">
+                          <i class="fas fa-trash mr-1"></i> Eliminar
+                      </button>
+                      `;
+                    }
+                    if(usuario.tipo_de_usuario==2){
+                      template += `
+                      <button class="btn btn-primary">
+                          <i class="fas fa-trash ml-1"></i> Ascender
+                      </button>
+                      `;
+                    }
+                  }
+                  else{
+                      if(tipo_de_usuario==1 && usuario.tipo_de_usuario!=1 && usuario.tipo_de_usuario!=3){
+                        template += `
+                        <button class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                        `; 
+                      }
+                  }
+                  template += `
                   </div>
                 </div>
               </div>
-            
                 `;
             });
             $('#usuarios').html(template);

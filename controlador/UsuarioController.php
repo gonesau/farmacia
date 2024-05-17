@@ -112,7 +112,8 @@ if($_POST['funcion']=='buscar_usuario_adm'){
             'correo'=>$objeto->correo_us,
             'sexo'=>$objeto->sexo_us,
             'adicional'=>$objeto->adicional_us,
-            'avatar'=>'../img/'.$objeto->avatar 
+            'avatar'=>'../img/'.$objeto->avatar,
+            'tipo_de_usuario'=>$objeto->us_tipo
         );
     }
     $jsonstring = json_encode($json);
