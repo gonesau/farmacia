@@ -2,6 +2,7 @@
 include_once 'conexion.php';
 class usuario{
     var $objetos;
+    private $acceso;
     public function __construct(){
         $db = new conexion();
         $this->acceso = $db->pdo;
