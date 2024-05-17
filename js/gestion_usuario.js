@@ -2,6 +2,11 @@ $(document).ready(function(){
     // Funcion para buscar un usuario
     var funcion;
     var tipo_de_usuario = $('#tipo_de_usuario').val();
+
+    if (tipo_de_usuario==2){
+      $('#button-crear').hide();
+    }
+
     function buscar_datos(consulta){   
         funcion = "buscar_usuario_adm";
         $.post('../controlador/UsuarioController.php',{consulta, funcion}, (response) => {
@@ -77,6 +82,33 @@ $(document).ready(function(){
             buscar_datos(valor);
         }
     });
+
+    // Funcion para crear un usuario
+    $('#form-crear').submit(e => {
+      let nombre = $('#nombre').val();
+      let apellido = $('#apellido').val();
+      let dui = $('#dui').val();
+      let edad = $('#edad').val();
+      let pass = $('#pass').val();
+      funcion = "crear_usuario";
+      $.post('../controlador/UsuarioController.php',{nombre, apellido, dui, edad, pass, funcion}, (response) => {
+        if(response == 'add'){
+          $('#add').hide('slow');
+          $('#add').show(1000);
+          $('#add').hide(2000);
+        }
+        else{
+          $('#noadd').hide('slow');
+          $('#noadd').show(1000);
+          $('#noadd').hide(2000);
+        }
+        $('#form-crear').trigger('reset');
+      });
+      e.preventDefault();
+    });
+
+
+
     buscar_datos();
 
 })

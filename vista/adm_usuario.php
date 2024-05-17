@@ -1,10 +1,10 @@
 <?php
 session_start();
-if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo']==3) {
+if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     include_once 'layouts/header.php';
     ?>
 
-    <title>Adm | Gestionar Usuarios</title>
+    <title>Gestionar Usuarios</title>
     <?php
     include_once 'layouts/nav.php';
     ?>
@@ -22,7 +22,13 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo']==3) {
                         </button>
                     </div>
                     <div class="card-body">
-                        <form id="crear">
+                        <div class="alert alert-success text-center" id="add" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Usuario Creado</span>
+                        </div>
+                        <div class="alert alert-danger text-center" id="noadd" style="display:none;">
+                            <span><i class="fas fa-times m-1"></i>Error al crear usuario</span>
+                        </div>
+                        <form id="form-crear">
                             <div class="form-group row">
                                 <label for="nombre" class="col-sm-4 col-form-label">Nombres</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Ingrese nombres" required>
@@ -47,8 +53,10 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo']==3) {
                             </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Crear Usuario</button>
-                        <button type="button" data-dismiss="modal" class="btn btn-outline-secondary float-right m-1" >Cerrar</button>
+                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Crear
+                            Usuario</button>
+                        <button type="button" data-dismiss="modal"
+                            class="btn btn-outline-secondary float-right m-1">Cerrar</button>
                         </form>
                     </div>
                 </div>
@@ -63,10 +71,11 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo']==3) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Gestionar Usuarios <button data-toggle="modal" data-target="#crearusuario" type="button"
-                                class="btn bg-gradient-primary ml-2"> Crear usuario </button> </h1>
+                        <h1>Gestionar Usuarios <button id="button-crear" data-toggle="modal" data-target="#crearusuario"
+                                type="button" class="btn bg-gradient-primary ml-2"> Crear usuario </button> </h1>
+
                         <input type="hidden" id="tipo_de_usuario" value="<?php
-                            echo $_SESSION['us_tipo'];
+                        echo $_SESSION['us_tipo'];
                         ?>">
                     </div>
                     <div class="col-sm-6">
@@ -90,13 +99,14 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo']==3) {
                             <input type="text" id="buscar" class="form-control float-left mt-2"
                                 placeholder="Ingrese Nombre, Apellido o DUI del usuario">
                             <div class="input-group-append">
-                                <button class="btn btn-primary mt-2" id="btn_buscar_usuario"><i class="fas fa-search"></i></button>
+                                <button class="btn btn-primary mt-2" id="btn_buscar_usuario"><i
+                                        class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div id="usuarios" class="row d-flex align-items-stretch">
-                            
+
                         </div>
                     </div>
                     <div class="card-footer">
@@ -119,4 +129,3 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo']==3) {
 
 <script src="../js/usuario.js"></script>
 <script src="../js/gestion_usuario.js"></script>
-

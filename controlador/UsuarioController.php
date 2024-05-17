@@ -119,4 +119,17 @@ if($_POST['funcion']=='buscar_usuario_adm'){
     $jsonstring = json_encode($json);
     echo $jsonstring;
 }
+
+
+
+if($_POST['funcion']=='crear_usuario'){
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $edad = $_POST['edad'];
+    $dui = $_POST['dui'];
+    $pass = $_POST['pass'];
+    $tipo = 2;
+    $avatar = 'avatar.png';
+    $usuario->crear($nombre, $apellido, $edad, $dui, $pass, $tipo, $avatar);
+}
 ?>
