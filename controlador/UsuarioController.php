@@ -130,6 +130,13 @@ if($_POST['funcion']=='crear_usuario'){
     $pass = $_POST['pass'];
     $tipo = 2;
     $avatar = 'avatar.png';
+
+    // Añadir registros para depuración
+    error_log("Datos recibidos: nombre=$nombre, apellido=$apellido, edad=$edad, dui=$dui, pass=$pass");
+
     $usuario->crear($nombre, $apellido, $edad, $dui, $pass, $tipo, $avatar);
 }
+
+
+
 ?>

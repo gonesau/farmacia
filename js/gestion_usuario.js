@@ -85,27 +85,34 @@ $(document).ready(function(){
 
     // Funcion para crear un usuario
     $('#form-crear').submit(e => {
+      e.preventDefault();
+  
       let nombre = $('#nombre').val();
       let apellido = $('#apellido').val();
       let dui = $('#dui').val();
       let edad = $('#edad').val();
       let pass = $('#pass').val();
+  
       funcion = "crear_usuario";
-      $.post('../controlador/UsuarioController.php',{nombre, apellido, dui, edad, pass, funcion}, (response) => {
-        if(response == 'add'){
-          $('#add').hide('slow');
-          $('#add').show(1000);
-          $('#add').hide(2000);
-        }
-        else{
-          $('#noadd').hide('slow');
-          $('#noadd').show(1000);
-          $('#noadd').hide(2000);
-        }
-        $('#form-crear').trigger('reset');
+  
+      // Añadir registros para depuración
+      console.log(`Datos enviados: nombre=${nombre}, apellido=${apellido}, edad=${edad}, dui=${dui}, pass=${pass}`);
+  
+      $.post('../controlador/UsuarioController.php', { nombre, apellido, dui, edad, pass, funcion }, (response) => {
+          console.log(response);
+          if (response == 'add') {
+              $('#add').hide('slow');
+              $('#add').show(1000);
+              $('#add').hide(2000);
+          } else {
+              $('#noadd').hide('slow');
+              $('#noadd').show(1000);
+              $('#noadd').hide(2000);
+          }
+          $('#form-crear').trigger('reset');
       });
-      e.preventDefault();
-    });
+  });
+  
 
 
 

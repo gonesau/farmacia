@@ -86,18 +86,27 @@ class usuario
 
     function crear($nombre, $apellido, $edad, $dui, $pass, $tipo, $avatar)
     {
-        $sql = "SELECT id_usuario FROM usuario WHERE dui_us=:dui";
-        $query = $this->acceso->prepare($sql);
-        $query->execute(array(':dui' => $dui));
-        $this->objetos = $query->fetchall();
-        if (!empty($this->objetos)) {
-            echo 'noadd';
-        } else {
-            $sql = "INSERT INTO usuario(nombre_us, apellidos_us, edad_us, dui_us, password_us, us_tipo, avatar) VALUES(:nombre, :apellido, :edad, :dui, :pass, :tipo, :avatar)";
+        try {
+            // Verificar si el DUI ya existe en la base de datos
+            $sql = "SELECT id_usuario FROM usuario WHERE dui_us=:dui";
             $query = $this->acceso->prepare($sql);
-            $query->execute(array(':nombre' => $nombre, ':apellido' => $apellido, ':edad' => $edad, ':dui' => $dui, ':pass' => $pass, ':tipo' => $tipo, ':avatar' => $avatar));
-            echo 'add';
+            $query->execute(array(':dui' => $dui));
+            $this->objetos = $query->fetchall();
+    
+            if (!empty($this->objetos)) {
+                echo 'noadd';
+            } else {
+                // Insertar el nuevo usuario
+                $sql = "INSERT INTO usuario(nombre_us, apellidos_us, edad, dui_us, password_us, us_tipo, avatar) VALUES(:nombre, :apellido, :edad, :dui, :pass, :tipo, :avatar)";
+                $query = $this->acceso->prepare($sql);
+                $query->execute(array(':nombre' => $nombre, ':apellido' => $apellido, ':edad' => $edad, ':dui' => $dui, ':pass' => $pass, ':tipo' => $tipo, ':avatar' => $avatar));
+                echo 'add';
+            }
+        } catch (PDOException $e) {
+            // Mostrar el error específico
+            echo 'Error: ' . $e->getMessage();
         }
     }
+    
 }
 ?>
