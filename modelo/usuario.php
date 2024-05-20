@@ -107,6 +107,38 @@ class usuario
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+    function ascender($pass, $id_ascendido, $id_usuario) {
+        $sql = "SELECT id_usuario FROM usuario WHERE id_usuario=:id_usuario and password_us=:pass";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id_usuario' => $id_usuario, ':pass' => $pass));
+        $this->objetos = $query->fetchall();
+        if (!empty($this->objetos)) {
+            $tipo = 1;
+            $sql = "UPDATE usuario SET us_tipo=:tipo WHERE id_usuario=:id_ascendido";
+            $query = $this->acceso->prepare($sql);
+            $query->execute(array(':id_ascendido' => $id_ascendido, ':tipo' => $tipo));
+            echo 'ascendido';
+        } else {
+            echo 'noascendido';
+        }
+    }
+
+    function descender($pass, $id_desecendido, $id_usuario){
+        $sql = "SELECT id_usuario FROM usuario WHERE id_usuario=:id_usuario and password_us=:pass";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id_usuario' => $id_usuario, ':pass' => $pass));
+        $this->objetos = $query->fetchall();
+        if (!empty($this->objetos)) {
+            $tipo = 2;
+            $sql = "UPDATE usuario SET us_tipo=:tipo WHERE id_usuario=:id_desecendido";
+            $query = $this->acceso->prepare($sql);
+            $query->execute(array(':id_desecendido' => $id_desecendido, ':tipo' => $tipo));
+            echo 'descendido';
+        } else {
+            echo 'nodescendido';
+        }
+    }
     
 }
 ?>

@@ -32,6 +32,8 @@ $(document).ready(function(){
             $('#apellidos_us').html(apellidos);
             $('#nombre_us_foto').html(nombre); // Cambiado a nombre_us_foto
             $('#apellidos_us_foto').html(apellidos); // Cambiado a apellidos_us_foto
+            $('#nombre_us_confir').html(nombre); // Cambiado a nombre_us_foto
+            $('#apellidos_us_confir').html(apellidos);
             $('#edad').html(edad);
             $('#dui_us').html(dui);
             $('#us_tipo').html(tipo);

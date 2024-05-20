@@ -1,20 +1,23 @@
-$(document).ready(function(){
-    // Funcion para buscar un usuario
-    var funcion;
-    var tipo_de_usuario = $('#tipo_de_usuario').val();
+$(document).ready(function () {
+  // Funcion para buscar un usuario
+  var funcion;
+  var tipo_de_usuario = $("#tipo_de_usuario").val();
 
-    if (tipo_de_usuario==2){
-      $('#button-crear').hide();
-    }
+  if (tipo_de_usuario == 2) {
+    $("#button-crear").hide();
+  }
 
-    function buscar_datos(consulta){   
-        funcion = "buscar_usuario_adm";
-        $.post('../controlador/UsuarioController.php',{consulta, funcion}, (response) => {
-            const usuarios = JSON.parse(response);
-            let template = '';
-            usuarios.forEach(usuario => {
-                template += `
-                <div class="card bg-light d-flex flex-fill">
+  function buscar_datos(consulta) {
+    funcion = "buscar_usuario_adm";
+    $.post(
+      "../controlador/UsuarioController.php",
+      { consulta, funcion },
+      (response) => {
+        const usuarios = JSON.parse(response);
+        let template = "";
+        usuarios.forEach((usuario) => {
+          template += `
+                <div usuarioId="${usuario.id}" class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
                     ${usuario.tipo}
                 </div>
@@ -39,83 +42,136 @@ $(document).ready(function(){
                 </div>
                 <div class="card-footer">
                   <div class="text-right">`;
-                  if(tipo_de_usuario==3){
-                    if(usuario.tipo_de_usuario!=3){
-                      template += `
+          if (tipo_de_usuario == 3) {
+            if (usuario.tipo_de_usuario != 3) {
+              template += `
                       <button class="btn btn-danger">
                           <i class="fas fa-trash mr-1"></i> Eliminar
                       </button>
                       `;
-                    }
-                    if(usuario.tipo_de_usuario==2){
-                      template += `
-                      <button class="btn btn-primary">
-                          <i class="fas fa-trash ml-1"></i> Ascender
+            }
+            if (usuario.tipo_de_usuario == 2) {
+              template += `
+                      <button data-toggle="modal" data-target="#confirmar" type="button" class="ascender btn btn-primary">
+                          <i class="fas fa-sort-amount-up ml-1"></i> Ascender
                       </button>
                       `;
-                    }
-                  }
-                  else{
-                      if(tipo_de_usuario==1 && usuario.tipo_de_usuario!=1 && usuario.tipo_de_usuario!=3){
-                        template += `
+            }
+            if (usuario.tipo_de_usuario == 1) {
+              template += `
+                      <button data-toggle="modal" data-target="#confirmar" type="button" class="descender btn btn-secondary">
+                          <i class="fas fa-sort-amount-down ml-1"></i> Descender
+                      </button>
+                      `;
+            }
+          } else {
+            if (
+              tipo_de_usuario == 1 &&
+              usuario.tipo_de_usuario != 1 &&
+              usuario.tipo_de_usuario != 3
+            ) {
+              template += `
                         <button class="btn btn-danger">
                             <i class="fas fa-trash"></i> Eliminar
                         </button>
-                        `; 
-                      }
-                  }
-                  template += `
+                        `;
+            }
+          }
+          template += `
                   </div>
                 </div>
               </div>
                 `;
-            });
-            $('#usuarios').html(template);
         });
+        $("#usuarios").html(template);
+      }
+    );
+  }
+  $(document).on("keyup", "#buscar", function () {
+    let valor = $(this).val();
+    if (valor != "") {
+      buscar_datos(valor);
+    } else {
+      buscar_datos(valor);
     }
-    $(document).on('keyup', '#buscar', function(){
-        let valor = $(this).val();
-        if(valor != ""){
-            buscar_datos(valor);
-        }
-        else{
-            buscar_datos(valor);
-        }
-    });
-
-    // Funcion para crear un usuario
-    $('#form-crear').submit(e => {
-      e.preventDefault();
-  
-      let nombre = $('#nombre').val();
-      let apellido = $('#apellido').val();
-      let dui = $('#dui').val();
-      let edad = $('#edad').val();
-      let pass = $('#pass').val();
-  
-      funcion = "crear_usuario";
-  
-      // Añadir registros para depuración
-      console.log(`Datos enviados: nombre=${nombre}, apellido=${apellido}, edad=${edad}, dui=${dui}, pass=${pass}`);
-  
-      $.post('../controlador/UsuarioController.php', { nombre, apellido, dui, edad, pass, funcion }, (response) => {
-          console.log(response);
-          if (response == 'add') {
-              $('#add').hide('slow');
-              $('#add').show(1000);
-              $('#add').hide(2000);
-          } else {
-              $('#noadd').hide('slow');
-              $('#noadd').show(1000);
-              $('#noadd').hide(2000);
-          }
-          $('#form-crear').trigger('reset');
-      });
   });
-  
+
+  // Funcion para crear un usuario
+  $("#form-crear").submit((e) => {
+    e.preventDefault();
+
+    let nombre = $("#nombre").val();
+    let apellido = $("#apellido").val();
+    let dui = $("#dui").val();
+    let edad = $("#edad").val();
+    let pass = $("#pass").val();
+
+    funcion = "crear_usuario";
+
+    // Añadir registros para depuración
+    console.log(
+      `Datos enviados: nombre=${nombre}, apellido=${apellido}, edad=${edad}, dui=${dui}, pass=${pass}`
+    );
+
+    $.post(
+      "../controlador/UsuarioController.php",
+      { nombre, apellido, dui, edad, pass, funcion },
+      (response) => {
+        console.log(response);
+        if (response == "add") {
+          $("#add").hide("slow");
+          $("#add").show(1000);
+          $("#add").hide(2000);
+        } else {
+          $("#noadd").hide("slow");
+          $("#noadd").show(1000);
+          $("#noadd").hide(2000);
+        }
+        $("#form-crear").trigger("reset");
+      }
+    );
+  });
+
+  $(document).on("click", ".ascender", (e) => {
+    const elemento =
+      $(this)[0].activeElement.parentElement.parentElement.parentElement;
+    const id = $(elemento).attr("usuarioId");
+    funcion = "ascender";
+    $("#id_usuario").val(id);
+    $("#funcion").val(funcion);
+  });
+
+  $(document).on("click", ".descender", (e) => {
+    const elemento =
+      $(this)[0].activeElement.parentElement.parentElement.parentElement;
+    const id = $(elemento).attr("usuarioId");
+    funcion = "descender";
+    $("#id_usuario").val(id);
+    $("#funcion").val(funcion);
+  });
+
+  $('#form-confirmar').submit((e) => {
+    let pass = $('#oldpass').val();
+    let id_usuario = $('#id_user').val();
+    let funcion = $('#funcion').val();
+    $.post('../controlador/UsuarioController.php', {pass, id_usuario, funcion}, (response) => {
+      console.log(response);
+      if (response == 'ascendido' || response == 'descendido') {
+        $('#confirmado').hide('slow');
+        $('#confirmado').show(1000);
+        $('#confirmado').hide(2000);
+        $('#form-confirmar').trigger('reset');
+      } else {
+        $('#rechazado').hide('slow');
+        $('#rechazado').show(1000);
+        $('#rechazado').hide(2000);
+        $('#form-confirmar').trigger('reset');
+      }
+      buscar_datos();
+    });
+    e.preventDefault();
+  });
 
 
-
-    buscar_datos();
-
-})
+  buscar_datos();
+});
