@@ -18,9 +18,17 @@ $(document).ready(function () {
         usuarios.forEach((usuario) => {
           template += `
           <div usuarioId="${usuario.id}" class="card bg-light d-flex flex-fill">
-                <div class="card-header text-muted border-bottom-0">
-                    ${usuario.tipo}
-                </div>
+                <div class="card-header text-muted border-bottom-0">`;
+                    if(usuario.tipo_de_usuario == 3){
+                      template+=`<h1 class="badge badge-danger">${usuario.tipo}</h1>`;
+                    }
+                    if(usuario.tipo_de_usuario == 2){
+                      template+=`<h1 class="badge badge-primary">${usuario.tipo}</h1>`;
+                    }
+                    if(usuario.tipo_de_usuario == 1){
+                      template+=`<h1 class="badge badge-secondary">${usuario.tipo}</h1>`;
+                    }
+              template+=`</div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
@@ -45,7 +53,7 @@ $(document).ready(function () {
           if (tipo_de_usuario == 3) {
             if (usuario.tipo_de_usuario != 3) {
               template += `
-                      <button class="btn btn-danger">
+                      <button data-toggle="modal" data-target="#confirmar" type="button" class="borrar_usuario btn btn-danger">
                           <i class="fas fa-trash mr-1"></i> Eliminar
                       </button>
                       `;
@@ -71,7 +79,7 @@ $(document).ready(function () {
               usuario.tipo_de_usuario != 3
             ) {
               template += `
-                        <button class="btn btn-danger">
+                        <button data-toggle="modal" data-target="#confirmar" type="button" class="borrar_usuario btn btn-danger">
                             <i class="fas fa-trash"></i> Eliminar
                         </button>
                         `;
@@ -148,6 +156,15 @@ $(document).ready(function () {
     $("#funcion").val("descender");
   });
 
+  $(document).on("click", ".borrar_usuario", function () {
+    const elemento = $(this).closest(".card");
+    const id = $(elemento).attr("usuarioId");
+    console.log(`Borrar clicked: id=${id}`);
+    funcion = "borrar_usuario";
+    $("#id_usuario").val(id);
+    $("#funcion").val(funcion);
+  });
+
   $('#form-confirmar').submit((e) => {
     e.preventDefault();
     let pass = $('#oldpass').val();
@@ -156,7 +173,7 @@ $(document).ready(function () {
     console.log(`Form submit: pass=${pass}, id_usuario=${id_usuario}, funcion=${funcion}`);
     $.post('../controlador/UsuarioController.php', { pass, id_usuario, funcion }, (response) => {
       console.log(`Response: ${response}`);
-      if (response == 'ascendido' || response == 'descendido') {
+      if (response == 'ascendido' || response == 'descendido' || response == 'borrado') {
         $('#confirmado').hide('slow');
         $('#confirmado').show(1000);
         $('#confirmado').hide(2000);

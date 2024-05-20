@@ -26,12 +26,12 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         <img id="avatar1" src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
                     </div>
                     <div class="text-center">
-                        <h3 id="nombre_us1" class="profile-username text-center text-success">
+                        <h3 class="profile-username text-center text-success">
                             <?php
                             echo $_SESSION['nombre'];
                             ?>
                         </h3>
-                        <p id="apellidos_us1" class="text-muted text-center">
+                        <p  class="text-muted text-center">
                             <?php
                             echo $_SESSION['apellidos'];
                             ?>

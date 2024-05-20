@@ -145,12 +145,18 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                       Cambiar Foto
                     </button>
                   </div>
-                  <h3 id="nombre_us" class="profile-username text-center text-success">
-
-                  </h3>
-                  <p id="apellidos_us" class="text-muted text-center">
-
-                  </p>
+                  <div class="text-center">
+                    <h3 id="nombre_us" class="profile-username text-center text-success">
+                      <?php
+                      echo $_SESSION['nombre'];
+                      ?>
+                    </h3>
+                    <p id="apellidos_us" class="text-muted text-center">
+                      <?php
+                      echo $_SESSION['apellido'];
+                      ?>
+                    </p>
+                  </div>
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
                       <b style="color:#0b7300">Edad</b> <a id="edad" href="" class="float-right">
@@ -163,9 +169,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                       </a>
                     </li>
                     <li class="list-group-item">
-                      <b style="color:#0b7300">Tipo Usuario</b> <span id="us_tipo" class="badge-primary float-right">
-                        Administrador
-                      </span>
+                      <b style="color:#0b7300">Tipo Usuario</b>
+                      <span id="us_tipo" class="float-right">Administrador</span>
                     </li>
                     <button data-toggle="modal" data-target="#cambiocontra" type="button"
                       class="btn btn-block btn-outline-warning btn-sm">

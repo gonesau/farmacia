@@ -152,5 +152,12 @@ if ($_POST['funcion'] == 'descender') {
     $usuario->descender($pass, $id_desecendido, $id_usuario);
 }
 
+if ($_POST['funcion'] == 'borrar_usuario') {
+    $pass = $_POST['pass'];
+    $id_borrado = $_POST['id_usuario'];
+    error_log("Eliminar (controlador): pass=$pass, id_eliminado=$id_borrado");
+    $usuario->borrar($pass, $id_borrado, $id_usuario);
+}
+
 
 ?>
