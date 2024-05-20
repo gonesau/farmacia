@@ -30,6 +30,8 @@ $(document).ready(function(){
             adicional += `${usuario.adicional}`;
             $('#nombre_us').html(nombre);
             $('#apellidos_us').html(apellidos);
+            $('#nombre_us1').html(nombre);
+            $('#apellidos_us1').html(apellidos);
             $('#nombre_us_foto').html(nombre); // Cambiado a nombre_us_foto
             $('#apellidos_us_foto').html(apellidos); // Cambiado a apellidos_us_foto
             $('#nombre_us_confir').html(nombre); // Cambiado a nombre_us_foto

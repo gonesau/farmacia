@@ -109,6 +109,7 @@ class usuario
     }
 
     function ascender($pass, $id_ascendido, $id_usuario) {
+        error_log("Ascender (modelo): pass=$pass, id_ascendido=$id_ascendido, id_usuario=$id_usuario");
         $sql = "SELECT id_usuario FROM usuario WHERE id_usuario=:id_usuario and password_us=:pass";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id_usuario' => $id_usuario, ':pass' => $pass));
@@ -117,14 +118,22 @@ class usuario
             $tipo = 1;
             $sql = "UPDATE usuario SET us_tipo=:tipo WHERE id_usuario=:id_ascendido";
             $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_ascendido' => $id_ascendido, ':tipo' => $tipo));
-            echo 'ascendido';
+            $result = $query->execute(array(':id_ascendido' => $id_ascendido, ':tipo' => $tipo));
+            error_log("Ascender: query executed, result=" . var_export($result, true));
+            if ($result) {
+                echo 'ascendido';
+            } else {
+                error_log("Ascender: query failed");
+                echo 'noascendido';
+            }
         } else {
+            error_log("Ascender: noascendido - usuario/password incorrecto");
             echo 'noascendido';
         }
     }
-
+    
     function descender($pass, $id_desecendido, $id_usuario){
+        error_log("Descender (modelo): pass=$pass, id_desecendido=$id_desecendido, id_usuario=$id_usuario");
         $sql = "SELECT id_usuario FROM usuario WHERE id_usuario=:id_usuario and password_us=:pass";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id_usuario' => $id_usuario, ':pass' => $pass));
@@ -133,12 +142,20 @@ class usuario
             $tipo = 2;
             $sql = "UPDATE usuario SET us_tipo=:tipo WHERE id_usuario=:id_desecendido";
             $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_desecendido' => $id_desecendido, ':tipo' => $tipo));
-            echo 'descendido';
+            $result = $query->execute(array(':id_desecendido' => $id_desecendido, ':tipo' => $tipo));
+            error_log("Descender: query executed, result=" . var_export($result, true));
+            if ($result) {
+                echo 'descendido';
+            } else {
+                error_log("Descender: query failed");
+                echo 'nodescendido';
+            }
         } else {
+            error_log("Descender: nodescendido - usuario/password incorrecto");
             echo 'nodescendido';
         }
     }
+    
     
 }
 ?>

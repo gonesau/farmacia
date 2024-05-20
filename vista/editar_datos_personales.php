@@ -66,8 +66,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
     </div>
   </div>
 
-    <!-- Modal Foto-->
-    <div class="modal fade" id="cambiofoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal Foto-->
+  <div class="modal fade" id="cambiofoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

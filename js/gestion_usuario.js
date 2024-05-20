@@ -17,7 +17,7 @@ $(document).ready(function () {
         let template = "";
         usuarios.forEach((usuario) => {
           template += `
-                <div usuarioId="${usuario.id}" class="card bg-light d-flex flex-fill">
+          <div usuarioId="${usuario.id}" class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
                     ${usuario.tipo}
                 </div>
@@ -132,30 +132,30 @@ $(document).ready(function () {
     );
   });
 
-  $(document).on("click", ".ascender", (e) => {
-    const elemento =
-      $(this)[0].activeElement.parentElement.parentElement.parentElement;
+  $(document).on("click", ".ascender", function () {
+    const elemento = $(this).closest(".card");
     const id = $(elemento).attr("usuarioId");
-    funcion = "ascender";
-    $("#id_usuario").val(id);
-    $("#funcion").val(funcion);
+    console.log(`Ascender clicked: id=${id}`);
+    $("#id_usuario").val(id); // Asegúrate de usar el id correcto
+    $("#funcion").val("ascender");
   });
 
-  $(document).on("click", ".descender", (e) => {
-    const elemento =
-      $(this)[0].activeElement.parentElement.parentElement.parentElement;
+  $(document).on("click", ".descender", function () {
+    const elemento = $(this).closest(".card");
     const id = $(elemento).attr("usuarioId");
-    funcion = "descender";
-    $("#id_usuario").val(id);
-    $("#funcion").val(funcion);
+    console.log(`Descender clicked: id=${id}`);
+    $("#id_usuario").val(id); // Asegúrate de usar el id correcto
+    $("#funcion").val("descender");
   });
 
   $('#form-confirmar').submit((e) => {
+    e.preventDefault();
     let pass = $('#oldpass').val();
-    let id_usuario = $('#id_user').val();
+    let id_usuario = $('#id_usuario').val();
     let funcion = $('#funcion').val();
-    $.post('../controlador/UsuarioController.php', {pass, id_usuario, funcion}, (response) => {
-      console.log(response);
+    console.log(`Form submit: pass=${pass}, id_usuario=${id_usuario}, funcion=${funcion}`);
+    $.post('../controlador/UsuarioController.php', { pass, id_usuario, funcion }, (response) => {
+      console.log(`Response: ${response}`);
       if (response == 'ascendido' || response == 'descendido') {
         $('#confirmado').hide('slow');
         $('#confirmado').show(1000);
@@ -169,7 +169,6 @@ $(document).ready(function () {
       }
       buscar_datos();
     });
-    e.preventDefault();
   });
 
 

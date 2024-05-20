@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     include_once 'layouts/header.php';
     ?>
@@ -12,6 +13,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 
 
     <!-- Modal Confirmar contraseña-->
+    
     <div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -24,12 +26,12 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         <img id="avatar1" src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
                     </div>
                     <div class="text-center">
-                        <h3 id="nombre_us_confir" class="profile-username text-center text-success">
+                        <h3 id="nombre_us1" class="profile-username text-center text-success">
                             <?php
                             echo $_SESSION['nombre'];
                             ?>
                         </h3>
-                        <p id="apellidos_us_confir" class="text-muted text-center">
+                        <p id="apellidos_us1" class="text-muted text-center">
                             <?php
                             echo $_SESSION['apellidos'];
                             ?>
@@ -50,8 +52,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                 </span>
                             </div>
                             <input type="password" class="form-control" id="oldpass" placeholder="Contraseña Actual">
-                            <input type="hidden" id="id_user">
-                            <input type="hidden" id="funcion">
+                            <input type="hidden" id="id_usuario" name="id_usuario">
+                            <input type="hidden" id="funcion" name="funcion">
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -183,3 +185,4 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 
 <script src="../js/usuario.js"></script>
 <script src="../js/gestion_usuario.js"></script>
+<script src="../js/usuario.js"></script>

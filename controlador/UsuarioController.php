@@ -138,17 +138,19 @@ if($_POST['funcion']=='crear_usuario'){
     $usuario->crear($nombre, $apellido, $edad, $dui, $pass, $tipo, $avatar);
 }
 
-if($_POST['funcion']=='ascender'){
+if ($_POST['funcion'] == 'ascender') {
     $pass = $_POST['pass'];
     $id_ascendido = $_POST['id_usuario'];
+    error_log("Ascender (controlador): pass=$pass, id_ascendido=$id_ascendido");
     $usuario->ascender($pass, $id_ascendido, $id_usuario);
 }
 
-
-if($_POST['funcion']=='descender'){
+if ($_POST['funcion'] == 'descender') {
     $pass = $_POST['pass'];
     $id_desecendido = $_POST['id_usuario'];
+    error_log("Descender (controlador): pass=$pass, id_desecendido=$id_desecendido");
     $usuario->descender($pass, $id_desecendido, $id_usuario);
 }
+
 
 ?>
