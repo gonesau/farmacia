@@ -7,6 +7,22 @@ $(document).ready(function () {
     $("#button-crear").hide();
   }
 
+  function obtenerNombreUsuario(id_usuario) {
+    funcion = "obtenerNombreUsuario";
+    $.post(
+      "../controlador/UsuarioController.php",
+      { id_usuario, funcion },
+      (response) => {
+        const usuario = JSON.parse(response);
+        $("#nombre_usuario").html(usuario.nombre);
+        $("#apellidos_usuario").html(usuario.apellidos);
+        console.log("Nombre de usuario:", usuario.nombre);
+        console.log("Apellidos de usuario:", usuario.apellidos);
+      }
+    );
+  }
+
+
   function buscar_datos(consulta) {
     funcion = "buscar_usuario_adm";
     $.post(

@@ -2,7 +2,12 @@ $(document).ready(function () {
   var funcion = "";
   var id_usuario = $("#id_usuario").val();
   var edit = false;
+
   buscar_usuario(id_usuario);
+
+
+
+
   function buscar_usuario(dato) {
     funcion = "buscar_usuario";
 
@@ -20,9 +25,14 @@ $(document).ready(function () {
         let correo = "";
         let sexo = "";
         let adicional = "";
+        var nombre_usuario = "";
+        var apellidos_usuario = "";
+        console.log(response);
         const usuario = JSON.parse(response);
         nombre += `${usuario.nombre}`;
         apellidos += `${usuario.apellidos}`;
+        nombre_usuario += `${usuario.name}`;
+        apellidos_usuario += `${usuario.apell}`;
         edad += `${usuario.edad}`;
         dui += `${usuario.dui}`;
         if (usuario.tipo == 'Root') {
@@ -44,9 +54,11 @@ $(document).ready(function () {
         $('#apellidos_us').html(apellidos);
         $('#nombre_us1').html(nombre);
         $('#apellidos_us1').html(apellidos);
-        $('#nombre_us_foto').html(nombre); // Cambiado a nombre_us_foto
-        $('#apellidos_us_foto').html(apellidos); // Cambiado a apellidos_us_foto
-        $('#nombre_us_confir').html(nombre); // Cambiado a nombre_us_foto
+        $('#nombre_us_foto').html(nombre); 
+        $('#apellidos_us_foto').html(apellidos); 
+        $('.apellidos_us_var').html(apellidos);
+        $('.nombre_us_var').html(nombre);
+        $('#nombre_us_confir').html(nombre); 
         $('#apellidos_us_confir').html(apellidos);
         $("#edad").html(edad);
         $("#dui_us").html(dui);
@@ -63,6 +75,9 @@ $(document).ready(function () {
       }
     );
   }
+
+
+
   $(document).on("click", ".edit", (e) => {
     funcion = "capturar_datos";
     edit = true;
@@ -163,4 +178,10 @@ $(document).ready(function () {
     });
     e.preventDefault();
   });
+
+
+  
+
+
+
 });

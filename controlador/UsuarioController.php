@@ -4,26 +4,46 @@ $usuario = new usuario();
 session_start();
 $id_usuario = $_SESSION['usuario'];
 
-if($_POST['funcion']=='buscar_usuario'){
+if ($_POST['funcion'] == 'buscar_usuario') {
     $json = array();
     $fecha_actual = new DateTime();
     $usuario->obtener_datos($_POST['dato']);
-    foreach($usuario->objetos as $objeto){
-        $nacimiento = new DateTime($objeto->edad);
-        $edad = $nacimiento->diff($fecha_actual);
-        $edad_years = $edad->y;
+    
+    if (!empty($usuario->objetos)) { // Verificar si hay resultados
+        foreach ($usuario->objetos as $objeto) {
+            $nacimiento = new DateTime($objeto->edad);
+            $edad = $nacimiento->diff($fecha_actual);
+            $edad_years = $edad->y;
+            $json[] = array(
+                'nombre' => $objeto->nombre_us,
+                'apellidos' => $objeto->apellidos_us,
+                'edad' => $edad_years,
+                'dui' => $objeto->dui_us,
+                'tipo' => $objeto->nombre_tipo,
+                'telefono' => $objeto->telefono_us,
+                'residencia' => $objeto->residencia_us,
+                'correo' => $objeto->correo_us,
+                'sexo' => $objeto->sexo_us,
+                'adicional' => $objeto->adicional_us,
+                'avatar' => '../img/' . $objeto->avatar,
+                'name' => $objeto->nombre_us,
+                'apell' => $objeto->apellidos_us
+            );
+        }
+        $jsonstring = json_encode($json[0]);
+        echo $jsonstring;
+    } else {
+        echo json_encode(array()); // Devolver un array vacío si no hay resultados
+    }
+}
+
+if ($_POST['funcion'] == 'obtenerNombreUsuario') {
+    $json = array();
+    $usuario->obtener_datos($id_usuario);
+    foreach ($usuario->objetos as $objeto) {
         $json[] = array(
-            'nombre'=>$objeto->nombre_us,
-            'apellidos'=>$objeto->apellidos_us,
-            'edad'=>$edad_years,
-            'dui'=>$objeto->dui_us,
-            'tipo'=>$objeto->nombre_tipo,
-            'telefono'=>$objeto->telefono_us,
-            'residencia'=>$objeto->residencia_us,
-            'correo'=>$objeto->correo_us,
-            'sexo'=>$objeto->sexo_us,
-            'adicional'=>$objeto->adicional_us,
-            'avatar'=>'../img/'.$objeto->avatar 
+            'nombre' => $objeto->nombre_us,
+            'apellidos' => $objeto->apellidos_us
         );
     }
     $jsonstring = json_encode($json[0]);

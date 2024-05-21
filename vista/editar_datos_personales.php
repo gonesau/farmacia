@@ -146,17 +146,17 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                     </button>
                   </div>
                   <div class="text-center">
-                    <h3 id="nombre_us" class="profile-username text-center text-success">
-                      <?php
-                      echo $_SESSION['nombre'];
-                      ?>
-                    </h3>
-                    <p id="apellidos_us" class="text-muted text-center">
-                      <?php
-                      echo $_SESSION['apellido'];
-                      ?>
-                    </p>
-                  </div>
+            <h3 id="nombre_us_foto" class="profile-username text-center text-success">
+              <?php
+              echo $_SESSION['nombre'];
+              ?>
+            </h3>
+            <p id="apellidos_us_foto" class="text-muted text-center">
+              <?php
+              echo $_SESSION['apellidos'];
+              ?>
+            </p>
+          </div>
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
                       <b style="color:#0b7300">Edad</b> <a id="edad" href="" class="float-right">

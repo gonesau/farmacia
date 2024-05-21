@@ -88,12 +88,12 @@
           </li>
 
           
-          <li class="nav-header">EXAMPLES</li>
+          <li class="nav-header">Almacen</li>
           <li class="nav-item">
-            <a href="editar_datos_personales.php" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+            <a href="adm_atributo.php" class="nav-link">
+              <i class="nav-icon fas fa-vials"></i>
               <p>
-                Gallery
+                Gestión de Atributos
               </p>
             </a>
           </li>
