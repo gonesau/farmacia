@@ -1,65 +1,86 @@
 <?php
 session_start();
 
-
 if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     include_once 'layouts/header.php';
+    include_once '../modelo/usuario.php';
     ?>
 
     <title>Gestionar Usuarios</title>
     <?php
     include_once 'layouts/nav.php';
+    $objUsuario = new usuario();
     ?>
 
     <script src="../js/usuario.js"></script>
     <script src="../js/gestion_usuario.js"></script>
-<!-- Modal Confirmar contraseña-->
-<div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Contraseña</h1>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <img id="avatar1" src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
-                </div>
-                <div class="text-center">
-            <h3 id="nombre_usuario" class="nombre_us_var profile-username text-center text-success">
 
-            </h3>
-            <p id="apellidos_usuario" class="apellidos_us_var text-muted text-center">
 
-            </p>
-          </div>
-                <span>Es necesario ingresar contraseña para continuar</span>
-                <div class="alert alert-success text-center" id="confirmado" style="display:none;">
-                    <span><i class="fas fa-check m-1"></i>Usuario Modificado</span>
+    <!-- Modal Confirmar contraseña-->
+    <div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Contraseña</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="alert alert-danger text-center" id="rechazado" style="display:none;">
-                    <span><i class="fas fa-times m-1"></i>Contraseña Incorrecta</span>
-                </div>
-                <form id="form-confirmar">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fas fa-unlock"></i>
-                            </span>
-                        </div>
-                        <input type="password" class="form-control" id="oldpass" placeholder="Contraseña Actual">
-                        <input type="hidden" id="id_usuario" name="id_usuario">
-                        <input type="hidden" id="funcion" name="funcion">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img id="avatar1" src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn bg-gradient-primary">Guardar</button>
-                </form>
+                    <?php
+                    // $datos = $objUsuario->obtener_datos($_SESSION['us_tipo']) aca utiliza el 3 y no se porque;
+                    //tons mi pana, con la funcion de obtener datos nos jalamos todos los datos
+                    $datos = $objUsuario->obtener_datos($_SESSION['usuario']);
+                    if (is_array($datos) || is_object($datos)) {
+                        //recorremos con un foreach todo lo que nos jalamos
+                        foreach ($datos as $row => $column) {
+                            ?>
+                            <div class="text-center">
+                                <h3 id="nombre_usuario" class="profile-username text-center text-success">
+                                    <?php
+                                    //imprimimos
+                                    echo $column->nombre_us;
+                                    ?>
+                                </h3>
+                                <p id="apellidos_usuario" class="text-muted text-center">
+                                    <?php
+                                    //imprimimos
+                                    echo $column->apellidos_us;
+                                    ?>
+                                </p>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                    <span>Es necesario ingresar contraseña para continuar</span>
+                    <div class="alert alert-success text-center" id="confirmado" style="display:none;">
+                        <span><i class="fas fa-check m-1"></i>Usuario Modificado</span>
+                    </div>
+                    <div class="alert alert-danger text-center" id="rechazado" style="display:none;">
+                        <span><i class="fas fa-times m-1"></i>Contraseña Incorrecta</span>
+                    </div>
+                    <form id="form-confirmar">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-unlock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" id="oldpass" placeholder="Contraseña Actual">
+                            <input type="hidden" id="id_usuario" name="id_usuario">
+                            <input type="hidden" id="funcion" name="funcion">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn bg-gradient-primary">Guardar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- Modal Crear Usuario-->
@@ -172,9 +193,9 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 
 
     <?php
-  include_once 'layouts/footer.php';
+    include_once 'layouts/footer.php';
 } else {
-  header('Location: ../index.php');
+    header('Location: ../index.php');
 }
 ?>
 <script src="../js/usuario.js"></script>

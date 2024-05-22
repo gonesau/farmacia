@@ -2,11 +2,14 @@
 session_start();
 if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo'] == 2) {
   include_once 'layouts/header.php';
-  ?>
+  include_once '../modelo/usuario.php';
+?>
 
   <title>Adm | Editar Datos</title>
   <?php
   include_once 'layouts/nav.php';
+  //creamos un objeto usuario para poder acceder a las funciones xd
+  $objUsuario = new usuario();
   ?>
 
   <!-- Modal Cambiar Contraseña-->
@@ -81,12 +84,12 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
           <div class="text-center">
             <h3 id="nombre_us_foto" class="profile-username text-center text-success">
               <?php
-              echo $_SESSION['nombre'];
+              // echo $_SESSION['nombre'];
               ?>
             </h3>
             <p id="apellidos_us_foto" class="text-muted text-center">
               <?php
-              echo $_SESSION['apellido'];
+              // echo $_SESSION['apellido'];
               ?>
             </p>
           </div>
@@ -145,18 +148,32 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                       Cambiar Foto
                     </button>
                   </div>
-                  <div class="text-center">
-            <h3 id="nombre_us_foto" class="profile-username text-center text-success">
-              <?php
-              echo $_SESSION['nombre'];
-              ?>
-            </h3>
-            <p id="apellidos_us_foto" class="text-muted text-center">
-              <?php
-              echo $_SESSION['apellidos'];
-              ?>
-            </p>
-          </div>
+                  <?php
+                  // $datos = $objUsuario->obtener_datos($_SESSION['us_tipo']) aca utiliza el 3 y no se porque;
+                  //tons mi pana, con la funcion de obtener datos nos jalamos todos los datos
+                  $datos = $objUsuario->obtener_datos($_SESSION['usuario']);
+                  if (is_array($datos) || is_object($datos)) {
+                    //recorremos con un foreach todo lo que nos jalamos
+                    foreach ($datos as $row => $column) {
+                  ?>
+                      <div class="text-center">
+                        <h3 id="nombre_us" class="profile-username text-center text-success">
+                          <?php
+                          //imprimimos
+                          echo $column->nombre_us;
+                          ?>
+                        </h3>
+                        <p id="apellidos_us" class="text-muted text-center">
+                          <?php
+                          //imprimimos
+                          echo $column->apellidos_us;
+                          ?>
+                        </p>
+                      </div>
+                  <?php
+                    }
+                  }
+                  ?>
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
                       <b style="color:#0b7300">Edad</b> <a id="edad" href="" class="float-right">
@@ -170,10 +187,9 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                     </li>
                     <li class="list-group-item">
                       <b style="color:#0b7300">Tipo Usuario</b>
-                      <span id="us_tipo" class="float-right">Administrador</span>
+                      <span id="us_tipo" class="float-right"></span>
                     </li>
-                    <button data-toggle="modal" data-target="#cambiocontra" type="button"
-                      class="btn btn-block btn-outline-warning btn-sm">
+                    <button data-toggle="modal" data-target="#cambiocontra" type="button" class="btn btn-block btn-outline-warning btn-sm">
                       Cambiar Contraseña
                     </button>
                   </ul>
@@ -287,7 +303,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
 
 
 
-  <?php
+<?php
   include_once 'layouts/footer.php';
 } else {
   header('Location: ../index.php');

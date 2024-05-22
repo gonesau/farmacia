@@ -56,8 +56,6 @@ $(document).ready(function () {
         $('#apellidos_us1').html(apellidos);
         $('#nombre_us_foto').html(nombre); 
         $('#apellidos_us_foto').html(apellidos); 
-        $('.apellidos_us_var').html(apellidos);
-        $('.nombre_us_var').html(nombre);
         $('#nombre_us_confir').html(nombre); 
         $('#apellidos_us_confir').html(apellidos);
         $("#edad").html(edad);
