@@ -22,11 +22,11 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-success text-center" id="add" style="display:none;">
-                            <span><i class="fas fa-check m-1"></i>Usuario Creado</span>
+                        <div class="alert alert-success text-center" id="add-laboratorio" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Laboratorio Creado</span>
                         </div>
-                        <div class="alert alert-danger text-center" id="noadd" style="display:none;">
-                            <span><i class="fas fa-times m-1"></i>Error al crear usuario</span>
+                        <div class="alert alert-danger text-center" id="noadd-laboratorio" style="display:none;">
+                            <span><i class="fas fa-times m-1"></i>Error al crear Laboratorio</span>
                         </div>
                         <form id="form-crear-laboratorio">
                             <div class="form-group row">
@@ -236,3 +236,5 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     header('Location: ../index.php');
 }
 ?>
+
+<script src="../js/Laboratorio.js"></script>
