@@ -6,8 +6,8 @@
 <!--select2-->
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../css/css/all.min.css">
-  <!-- Ionicons -->
-  
+  <!-- Sweet Alert 2 -->
+  <link rel="stylesheet" href="../css/sweetalert2.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="../css/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->

@@ -52,4 +52,9 @@ if($_POST['funcion'] == 'cambiar_logo'){
     }
 }
 
+if($_POST['funcion'] == 'borrar'){
+    $id = $_POST['id'];
+    $laboratorio->borrar($id);
+}
+
 ?>
