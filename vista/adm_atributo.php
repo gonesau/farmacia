@@ -64,7 +64,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         <div class="alert alert-success text-center" id="add-laboratorio" style="display:none;">
                             <span><i class="fas fa-check m-1"></i>Laboratorio Creado</span>
                         </div>
-                        <div class="alert alert-success text-center" id="edit-laboratorio" style="display:none;">
+                        <div class="alert alert-success text-center" id="edit-labo" style="display:none;">
                             <span><i class="fas fa-check m-1"></i>Laboratorio Actualizado Correctamente</span>
                         </div>
                         <div class="alert alert-danger text-center" id="noadd-laboratorio" style="display:none;">
@@ -111,7 +111,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                             <span><i class="fas fa-check m-1"></i>Tipo Actualizado Correctamente</span>
                         </div>
                         <div class="alert alert-danger text-center" id="noadd-tipo" style="display:none;">
-                            <span><i class="fas fa-times m-1"></i>Error al crear Tipo</span>
+                            <span><i class="fas fa-times m-1"></i>Error al crear Tipo, ya existe</span>
                         </div>
                         <form id="form-crear-tipo">
                             <div class="form-group row">
@@ -135,7 +135,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 
 
     <!-- Modal Crear Presentación-->
-    <div class="modal fade" id="crearpresentacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="crearpre" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="card card-success">
@@ -146,23 +146,27 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-success text-center" id="add" style="display:none;">
-                            <span><i class="fas fa-check m-1"></i>Usuario Creado</span>
+                        <div class="alert alert-success text-center" id="add-pre" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Presentación Creada</span>
                         </div>
-                        <div class="alert alert-danger text-center" id="noadd" style="display:none;">
-                            <span><i class="fas fa-times m-1"></i>Error al crear usuario</span>
+                        <div class="alert alert-success text-center" id="edit-pre" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Presentación Actualizada Correctamente</span>
                         </div>
-                        <form id="form-crear-presentacion">
+                        <div class="alert alert-danger text-center" id="noadd-pre" style="display:none;">
+                            <span><i class="fas fa-times m-1"></i>Error al crear Presentación, ya existe</span>
+                        </div>
+                        <form id="form-crear-pre">
                             <div class="form-group row">
-                                <label for="nombre_presentacion" class="col-sm-6 col-form-label">Nombre de
+                                <label for="nombre_pre" class="col-sm-6 col-form-label">Nombre de
                                     Presentacion</label>
-                                <input type="text" class="form-control" id="nombre_presentacion"
-                                    placeholder="Ingrese nombres" required>
+                                <input type="text" class="form-control" id="nombre_pre" placeholder="Ingrese nombres"
+                                    required>
+                                <input type="hidden" name="id_editar_pre" id="id_editar_pre">
                             </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn bg-gradient-primary float-right m-1"
-                            id="btn_crear_usuario">Crear</button>
+                            id="btn_crear_usuario">Guardar</button>
                         <button type="button" data-dismiss="modal"
                             class="btn btn-outline-secondary float-right m-1">Cerrar</button>
                         </form>
@@ -247,7 +251,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                         </div>
                                     </div>
 
-        <!-- Contenido de Tipos -->
+                                    <!-- Contenido de Tipos -->
                                     <div class="tab-pane" id="tipo">
                                         <div class="card card-success">
                                             <div class="card-header">
@@ -281,12 +285,12 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                         </div>
                                     </div>
 
-
+                                    <!-- Contenido de Presentación -->
                                     <div class="tab-pane" id="presentacion">
                                         <div class="card card-success">
                                             <div class="card-header">
                                                 <div class="card-title">Presentación <button type="button"
-                                                        data-toggle="modal" data-target="#crearpresentacion"
+                                                        data-toggle="modal" data-target="#crearpre"
                                                         class="btn bg-primary btn-sm m-2"> Crear Presentación </button>
                                                 </div>
                                                 <div class="input-group">
@@ -298,7 +302,17 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body p-0 table-responsive">
+                                                <table class="table table-hover text-nowrap">
+                                                    <thead class="table-success">
+                                                        <tr>
+                                                            <th>Presentaciones</th>
+                                                            <th>Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-active" id="presentaciones">
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div class="card-footer">
 

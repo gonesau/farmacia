@@ -29,10 +29,10 @@ $(document).ready(function () {
                     $("#form-crear-laboratorio").trigger("reset");
                     buscar_lab();
                 }
-                else if (response.trim() == "edit"){
-                    $("#edit-laboratorio").hide("slow");
-                    $("#edit-laboratorio").show(1000);
-                    $("#edit-laboratorio").hide(2000);
+                if (response == "edit"){
+                    $("#edit-labo").hide("slow");
+                    $("#edit-labo").show(1000);
+                    $("#edit-labo").hide(2000);
                     $("#form-crear-laboratorio").trigger("reset");
                     buscar_lab();
                 }
