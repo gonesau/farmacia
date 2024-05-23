@@ -32,7 +32,7 @@ class Laboratorio{
             return $this->objetos;
         }
         else{
-            $sql = "SELECT * FROM laboratorio where nombre NOT LIKE '' ORDER BY id_laboratorio LIMIT 25";
+            $sql = "SELECT * FROM laboratorio where nombre NOT LIKE '' ORDER BY id_laboratorio DESC LIMIT 25";
             $query = $this->acceso->prepare($sql);
             $query->execute();
             $this->objetos = $query->fetchAll(PDO::FETCH_ASSOC); 
@@ -40,6 +40,5 @@ class Laboratorio{
         }
     }
     
-
 }
 ?>

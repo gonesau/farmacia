@@ -33,7 +33,25 @@ $(document).ready(function () {
         funcion = "buscar";
         $.post(
             "../controlador/LaboratorioController.php",{consulta, funcion}, (response) => {
-                console.log(response);
+                const laboratorios = JSON.parse(response);
+                let template = "";
+                laboratorios.forEach((laboratorio) => {
+                    template += `
+                        <tr labId="${laboratorio.id}">
+                            <td>${laboratorio.nombre}</td>
+                            <td>
+                                <img src="${laboratorio.avatar}" class="img-fluid rounded-1" width="50" height="50">
+                            </td>
+                            <td>
+                                <button type="button" class="avatar btn btn-info btn-sm editar" title="Editar logo"> <i class="far fa-image"> </i> </button>
+                                <button type="button" class="editar btn btn-warning btn-sm editar" title="Editar laboratorio"> <i class="fas fa-edit"> </i> </button>
+                                <button type="button" class="borrar btn btn-danger btn-sm borrar" title="Eliminar laboratorio"><i class="fa fa-trash"> </i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                $("#laboratorios").html(template);
+                
             });
     }
 
