@@ -1,14 +1,20 @@
 $(document).ready(function () {
     var funcion = "";
+    var edit = false;
     buscar_lab();
     // Función que se ejecuta al hacer clic en el botón btn_crear_usuario
     $("#form-crear-laboratorio").submit((e) => {
         e.preventDefault();
         let nombre_laboratorio = $("#nombre_laboratorio").val();
-        funcion = "crear";
+        let id_editado = $("#id_editar_lab").val();
+        if (edit == false) {
+            funcion = "crear";
+        } else {
+            funcion = "editar";
+        }
         $.post(
             "../controlador/LaboratorioController.php",
-            { nombre_laboratorio, funcion },
+            { nombre_laboratorio, id_editado, funcion },
             (response) => {
                 if (response.trim() == "add") {
                     $("#add-laboratorio").hide("slow");
@@ -16,13 +22,21 @@ $(document).ready(function () {
                     $("#add-laboratorio").hide(2000);
                     $("#form-crear-laboratorio").trigger("reset");
                     buscar_lab();
-                } else {
+                } if (response.trim() == "noadd") {
                     $("#noadd-laboratorio").hide("slow");
                     $("#noadd-laboratorio").show(1000);
                     $("#noadd-laboratorio").hide(2000);
                     $("#form-crear-laboratorio").trigger("reset");
                     buscar_lab();
                 }
+                else if (response.trim() == "edit"){
+                    $("#edit-laboratorio").hide("slow");
+                    $("#edit-laboratorio").show(1000);
+                    $("#edit-laboratorio").hide(2000);
+                    $("#form-crear-laboratorio").trigger("reset");
+                    buscar_lab();
+                }
+                edit = false;
             }
         );
         e.preventDefault();
@@ -46,7 +60,7 @@ $(document).ready(function () {
                                                         </td>
                                                         <td>
                                                                 <button type="button" data-toggle="modal" data-target="#cambiologo" class="avatar btn btn-info btn-sm editar" title="Editar logo"> <i class="far fa-image"> </i> </button>
-                                                                <button type="button" class="editar btn btn-warning btn-sm editar" title="Editar laboratorio"> <i class="fas fa-edit"> </i> </button>
+                                                                <button type="button" data-toggle="modal" data-target="#crearlaboratorio" class="editar btn btn-warning btn-sm editar" title="Editar laboratorio"> <i class="fas fa-edit"> </i> </button>
                                                                 <button type="button" class="borrar btn btn-danger btn-sm borrar" title="Eliminar laboratorio"><i class="fa fa-trash"> </i></button>
                                                         </td>
                                                 </tr>
@@ -104,6 +118,7 @@ $(document).ready(function () {
                 $("#noedit-laboratorio").hide(2000);
                 buscar_lab();
             }
+            edit = false;
         });
         e.preventDefault();
     });
@@ -139,6 +154,7 @@ $(document).ready(function () {
                         "../controlador/LaboratorioController.php",
                         { id, funcion },
                         (response) => {
+                            edit = false;
                                 if (response.trim() == "borrado") {
                                         swalWithBootstrapButtons.fire({
                                         title: "Eliminado",
@@ -165,4 +181,15 @@ $(document).ready(function () {
                 }
             });
     });
+
+    $(document).on("click", ".editar", (e) => {
+        const elemento = $(this)[0].activeElement.parentElement.parentElement;
+        const id = $(elemento).attr("labId");
+        const nombre = $(elemento).attr("labnombre");
+        $("#id_editar_lab").val(id);
+        $("#nombre_laboratorio").val(nombre);
+        edit = true;
+    });
+
+
 });

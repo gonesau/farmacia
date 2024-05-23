@@ -22,6 +22,14 @@ class Laboratorio{
         }
     }
 
+    function editar($nombre, $id_editado){
+        $sql = "UPDATE laboratorio SET nombre=:nombre WHERE id_laboratorio=:id";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':nombre' => $nombre, ':id' => $id_editado));
+        echo "edit";
+    }
+
+
     function buscar(){
         if(!empty($_POST['consulta'])){
             $consulta = $_POST['consulta'];

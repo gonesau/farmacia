@@ -64,6 +64,9 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         <div class="alert alert-success text-center" id="add-laboratorio" style="display:none;">
                             <span><i class="fas fa-check m-1"></i>Laboratorio Creado</span>
                         </div>
+                        <div class="alert alert-success text-center" id="edit-laboratorio" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Laboratorio Actualizado Correctamente</span>
+                        </div>
                         <div class="alert alert-danger text-center" id="noadd-laboratorio" style="display:none;">
                             <span><i class="fas fa-times m-1"></i>Error al crear Laboratorio</span>
                         </div>
@@ -71,10 +74,11 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                             <div class="form-group row">
                                 <label for="nombre_laboratorio" class="col-sm-6 col-form-label">Nombre de Laboratorio</label>
                                 <input type="text" class="form-control" id="nombre_laboratorio" placeholder="Ingrese nombres" required>
+                                <input type="hidden" name="id_editar_lab" id="id_editar_lab">
                             </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Crear</button>
+                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Guardar</button>
                         <button type="button" data-dismiss="modal"
                             class="btn btn-outline-secondary float-right m-1">Cerrar</button>
                         </form>
