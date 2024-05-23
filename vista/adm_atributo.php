@@ -10,42 +10,42 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     ?>
 
 
-  <!-- Modal Cambiar Foto Laboratorio-->
-  <div class="modal fade" id="cambiologo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar Logo</h1>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="text-center">
-            <img id="logoactual" src="../img/lab/lab.png" class="profile-user-img img-fluid img-circle">
-          </div>
-          <div class="text-center">
-            <b id="nombre_logo"></b>
-          </div>
-          <div class="alert alert-success text-center" id="edit-laboratorio" style="display:none;">
-            <span><i class="fas fa-check m-1"></i>Logo Actualizado Correctamente</span>
-          </div>
-          <div class="alert alert-danger text-center" id="noedit-laboratorio" style="display:none;">
-            <span><i class="fas fa-times m-1"></i>Formato no soportado</span>
-          </div>
-          <form id="form_logo" enctype="multipart/form-data">
-            <div class="input-group mb-3 ml-5 mt-2">
-              <input type="file" class="input-group" name="foto">
-              <input type="hidden" name="funcion" id="funcion">
-              <input type="hidden" name="id_logo_lab" id="id_logo_lab">
+    <!-- Modal Cambiar Foto Laboratorio-->
+    <div class="modal fade" id="cambiologo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar Logo</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img id="logoactual" src="../img/lab/lab.png" class="profile-user-img img-fluid img-circle">
+                    </div>
+                    <div class="text-center">
+                        <b id="nombre_logo"></b>
+                    </div>
+                    <div class="alert alert-success text-center" id="edit-laboratorio" style="display:none;">
+                        <span><i class="fas fa-check m-1"></i>Logo Actualizado Correctamente</span>
+                    </div>
+                    <div class="alert alert-danger text-center" id="noedit-laboratorio" style="display:none;">
+                        <span><i class="fas fa-times m-1"></i>Formato no soportado</span>
+                    </div>
+                    <form id="form_logo" enctype="multipart/form-data">
+                        <div class="input-group mb-3 ml-5 mt-2">
+                            <input type="file" class="input-group" name="foto">
+                            <input type="hidden" name="funcion" id="funcion">
+                            <input type="hidden" name="id_logo_lab" id="id_logo_lab">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn bg-gradient-primary">Guardar</button>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn bg-gradient-primary">Guardar</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
 
 
 
@@ -72,13 +72,16 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         </div>
                         <form id="form-crear-laboratorio">
                             <div class="form-group row">
-                                <label for="nombre_laboratorio" class="col-sm-6 col-form-label">Nombre de Laboratorio</label>
-                                <input type="text" class="form-control" id="nombre_laboratorio" placeholder="Ingrese nombres" required>
+                                <label for="nombre_laboratorio" class="col-sm-6 col-form-label">Nombre de
+                                    Laboratorio</label>
+                                <input type="text" class="form-control" id="nombre_laboratorio"
+                                    placeholder="Ingrese nombres" required>
                                 <input type="hidden" name="id_editar_lab" id="id_editar_lab">
                             </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Guardar</button>
+                        <button type="submit" class="btn bg-gradient-primary float-right m-1"
+                            id="btn_crear_usuario">Guardar</button>
                         <button type="button" data-dismiss="modal"
                             class="btn btn-outline-secondary float-right m-1">Cerrar</button>
                         </form>
@@ -89,8 +92,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     </div>
 
 
-        <!-- Modal Crear tipo-->
-        <div class="modal fade" id="creartipo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Crear tipo-->
+    <div class="modal fade" id="creartipo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="card card-success">
@@ -101,20 +104,26 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-success text-center" id="add" style="display:none;">
-                            <span><i class="fas fa-check m-1"></i>Usuario Creado</span>
+                        <div class="alert alert-success text-center" id="add-tipo" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Tipo Creado</span>
                         </div>
-                        <div class="alert alert-danger text-center" id="noadd" style="display:none;">
-                            <span><i class="fas fa-times m-1"></i>Error al crear usuario</span>
+                        <div class="alert alert-success text-center" id="edit-tipo" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Tipo Actualizado Correctamente</span>
+                        </div>
+                        <div class="alert alert-danger text-center" id="noadd-tipo" style="display:none;">
+                            <span><i class="fas fa-times m-1"></i>Error al crear Tipo</span>
                         </div>
                         <form id="form-crear-tipo">
                             <div class="form-group row">
                                 <label for="nombre_tipo" class="col-sm-6 col-form-label">Nombre de Tipo</label>
-                                <input type="text" class="form-control" id="nombre_tipo" placeholder="Ingrese nombres" required>
+                                <input type="text" class="form-control" id="nombre_tipo" placeholder="Ingrese nombres"
+                                    required>
+                                <input type="hidden" name="id_editar_tipo" id="id_editar_tipo">
                             </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Crear</button>
+                        <button type="submit" class="btn bg-gradient-primary float-right m-1"
+                            id="btn_crear_usuario">Guardar</button>
                         <button type="button" data-dismiss="modal"
                             class="btn btn-outline-secondary float-right m-1">Cerrar</button>
                         </form>
@@ -125,8 +134,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     </div>
 
 
-            <!-- Modal Crear Presentación-->
-            <div class="modal fade" id="crearpresentacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Crear Presentación-->
+    <div class="modal fade" id="crearpresentacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="card card-success">
@@ -145,12 +154,15 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         </div>
                         <form id="form-crear-presentacion">
                             <div class="form-group row">
-                                <label for="nombre_presentacion" class="col-sm-6 col-form-label">Nombre de Presentacion</label>
-                                <input type="text" class="form-control" id="nombre_presentacion" placeholder="Ingrese nombres" required>
+                                <label for="nombre_presentacion" class="col-sm-6 col-form-label">Nombre de
+                                    Presentacion</label>
+                                <input type="text" class="form-control" id="nombre_presentacion"
+                                    placeholder="Ingrese nombres" required>
                             </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Crear</button>
+                        <button type="submit" class="btn bg-gradient-primary float-right m-1"
+                            id="btn_crear_usuario">Crear</button>
                         <button type="button" data-dismiss="modal"
                             class="btn btn-outline-secondary float-right m-1">Cerrar</button>
                         </form>
@@ -204,7 +216,9 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                     <div class="tab-pane active" id="laboratorio">
                                         <div class="card card-success">
                                             <div class="card-header">
-                                                <div class="card-title">Laboratorio <button type="button" data-toggle="modal" data-target="#crearlaboratorio" class="btn bg-primary btn-sm m-2"> Crear Laboratorio</button> </div>
+                                                <div class="card-title">Laboratorio <button type="button"
+                                                        data-toggle="modal" data-target="#crearlaboratorio"
+                                                        class="btn bg-primary btn-sm m-2"> Crear Laboratorio</button> </div>
                                                 <div class="input-group">
                                                     <input id="buscar_laboratorio" type="text"
                                                         class="form-control float-left" placeholder="Ingrese nombre">
@@ -219,7 +233,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                                     <thead class="table-success">
                                                         <tr>
                                                             <th>Nombre</th>
-                                                            <th>Avatar</th>
+                                                            <th>Logo</th>
                                                             <th>Acción</th>
                                                         </tr>
                                                     </thead>
@@ -232,30 +246,49 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                             </div>
                                         </div>
                                     </div>
+
+        <!-- Contenido de Tipos -->
                                     <div class="tab-pane" id="tipo">
                                         <div class="card card-success">
                                             <div class="card-header">
-                                                <div class="card-title">Tipo <button type="button" data-toggle="modal" data-target="#creartipo" class="btn bg-primary btn-sm m-2"> Crear Tipo</button>  </div>
+                                                <div class="card-title">Tipo <button type="button" data-toggle="modal"
+                                                        data-target="#creartipo" class="btn bg-primary btn-sm m-2"> Crear
+                                                        Tipo</button> </div>
                                                 <div class="input-group">
-                                                    <input id="buscar_tipo" type="text"
-                                                        class="form-control float-left" placeholder="Ingrese nombre">
+                                                    <input id="buscar_tipo" type="text" class="form-control float-left"
+                                                        placeholder="Ingrese nombre">
                                                     <div class="input-group-append">
                                                         <button type="button" class="btn btn-default"><i
                                                                 class="fas fa-search"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body p-0 table-responsive">
+                                                <table class="table table-hover text-nowrap">
+                                                    <thead class="table-success">
+                                                        <tr>
+                                                            <th>Tipos</th>
+                                                            <th>Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-active" id="tipos">
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div class="card-footer">
 
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="tab-pane" id="presentacion">
                                         <div class="card card-success">
                                             <div class="card-header">
-                                                <div class="card-title">Presentación <button type="button" data-toggle="modal" data-target="#crearpresentacion" class="btn bg-primary btn-sm m-2"> Crear Presentación </button> </div>
+                                                <div class="card-title">Presentación <button type="button"
+                                                        data-toggle="modal" data-target="#crearpresentacion"
+                                                        class="btn bg-primary btn-sm m-2"> Crear Presentación </button>
+                                                </div>
                                                 <div class="input-group">
                                                     <input id="buscar_presentacion" type="text"
                                                         class="form-control float-left" placeholder="Ingrese nombre">
@@ -292,3 +325,5 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 ?>
 
 <script src="../js/Laboratorio.js"></script>
+<script src="../js/Tipo.js"></script>
+<script src="../js/Presentacion.js"></script>
