@@ -37,13 +37,13 @@ $(document).ready(function () {
                 let template = "";
                 laboratorios.forEach((laboratorio) => {
                     template += `
-                        <tr labId="${laboratorio.id}">
+                        <tr labId="${laboratorio.id}" labnombre="${laboratorio.nombre}" labavatar="${laboratorio.avatar}">
                             <td>${laboratorio.nombre}</td>
                             <td>
                                 <img src="${laboratorio.avatar}" class="img-fluid rounded-1" width="50" height="50">
                             </td>
                             <td>
-                                <button type="button" class="avatar btn btn-info btn-sm editar" title="Editar logo"> <i class="far fa-image"> </i> </button>
+                                <button type="button" data-toggle="modal" data-target="#cambiologo" class="avatar btn btn-info btn-sm editar" title="Editar logo"> <i class="far fa-image"> </i> </button>
                                 <button type="button" class="editar btn btn-warning btn-sm editar" title="Editar laboratorio"> <i class="fas fa-edit"> </i> </button>
                                 <button type="button" class="borrar btn btn-danger btn-sm borrar" title="Eliminar laboratorio"><i class="fa fa-trash"> </i></button>
                             </td>
@@ -65,7 +65,47 @@ $(document).ready(function () {
         }
     });  
 
+    $(document).on("click", ".avatar", (e) => {
+        funcion = "cambiar_logo";
+        const elemento = $(this)[0].activeElement.parentElement.parentElement;
+        const id = $(elemento).attr("labId");
+        const nombre = $(elemento).attr("labnombre");
+        const avatar = $(elemento).attr("labavatar");
+        $("#logoactual").attr("src", avatar);
+        $("#nombre_logo").html(nombre);
+        $("#funcion").val(funcion);
+        $("#id_logo_lab").val(id);
+    });
 
 
+    $("#form_logo").submit((e) => {
+        let formData = new FormData($("#form_logo")[0]);
+        $.ajax({
+          url: "../controlador/LaboratorioController.php",
+          type: "POST",
+          data: formData,
+          cache: false,
+          processData: false,
+          contentType: false,
+        }).done(function (response) {
+            const json = JSON.parse(response);
+            if (json.alert == "edit") {
+                buscar_lab();
+                $("#logoactual").attr('src', json.ruta);
+                $("#form_logo").trigger('reset');
+                $("#edit-laboratorio").hide("slow");
+                $("#edit-laboratorio").show(1000);
+                $("#edit-laboratorio").hide(2000);
+                buscar_lab();
+            } else {
+                $("#form_logo").trigger('reset');
+                $("#noedit-laboratorio").hide("slow");
+                $("#noedit-laboratorio").show(1000);
+                $("#noedit-laboratorio").hide(2000);
+                buscar_lab();
+            }
+        });
+        e.preventDefault();
+      });
 });
 
