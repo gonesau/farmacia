@@ -58,7 +58,11 @@ class Laboratorio{
         $sql = "DELETE FROM laboratorio WHERE id_laboratorio=:id";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id' => $id));
-        echo "borrado";
+        if(!empty($query->execute(array(':id' => $id)))){
+            echo "borrado";
+        }else{
+            echo "noborrado";
+        }
     }
 }
 ?>
