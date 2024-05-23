@@ -3,7 +3,7 @@ session_start();
 if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo'] == 2) {
   include_once 'layouts/header.php';
   include_once '../modelo/usuario.php';
-?>
+  ?>
 
   <title>Adm | Editar Datos</title>
   <?php
@@ -155,7 +155,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                   if (is_array($datos) || is_object($datos)) {
                     //recorremos con un foreach todo lo que nos jalamos
                     foreach ($datos as $row => $column) {
-                  ?>
+                      ?>
                       <div class="text-center">
                         <h3 id="nombre_us" class="profile-username text-center text-success">
                           <?php
@@ -170,7 +170,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                           ?>
                         </p>
                       </div>
-                  <?php
+                      <?php
                     }
                   }
                   ?>
@@ -187,9 +187,10 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
                     </li>
                     <li class="list-group-item">
                       <b style="color:#0b7300">Tipo Usuario</b>
-                      <span id="us_tipo" class="float-right"></span>
+                      <span id="us_tipo" class="float-right"> </span>
                     </li>
-                    <button data-toggle="modal" data-target="#cambiocontra" type="button" class="btn btn-block btn-outline-warning btn-sm">
+                    <button data-toggle="modal" data-target="#cambiocontra" type="button"
+                      class="btn btn-block btn-outline-warning btn-sm">
                       Cambiar Contraseña
                     </button>
                   </ul>
@@ -303,7 +304,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo
 
 
 
-<?php
+  <?php
   include_once 'layouts/footer.php';
 } else {
   header('Location: ../index.php');

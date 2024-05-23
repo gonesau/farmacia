@@ -82,7 +82,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     </div>
 
 
-            <!-- Modal Crear tipo-->
+            <!-- Modal Crear Presentación-->
             <div class="modal fade" id="crearpresentacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

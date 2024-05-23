@@ -22,7 +22,6 @@ $(document).ready(function () {
     );
   }
 
-
   function buscar_datos(consulta) {
     funcion = "buscar_usuario_adm";
     $.post(
@@ -32,19 +31,22 @@ $(document).ready(function () {
         const usuarios = JSON.parse(response);
         let template = "";
         usuarios.forEach((usuario) => {
+          if (usuario.id == $("#id_usuario").val()) {
+            $("#us_tipo").text(usuario.tipo);
+          }
           template += `
           <div usuarioId="${usuario.id}" class="card bg-light d-flex flex-fill">
-                <div class="card-header text-muted border-bottom-0">`;
-                    if(usuario.tipo_de_usuario == 3){
-                      template+=`<h1 class="badge badge-danger">${usuario.tipo}</h1>`;
-                    }
-                    if(usuario.tipo_de_usuario == 2){
-                      template+=`<h1 class="badge badge-primary">${usuario.tipo}</h1>`;
-                    }
-                    if(usuario.tipo_de_usuario == 1){
-                      template+=`<h1 class="badge badge-secondary">${usuario.tipo}</h1>`;
-                    }
-              template+=`</div>
+            <div class="card-header text-muted border-bottom-0">`;
+          if (usuario.tipo_de_usuario == 3) {
+            template += `<span class="badge badge-danger">${usuario.tipo}</span>`;
+          }
+          if (usuario.tipo_de_usuario == 2) {
+            template += `<span class="badge badge-primary">${usuario.tipo}</span>`;
+          }
+          if (usuario.tipo_de_usuario == 1) {
+            template += `<span class="badge badge-secondary">${usuario.tipo}</span>`;
+          }
+          template += `</div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
@@ -131,6 +133,7 @@ $(document).ready(function () {
     let pass = $("#pass").val();
 
     funcion = "crear_usuario";
+    buscar_datos();
 
     // Añadir registros para depuración
     console.log(
@@ -151,9 +154,12 @@ $(document).ready(function () {
           $("#noadd").show(1000);
           $("#noadd").hide(2000);
         }
+        buscar_datos();
         $("#form-crear").trigger("reset");
+        buscar_datos();
       }
     );
+    buscar_datos();
   });
 
   $(document).on("click", ".ascender", function () {
@@ -181,29 +187,38 @@ $(document).ready(function () {
     $("#funcion").val(funcion);
   });
 
-  $('#form-confirmar').submit((e) => {
+  $("#form-confirmar").submit((e) => {
     e.preventDefault();
-    let pass = $('#oldpass').val();
-    let id_usuario = $('#id_usuario').val();
-    let funcion = $('#funcion').val();
-    console.log(`Form submit: pass=${pass}, id_usuario=${id_usuario}, funcion=${funcion}`);
-    $.post('../controlador/UsuarioController.php', { pass, id_usuario, funcion }, (response) => {
-      console.log(`Response: ${response}`);
-      if (response == 'ascendido' || response == 'descendido' || response == 'borrado') {
-        $('#confirmado').hide('slow');
-        $('#confirmado').show(1000);
-        $('#confirmado').hide(2000);
-        $('#form-confirmar').trigger('reset');
-      } else {
-        $('#rechazado').hide('slow');
-        $('#rechazado').show(1000);
-        $('#rechazado').hide(2000);
-        $('#form-confirmar').trigger('reset');
+    let pass = $("#oldpass").val();
+    let id_usuario = $("#id_usuario").val();
+    let funcion = $("#funcion").val();
+    console.log(
+      `Form submit: pass=${pass}, id_usuario=${id_usuario}, funcion=${funcion}`
+    );
+    $.post(
+      "../controlador/UsuarioController.php",
+      { pass, id_usuario, funcion },
+      (response) => {
+        console.log(`Response: ${response}`);
+        if (
+          response == "ascendido" ||
+          response == "descendido" ||
+          response == "borrado"
+        ) {
+          $("#confirmado").hide("slow");
+          $("#confirmado").show(1000);
+          $("#confirmado").hide(2000);
+          $("#form-confirmar").trigger("reset");
+        } else {
+          $("#rechazado").hide("slow");
+          $("#rechazado").show(1000);
+          $("#rechazado").hide(2000);
+          $("#form-confirmar").trigger("reset");
+        }
+        buscar_datos();
       }
-      buscar_datos();
-    });
+    );
   });
-
 
   buscar_datos();
 });
