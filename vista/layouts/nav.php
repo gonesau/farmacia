@@ -2,8 +2,11 @@
  <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../img/logo.png" type="image/png">
 
-<link rel="stylesheet" href="../css/main.css">
 <!--select2-->
+<link rel="stylesheet" href="../css/select2.css">
+
+<link rel="stylesheet" href="../css/main.css">
+  
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../css/css/all.min.css">
   <!-- Sweet Alert 2 -->
@@ -89,6 +92,14 @@
 
           
           <li class="nav-header">Almacen</li>
+          <li class="nav-item">
+            <a href="adm_producto.php" class="nav-link">
+              <i class="nav-icon fas fa-pills"></i>
+              <p>
+                Gestión de productos
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="adm_atributo.php" class="nav-link">
               <i class="nav-icon fas fa-vials"></i>
