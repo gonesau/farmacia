@@ -4,6 +4,7 @@ $(document).ready(function () {
     rellenar_Laboratorios();
     rellenar_tipos();
     rellenar_presentaciones();
+    buscar_producto();
     function rellenar_Laboratorios() {
         funcion = "rellenar_laboratorios";
         $.post('../controlador/LaboratorioController.php', { funcion }, (response) => {
@@ -66,14 +67,23 @@ $(document).ready(function () {
                     $("#noadd").hide(2000);
                     $("#form-crear-producto").trigger("reset");
                 }
+                buscar_producto();
             }
         );
         e.preventDefault();
     });
-    function buscar_productos(consulta) {
+    function buscar_producto(consulta) {
         funcion = "buscar";
         $.post('../controlador/ProductoController.php', { consulta, funcion }, (response) => {
             console.log(response);
         });
     }
+    $(document).on("keyup", "#buscar-producto", function () {
+        let valor = $(this).val();
+        if (valor != "") {
+            buscar_producto(valor);
+        } else {
+            buscar_producto();
+        }
+    });
 });

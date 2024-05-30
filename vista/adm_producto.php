@@ -4,7 +4,7 @@ session_start();
 if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     include_once 'layouts/header.php';
     include_once '../modelo/usuario.php';
-    //include_once '../modelo/producto.php';
+    //include_once '../modelo/Producto.php';
     ?>
 
     <title>Gestionar Usuarios</title>
@@ -105,11 +105,13 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         <form id="form-crear-producto">
                             <div class="form-group row">
                                 <label for="nombre_producto" class="col-sm-4 col-form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre_producto" placeholder="Ingrese nombres" required>
+                                <input type="text" class="form-control" id="nombre_producto" placeholder="Ingrese nombre"
+                                    required>
                             </div>
                             <div class="form-group row">
                                 <label for="concentracion" class="col-sm-4 col-form-label">Concentracion</label>
-                                <input type="text" class="form-control" id="concentracion" placeholder="Ingrese apellidos">
+                                <input type="text" class="form-control" id="concentracion"
+                                    placeholder="Ingrese concentracion">
                             </div>
                             <div class="form-group row">
                                 <label for="adicional" class="col-sm-6 col-form-label">Adicional</label>
@@ -117,7 +119,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                             </div>
                             <div class="form-group row">
                                 <label for="precio" class="col-sm-4 col-form-label">Precio</label>
-                                <input type="number" class="form-control" id="precio" value='1' placeholder="Ingrese el precio" required>
+                                <input type="number" class="form-control" id="precio" value='1'
+                                    placeholder="Ingrese el precio" required>
                             </div>
                             <div class="form-group row">
                                 <label for="laboratorio" class="col-sm-4 col-form-label">Laboratorio</label>
@@ -129,13 +132,13 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                             </div>
                             <div class="form-group row">
                                 <label for="presentacion" class="col-sm-4 col-form-label">Presentacion</label>
-                                <select name="presentacion" id="presentacion" class="form-control select2" ></select>
+                                <select name="presentacion" id="presentacion" class="form-control select2"></select>
                             </div>
-                            
+
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Crear
-                            Usuario</button>
+                            producto</button>
                         <button type="button" data-dismiss="modal"
                             class="btn btn-outline-secondary float-right m-1">Cerrar</button>
                         </form>
