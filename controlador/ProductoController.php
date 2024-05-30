@@ -37,6 +37,3 @@ if ($_POST['funcion'] == 'buscar') {
     $jsonstring = json_encode($json);
     echo $jsonstring;
 }
-
-
-?>
