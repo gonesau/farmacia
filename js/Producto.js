@@ -51,11 +51,29 @@ $(document).ready(function () {
         let laboratorio = $('#laboratorio').val();
         let tipo = $('#tipo').val();
         let presentacion = $('#presentacion').val();
-        console.log(nombre + " " + concentracion
-            + " " + adicional + " " + precio
-            + " " + laboratorio + " " + tipo
-            + " " + presentacion
+        funcion = "crear";
+        $.post('../controlador/ProductoController.php',
+            { funcion, nombre, concentracion, adicional, precio, laboratorio, tipo, presentacion }, (response) => {
+                if (response === 'add') {
+                    $("#add").hide("slow");
+                    $("#add").show(1000);
+                    $("#add").hide(2000);
+                    $("#form-crear-producto").trigger("reset");
+                }
+                if (response === 'noadd') {
+                    $("#noadd").hide("slow");
+                    $("#noadd").show(1000);
+                    $("#noadd").hide(2000);
+                    $("#form-crear-producto").trigger("reset");
+                }
+            }
         );
         e.preventDefault();
     });
+    function buscar_productos(consulta) {
+        funcion = "buscar";
+        $.post('../controlador/ProductoController.php', { consulta, funcion }, (response) => {
+            console.log(response);
+        });
+    }
 });
