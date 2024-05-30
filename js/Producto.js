@@ -109,7 +109,7 @@ $(document).ready(function () {
           class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
           <div class="card bg-light d-flex flex-fill">
               <div class="card-header text-muted border-bottom-0">
-                  <i class="fas fa-lg fa-cubes mr-1"></i>${producto.stock}stock
+                  <i class="fas fa-lg fa-cubes mr-1"></i>${producto.stock}
               </div>
               <div class="card-body pt-0">
                   <div class="row">
@@ -137,8 +137,10 @@ $(document).ready(function () {
               </div>
               <div class="card-footer">
                   <div class="text-right">
-                      <button class="avatar btn btn-sm bg-teal">
-                          <i class="fas fa-image"></i>
+                      <button class="avatar btn btn-sm bg-teal" type="button" data-toggle="modal" data-target="#cambiologo">
+                          <i class="fas fa-image">
+
+                          </i>
                       </button>
                       <button class="editar btn btn-sm btn-success">
                           <i class="fas fa-pencil-alt"></i>
@@ -172,6 +174,11 @@ $(document).ready(function () {
     const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
     const id = $(elemento).attr('prodId');
     const avatar = $(elemento).attr('prodAvatar');
-    console.log(id + '' + avatar);
+    const nombre = $(elemento).attr('prodNombre');
+    $('#funcion').val(funcion);
+    $('#id_producto').val(id);
+    $('#avatar').val(avatar);
+    $('logoactual').attr('src', avatar);
+    $('#nombre_logo').val(nombre);
   });
 });

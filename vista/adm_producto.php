@@ -18,6 +18,49 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
     <script src="../js/gestion_usuario.js"></script>
 
 
+
+        <!-- Modal Cambiar Avatar de Producto-->
+        <div class="modal fade" id="cambiologo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar Logo</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img id="logoactual" src="../img/prod/prod_default.png" class="profile-user-img img-fluid img-circle">
+                    </div>
+                    <div class="text-center">
+                        <b id="nombre_logo"></b>
+                    </div>
+                    <div class="alert alert-success text-center" id="edit-prod" style="display:none;">
+                        <span><i class="fas fa-check m-1"></i>Logo Actualizado Correctamente</span>
+                    </div>
+                    <div class="alert alert-danger text-center" id="noedit-prod" style="display:none;">
+                        <span><i class="fas fa-times m-1"></i>Formato no soportado</span>
+                    </div>
+                    <form id="form_logo" enctype="multipart/form-data">
+                        <div class="input-group mb-3 ml-5 mt-2">
+                            <input type="file" class="input-group" name="foto">
+                            <input type="hidden" name="funcion" id="funcion">
+                            <input type="hidden" name="id_logo_prod" id="id_logo_prod">
+                            <input type="hidden" name="avatar" id="avatar">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn bg-gradient-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
     <!-- Modal Confirmar contraseña-->
     <div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -170,7 +213,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 
         <!-- Cuerpo de la página -->
         <section>
-            <!-- Buscador de Usuarios -->
+            <!-- Buscador de Productos -->
             <div class="container-fluid">
                 <div class="card card-success">
                     <div class="card-header">
