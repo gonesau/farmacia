@@ -16,6 +16,7 @@ if ($_POST['funcion'] == 'crear') {
 }
 
 
+// ProductoController.php
 if ($_POST['funcion'] == 'editar') {
     $id = $_POST['id'];
     $nombre = $_POST['nombre'];
@@ -26,6 +27,7 @@ if ($_POST['funcion'] == 'editar') {
     $tipo = $_POST['tipo'];
     $presentacion = $_POST['presentacion'];
     $producto->editar($id, $nombre, $concentracion, $adicional, $precio, $laboratorio, $tipo, $presentacion);
+    echo 'edit';
 }
 
 

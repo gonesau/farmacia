@@ -1,6 +1,7 @@
 $(document).ready(function () {
   var funcion;
   var edit = false;
+
   $(".select2").select2;
   rellenar_Laboratorios();
   rellenar_tipos();
@@ -53,6 +54,7 @@ $(document).ready(function () {
       }
     );
   }
+
   $("#form-crear-producto").submit((e) => {
     let id = $("#id_edit_prod").val();
     let nombre = $("#nombre_producto").val();
@@ -95,8 +97,8 @@ $(document).ready(function () {
           $("#edit_prod").hide(2000);
           $("#form-crear-producto").trigger("reset");
           buscar_producto();
-        }
-        else {
+        } 
+        if (response === "noadd" || response === "noedit") {
           $("#noadd").hide("slow");
           $("#noadd").show(1000);
           $("#noadd").hide(2000);
@@ -108,19 +110,20 @@ $(document).ready(function () {
     );
     e.preventDefault();
   });
+
+  // Producto.js
   function buscar_producto(consulta) {
     funcion = "buscar";
     $.post(
       "../controlador/ProductoController.php",
       { consulta, funcion },
       (response) => {
-        //console.log(response);
         const productos = JSON.parse(response);
         let template = "";
         productos.forEach((producto) => {
           template += `
           <div prodId="${producto.id}" prodNombre="${producto.nombre}" 
-          proPrecio="${producto.precio} prodConcentracion="${producto.concentracion}" 
+          prodPrecio="${producto.precio}" prodConcentracion="${producto.concentracion}" 
           prodAdicional="${producto.adicional}" prodLaboratorio="${producto.laboratorio_id}" 
           prodtipo="${producto.tipo_id}" prodPresentacion="${producto.presentacion_id}" prodAvatar="${producto.avatar}"
           class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
@@ -155,9 +158,7 @@ $(document).ready(function () {
               <div class="card-footer">
                   <div class="text-right">
                       <button class="avatar btn btn-sm bg-teal" type="button" data-toggle="modal" data-target="#cambiologo">
-                          <i class="fas fa-image">
-
-                          </i>
+                          <i class="fas fa-image"></i>
                       </button>
                       <button class="editar btn btn-sm btn-success type="button" data-toggle="modal" data-target="#crearproducto">
                           <i class="fas fa-pencil-alt"></i>
@@ -178,6 +179,7 @@ $(document).ready(function () {
       }
     );
   }
+
   $(document).on("keyup", "#buscar-producto", function () {
     let valor = $(this).val();
     if (valor != "") {
@@ -226,27 +228,27 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
-  $(document).on("click", ".editar", (e) => {
-    const elemento = $(e.currentTarget).closest("[prodId]");
-    const id = $(elemento).attr("prodId");
-    const nombre = $(elemento).attr("prodNombre");
-    const concentracion = $(elemento).attr("prodConcentracion");
-    const adicional = $(elemento).attr("prodAdicional");
-    const precio = $(elemento).attr("proPrecio");
-    const laboratorio = $(elemento).attr("prodLaboratorio"); 
-    const tipo = $(elemento).attr("prodtipo");
-    const presentacion = $(elemento).attr("prodPresentacion");
-    
-    $("#id_edit_prod").val(id);
-    $("#nombre_producto").val(nombre);
-    $("#concentracion").val(concentracion);
-    $("#adicional").val(adicional);
-    $("#precio").val(precio);
-    $("#laboratorio").val(laboratorio).trigger("change");
-    $("#tipo").val(tipo).trigger("change");
-    $("#presentacion").val(presentacion).trigger("change");
-    edit = true;
-  });
+// Producto.js
+$(document).on("click", ".editar", (e) => {
+  const elemento = $(e.currentTarget).closest("[prodId]");
+  const id = $(elemento).attr("prodId");
+  const nombre = $(elemento).attr("prodNombre");
+  const concentracion = $(elemento).attr("prodConcentracion");
+  const adicional = $(elemento).attr("prodAdicional");
+  const precio = $(elemento).attr("prodPrecio"); // Asegúrate de que el atributo está correcto
+  const laboratorio = $(elemento).attr("prodLaboratorio");
+  const tipo = $(elemento).attr("prodtipo");
+  const presentacion = $(elemento).attr("prodPresentacion");
 
+  $("#id_edit_prod").val(id);
+  $("#nombre_producto").val(nombre);
+  $("#concentracion").val(concentracion);
+  $("#adicional").val(adicional);
+  $("#precio").val(precio); // Aquí se asigna el precio
+  $("#laboratorio").val(laboratorio).trigger("change");
+  $("#tipo").val(tipo).trigger("change");
+  $("#presentacion").val(presentacion).trigger("change");
+  edit = true;
+});
 
 });

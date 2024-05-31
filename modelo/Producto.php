@@ -25,6 +25,7 @@ class Producto
         }
     }
 
+    // Producto.php
     function editar($id, $nombre, $concentracion, $adicional, $precio, $laboratorio, $tipo, $presentacion)
     {
         $sql = "SELECT id_producto FROM producto WHERE id_producto!=:id and nombre =:nombre and concentracion=:concentracion and adicional=:adicional and prod_lab=:laboratorio and prod_tip=:tipo and prod_pre=:presentacion";
@@ -34,12 +35,13 @@ class Producto
         if (!empty($this->objetos)) {
             echo 'noedit';
         } else {
-            $sql = "UPDATE producto SET nombre=:nombre, concentracion=:concentracion, adicional=:adicional, precio=:precio, prod_lab=:laboratorio, prod_tip=:tipo, prod_pre=:presentacion, WHERE id_producto=:id";
+            $sql = "UPDATE producto SET nombre=:nombre, concentracion=:concentracion, adicional=:adicional, precio=:precio, prod_lab=:laboratorio, prod_tip=:tipo, prod_pre=:presentacion WHERE id_producto=:id";
             $query = $this->acceso->prepare($sql);
             $query->execute(array(':nombre' => $nombre, ':concentracion' => $concentracion, ':adicional' => $adicional, ':laboratorio' => $laboratorio, ':tipo' => $tipo, ':presentacion' => $presentacion, ':precio' => $precio, ':id' => $id));
             echo 'edit';
         }
     }
+
 
 
     function buscar()
@@ -69,7 +71,7 @@ class Producto
     }
 
     function cambiar_logo($id, $nombre)
-    { 
+    {
         $sql = "UPDATE producto SET avatar=:nombre WHERE id_producto=:id";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':nombre' => $nombre, ':id' => $id));
