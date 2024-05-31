@@ -19,8 +19,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 
 
 
-        <!-- Modal Cambiar Avatar de Producto-->
-        <div class="modal fade" id="cambiologo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Cambiar Avatar de Producto-->
+    <div class="modal fade" id="cambiologo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -29,7 +29,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <img id="logoactual" src="../img/prod/prod_default.png" class="profile-user-img img-fluid img-circle">
+                        <img id="logoactual" src="../img/prod/prod_default.png"
+                            class="profile-user-img img-fluid img-circle">
                     </div>
                     <div class="text-center">
                         <b id="nombre_logo"></b>
@@ -145,6 +146,9 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         <div class="alert alert-danger text-center" id="noadd" style="display:none;">
                             <span><i class="fas fa-times m-1"></i>El producto ya existe</span>
                         </div>
+                        <div class="alert alert-success text-center" id="edit_prod" style="display:none;">
+                            <span><i class="fas fa-check m-1"></i>Se agrego correctamente</span>
+                        </div>
                         <form id="form-crear-producto">
                             <div class="form-group row">
                                 <label for="nombre_producto" class="col-sm-4 col-form-label">Nombre</label>
@@ -177,10 +181,10 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                 <label for="presentacion" class="col-sm-4 col-form-label">Presentacion</label>
                                 <select name="presentacion" id="presentacion" class="form-control select2"></select>
                             </div>
-
+                            <input type="hidden" id="id_edit_prod">
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Crear
+                        <button type="submit" class="btn bg-gradient-primary float-right m-1" id="btn_crear_usuario">Guardar
                             producto</button>
                         <button type="button" data-dismiss="modal"
                             class="btn btn-outline-secondary float-right m-1">Cerrar</button>

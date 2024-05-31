@@ -1,4 +1,4 @@
-$(document).ready(function () {
+  $(document).ready(function () {
   // Funcion para buscar un usuario
   var funcion;
   var tipo_de_usuario = $("#tipo_de_usuario").val();

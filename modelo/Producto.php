@@ -25,11 +25,28 @@ class Producto
         }
     }
 
+    function editar($id, $nombre, $concentracion, $adicional, $precio, $laboratorio, $tipo, $presentacion)
+    {
+        $sql = "SELECT id_producto FROM producto WHERE id_producto!=:id and nombre =:nombre and concentracion=:concentracion and adicional=:adicional and prod_lab=:laboratorio and prod_tip=:tipo and prod_pre=:presentacion";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id' => $id, ':nombre' => $nombre, ':concentracion' => $concentracion, ':adicional' => $adicional, ':laboratorio' => $laboratorio, ':tipo' => $tipo, ':presentacion' => $presentacion));
+        $this->objetos = $query->fetchAll();
+        if (!empty($this->objetos)) {
+            echo 'noedit';
+        } else {
+            $sql = "UPDATE producto SET nombre=:nombre, concentracion=:concentracion, adicional=:adicional, precio=:precio, prod_lab=:laboratorio, prod_tip=:tipo, prod_pre=:presentacion, WHERE id_producto=:id";
+            $query = $this->acceso->prepare($sql);
+            $query->execute(array(':nombre' => $nombre, ':concentracion' => $concentracion, ':adicional' => $adicional, ':laboratorio' => $laboratorio, ':tipo' => $tipo, ':presentacion' => $presentacion, ':precio' => $precio, ':id' => $id));
+            echo 'edit';
+        }
+    }
+
+
     function buscar()
     {
         if (!empty($_POST['consulta'])) {
             $consulta = $_POST['consulta'];
-            $sql = "SELECT id_producto, producto.nombre as nombre, concentracion, adicional, precio, laboratorio.nombre as laboratorio, tipo_producto.nombre as tipo, presentacion.nombre as presentacion, producto.avatar
+            $sql = "SELECT id_producto, producto.nombre as nombre, concentracion, adicional, precio, laboratorio.nombre as laboratorio, tipo_producto.nombre as tipo, presentacion.nombre as presentacion, producto.avatar, prod_lab, prod_tip, prod_pre
             FROM producto
             JOIN laboratorio on prod_lab=id_laboratorio
             JOIN tipo_producto on prod_tip=id_tipo_prod
@@ -39,7 +56,7 @@ class Producto
             $this->objetos = $query->fetchAll(PDO::FETCH_ASSOC);
             return $this->objetos;
         } else {
-            $sql = "SELECT id_producto, producto.nombre as nombre, concentracion, adicional, precio, laboratorio.nombre as laboratorio, tipo_producto.nombre as tipo, presentacion.nombre as presentacion, producto.avatar
+            $sql = "SELECT id_producto, producto.nombre as nombre, concentracion, adicional, precio, laboratorio.nombre as laboratorio, tipo_producto.nombre as tipo, presentacion.nombre as presentacion, producto.avatar, prod_lab, prod_tip, prod_pre
             FROM producto
             JOIN laboratorio on prod_lab=id_laboratorio
             JOIN tipo_producto on prod_tip=id_tipo_prod
@@ -49,5 +66,12 @@ class Producto
             $this->objetos = $query->fetchAll(PDO::FETCH_ASSOC);
             return $this->objetos;
         }
+    }
+
+    function cambiar_logo($id, $nombre)
+    { 
+        $sql = "UPDATE producto SET avatar=:nombre WHERE id_producto=:id";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':nombre' => $nombre, ':id' => $id));
     }
 }

@@ -1,5 +1,6 @@
 $(document).ready(function () {
   var funcion;
+  var edit = false;
   $(".select2").select2;
   rellenar_Laboratorios();
   rellenar_tipos();
@@ -53,6 +54,7 @@ $(document).ready(function () {
     );
   }
   $("#form-crear-producto").submit((e) => {
+    let id = $("#id_edit_prod").val();
     let nombre = $("#nombre_producto").val();
     let concentracion = $("#concentracion").val();
     let adicional = $("#adicional").val();
@@ -60,11 +62,17 @@ $(document).ready(function () {
     let laboratorio = $("#laboratorio").val();
     let tipo = $("#tipo").val();
     let presentacion = $("#presentacion").val();
-    funcion = "crear";
+    if (edit == true) {
+      funcion = "editar";
+      edit = false;
+    } else {
+      funcion = "crear";
+    }
     $.post(
       "../controlador/ProductoController.php",
       {
         funcion,
+        id,
         nombre,
         concentracion,
         adicional,
@@ -79,13 +87,22 @@ $(document).ready(function () {
           $("#add").show(1000);
           $("#add").hide(2000);
           $("#form-crear-producto").trigger("reset");
+          buscar_producto();
         }
-        if (response === "noadd") {
+        if (response === "edit") {
+          $("#edit_prod").hide("slow");
+          $("#edit_prod").show(1000);
+          $("#edit_prod").hide(2000);
+          $("#form-crear-producto").trigger("reset");
+          buscar_producto();
+        }
+        else {
           $("#noadd").hide("slow");
           $("#noadd").show(1000);
           $("#noadd").hide(2000);
           $("#form-crear-producto").trigger("reset");
         }
+
         buscar_producto();
       }
     );
@@ -102,10 +119,10 @@ $(document).ready(function () {
         let template = "";
         productos.forEach((producto) => {
           template += `
-          <div prodId="${producto.id}" prodStock="${producto.stock}" prodNombre="${producto.nombre}" 
+          <div prodId="${producto.id}" prodNombre="${producto.nombre}" 
           proPrecio="${producto.precio} prodConcentracion="${producto.concentracion}" 
-          prodAdicional="${producto.adicional}" prodLaboratorio="${producto.laboratorio}" 
-          prodtipo="${producto.tipo}" prodPresentacion="${producto.presentacion}" prodAvatar="${producto.avatar}"
+          prodAdicional="${producto.adicional}" prodLaboratorio="${producto.laboratorio_id}" 
+          prodtipo="${producto.tipo_id}" prodPresentacion="${producto.presentacion_id}" prodAvatar="${producto.avatar}"
           class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
           <div class="card bg-light d-flex flex-fill">
               <div class="card-header text-muted border-bottom-0">
@@ -142,7 +159,7 @@ $(document).ready(function () {
 
                           </i>
                       </button>
-                      <button class="editar btn btn-sm btn-success">
+                      <button class="editar btn btn-sm btn-success type="button" data-toggle="modal" data-target="#crearproducto">
                           <i class="fas fa-pencil-alt"></i>
                       </button>
                       <button class="lote btn btn-sm btn-primary">
@@ -169,16 +186,67 @@ $(document).ready(function () {
       buscar_producto();
     }
   });
-  $(document).on('click', '.avatar', (e) => {
-    funcion = "cambiar_avatar";
-    const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
-    const id = $(elemento).attr('prodId');
-    const avatar = $(elemento).attr('prodAvatar');
-    const nombre = $(elemento).attr('prodNombre');
-    $('#funcion').val(funcion);
-    $('#id_producto').val(id);
-    $('#avatar').val(avatar);
-    $('logoactual').attr('src', avatar);
-    $('#nombre_logo').val(nombre);
+
+  $(document).on("click", ".avatar", (e) => {
+    const funcion = "cambiar_avatar";
+    const elemento = $(e.currentTarget).closest("[prodId]");
+    const id = $(elemento).attr("prodId");
+    const avatar = $(elemento).attr("prodAvatar");
+    const nombre = $(elemento).attr("prodNombre");
+    $("#funcion").val(funcion);
+    $("#id_logo_prod").val(id); // Corregir ID
+    $("#avatar").val(avatar);
+    $("#logoactual").attr("src", avatar); // Añadir '#'
+    $("#nombre_logo").html(nombre);
   });
+
+  $("#form_logo").submit((e) => {
+    e.preventDefault(); // Mover preventDefault al principio
+    let formData = new FormData($("#form_logo")[0]);
+    $.ajax({
+      url: "../controlador/ProductoController.php",
+      type: "POST",
+      data: formData,
+      cache: false,
+      processData: false,
+      contentType: false,
+    }).done(function (response) {
+      const json = JSON.parse(response);
+      if (json.alert == "edit") {
+        $("#logoactual").attr("src", json.ruta);
+        $("#edit-prod").hide("slow").show(1000).hide(2000);
+        $("#form_logo").trigger("reset");
+        buscar_producto();
+      }
+      if (json.alert == "noedit") {
+        $("#noedit-prod").hide("slow").show(1000).hide(2000);
+        $("#form_logo").trigger("reset");
+      }
+    });
+    e.preventDefault();
+  });
+
+  $(document).on("click", ".editar", (e) => {
+    const elemento = $(e.currentTarget).closest("[prodId]");
+    const id = $(elemento).attr("prodId");
+    const nombre = $(elemento).attr("prodNombre");
+    const concentracion = $(elemento).attr("prodConcentracion");
+    const adicional = $(elemento).attr("prodAdicional");
+    const precio = $(elemento).attr("proPrecio");
+    const laboratorio = $(elemento).attr("prodLaboratorio"); 
+    const tipo = $(elemento).attr("prodtipo");
+    const presentacion = $(elemento).attr("prodPresentacion");
+    
+    $("#id_edit_prod").val(id);
+    $("#nombre_producto").val(nombre);
+    $("#concentracion").val(concentracion);
+    $("#adicional").val(adicional);
+    $("#precio").val(precio);
+    $("#laboratorio").val(laboratorio).trigger("change");
+    $("#tipo").val(tipo).trigger("change");
+    $("#presentacion").val(presentacion).trigger("change");
+    edit = true;
+  });
+
+
 });
