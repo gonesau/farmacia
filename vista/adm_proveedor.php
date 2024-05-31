@@ -23,11 +23,11 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-success text-center" id="add" style="display:none;">
+                        <div class="alert alert-success text-center" id="add-prov" style="display:none;">
                             <span><i class="fas fa-check m-1"></i>Proveedor Creado</span>
                         </div>
-                        <div class="alert alert-danger text-center" id="noadd" style="display:none;">
-                            <span><i class="fas fa-times m-1"></i>Error al crear proveedor</span>
+                        <div class="alert alert-danger text-center" id="noadd-prov" style="display:none;">
+                            <span><i class="fas fa-times m-1"></i>El proveedor ya existe</span>
                         </div>
                         <form id="form-crear">
                             <div class="form-group row">
@@ -70,8 +70,8 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Gestionar Proveedores <button data-toggle="modal"
-                                data-target="#crearproveedor" type="button" class="btn bg-gradient-primary ml-2"> Crear
+                        <h1>Gestionar Proveedores <button data-toggle="modal" data-target="#crearproveedor" type="button"
+                                class="btn bg-gradient-primary ml-2"> Crear
                                 Proveedor </button> </h1>
                     </div>
                     <div class="col-sm-6">
@@ -123,4 +123,3 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 ?>
 
 <script src="../js/Proveedor.js"></script>
-
