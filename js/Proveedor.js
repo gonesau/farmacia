@@ -54,7 +54,7 @@ $(document).ready(function () {
         </div>
         <div class="card-footer">
             <div class="text-right">
-                <button class="avatar btn btn-sm bg-info" title="Cambiar logo">
+                <button class="avatar btn btn-sm bg-info" title="Cambiar logo" data-toggle="modal" data-target="#cambiologo">
                     <i class="fas fa-image"></i>
                 </button>
                 <button class="avatar btn btn-sm btn-success" title="Editar información">
@@ -80,5 +80,16 @@ $(document).ready(function () {
         else {
             buscar_prov();
         }
+    });
+    $(document).on('click', '.avatar', (e) => {
+        funcion = 'cambiar_logo';
+        const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
+        const id = $(elemento).attr('provID');
+        const nombre = $(elemento).attr('provNombre');
+        const avatar = $(elemento).attr('provAvatar');
+        $('#logoactual').attr('src', avatar);
+        $('#nombre_logo').html(nombre);
+        $('#id_logo_prov').val(id);
+        $('#funcion').val(funcion);
     });
 });
