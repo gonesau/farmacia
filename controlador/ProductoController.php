@@ -31,10 +31,6 @@ if ($_POST['funcion'] == 'editar') {
 }
 
 
-
-
-
-
 if ($_POST['funcion'] == 'buscar') {
     $producto->buscar();
     $json = array();
@@ -91,5 +87,10 @@ if ($_POST['funcion'] == 'cambiar_avatar') {
         echo $jsonstring;
     }
 }
+
+if ($_POST['funcion'] == 'borrar'){
+    $id = $_POST['id'];
+    $producto->borrar($id);
+} 
 
 ?>

@@ -84,26 +84,33 @@ $(document).ready(function () {
         presentacion,
       },
       (response) => {
-        if (response === "add") {
+        if (response == "add") {
           $("#add").hide("slow");
           $("#add").show(1000);
           $("#add").hide(2000);
           $("#form-crear-producto").trigger("reset");
           buscar_producto();
         }
-        if (response === "edit") {
+        if (response == "edit") {
           $("#edit_prod").hide("slow");
           $("#edit_prod").show(1000);
           $("#edit_prod").hide(2000);
           $("#form-crear-producto").trigger("reset");
           buscar_producto();
-        } 
-        if (response === "noadd" || response === "noedit") {
+        }
+        if (response == "noadd") {
           $("#noadd").hide("slow");
           $("#noadd").show(1000);
           $("#noadd").hide(2000);
           $("#form-crear-producto").trigger("reset");
         }
+        if (response == "noedit") {
+          $("#noedit_prod").hide("slow");
+          $("#noedit_prod").show(1000);
+          $("#noedit_prod").hide(2000);
+          $("#form-crear-producto").trigger("reset");
+        }
+        edit = false;
 
         buscar_producto();
       }
@@ -228,27 +235,89 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
-// Producto.js
-$(document).on("click", ".editar", (e) => {
-  const elemento = $(e.currentTarget).closest("[prodId]");
-  const id = $(elemento).attr("prodId");
-  const nombre = $(elemento).attr("prodNombre");
-  const concentracion = $(elemento).attr("prodConcentracion");
-  const adicional = $(elemento).attr("prodAdicional");
-  const precio = $(elemento).attr("prodPrecio"); // Asegúrate de que el atributo está correcto
-  const laboratorio = $(elemento).attr("prodLaboratorio");
-  const tipo = $(elemento).attr("prodtipo");
-  const presentacion = $(elemento).attr("prodPresentacion");
+  // Producto.js
+  $(document).on("click", ".editar", (e) => {
+    const elemento = $(e.currentTarget).closest("[prodId]");
+    const id = $(elemento).attr("prodId");
+    const nombre = $(elemento).attr("prodNombre");
+    const concentracion = $(elemento).attr("prodConcentracion");
+    const adicional = $(elemento).attr("prodAdicional");
+    const precio = $(elemento).attr("prodPrecio"); // Asegúrate de que el atributo está correcto
+    const laboratorio = $(elemento).attr("prodLaboratorio");
+    const tipo = $(elemento).attr("prodtipo");
+    const presentacion = $(elemento).attr("prodPresentacion");
 
-  $("#id_edit_prod").val(id);
-  $("#nombre_producto").val(nombre);
-  $("#concentracion").val(concentracion);
-  $("#adicional").val(adicional);
-  $("#precio").val(precio); // Aquí se asigna el precio
-  $("#laboratorio").val(laboratorio).trigger("change");
-  $("#tipo").val(tipo).trigger("change");
-  $("#presentacion").val(presentacion).trigger("change");
-  edit = true;
-});
+    $("#id_edit_prod").val(id);
+    $("#nombre_producto").val(nombre);
+    $("#concentracion").val(concentracion);
+    $("#adicional").val(adicional);
+    $("#precio").val(precio); // Aquí se asigna el precio
+    $("#laboratorio").val(laboratorio).trigger("change");
+    $("#tipo").val(tipo).trigger("change");
+    $("#presentacion").val(presentacion).trigger("change");
+    edit = true;
+  });
 
+  $(document).on("click", ".borrar", (e) => {
+    funcion = "borrar";
+    const elemento = $(e.currentTarget).closest("[prodId]");
+    const id = $(elemento).attr("prodId");
+    const nombre = $(elemento).attr("prodNombre");
+    const avatar = $(elemento).attr("prodAvatar");
+    console.log(id);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger mr-1",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Estás seguro de eliminar el producto " + nombre + "?",
+        text: "No podrás revertir esto!",
+        imageUrl: avatar,
+        imageWidth: 100,
+        imageHeight: 100,
+        showCancelButton: true,
+        confirmButtonText: "Si, borrar producto",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          $.post(
+            "../controlador/ProductoController.php",
+            { id, funcion },
+            (response) => {
+              edit = false;
+              if (response.trim() == "borrado") {
+                swalWithBootstrapButtons.fire({
+                  title: "Eliminado",
+                  text: "El producto " + nombre + " ha sido eliminado",
+                  icon: "success",
+                });
+
+                buscar_producto();
+              } else {
+                swalWithBootstrapButtons.fire({
+                  title: "Error",
+                  text:
+                    "El producto " +
+                    nombre +
+                    " no ha sido eliminado porque tiene lotes asociados",
+                  icon: "error",
+                });
+              }
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelado",
+            text: "El producto " + nombre + " no ha sido eliminado",
+            icon: "error",
+          });
+        }
+      });
+  });
 });

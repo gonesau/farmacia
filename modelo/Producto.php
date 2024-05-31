@@ -76,4 +76,17 @@ class Producto
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':nombre' => $nombre, ':id' => $id));
     }
+
+    function borrar($id)
+    { 
+        $sql = "DELETE FROM producto WHERE id_producto=:id";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id' => $id));
+        if(!empty($query->execute(array(':id' => $id)))){
+            echo 'borrado';
+        }
+        else{
+            echo 'noborrado';
+        }
+    }
 }
