@@ -27,3 +27,38 @@ if ($_POST['funcion'] == 'buscar') {
     $jsonstring = json_encode($json);
     echo $jsonstring;
 }
+
+
+if ($_POST['funcion'] == 'cambiar_logo') {
+    $id = $_POST['id_logo_prov'];
+    $avatar = $_POST['avatar'];
+    if ($_FILES['foto']['type'] == 'image/jpeg' || $_FILES['foto']['type'] == 'image/png' || $_FILES['foto']['type'] == 'image/jpg') {
+        $nombre = uniqid() . '-' . $_FILES['foto']['name'];
+        $ruta = '../img/prov/' . $nombre;
+        move_uploaded_file($_FILES['foto']['tmp_name'], $ruta);
+        $proveedor->cambiar_logo($id, $nombre);
+        if ($avatar != '../img/prov/proveedor.png') {
+            unlink($avatar);
+        }
+        $json = array();
+        $json[] = array(
+            'ruta' => $ruta,
+            'alert' => 'edit'
+        );
+        $jsonstring = json_encode($json[0]);
+        echo $jsonstring;
+    } else {
+        $json = array();
+        $json[] = array(
+            'alert' => 'noedit'
+        );
+        $jsonstring = json_encode($json[0]);
+        echo $jsonstring;
+    }
+}
+
+
+if ($_POST['funcion'] == 'borrar'){
+    $id = $_POST['id'];
+    $proveedor->borrar($id);
+} 

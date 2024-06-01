@@ -43,4 +43,23 @@ class Proveedor
         }
     }
 
+    function cambiar_logo($id, $nombre)
+    {
+        $sql = "UPDATE proveedor SET avatar=:nombre WHERE id_proveedor=:id";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':nombre' => $nombre, ':id' => $id));
+    }
+
+    function borrar($id)
+    {
+        $sql = "DELETE FROM proveedor WHERE id_proveedor=:id";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id' => $id));
+        if(!empty($query->execute(array(':id' => $id)))){
+            echo "borrado";
+        }else{
+            echo "noborrado";
+        }
+    }
+
 }

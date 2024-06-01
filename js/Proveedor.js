@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var funcion;
+    
     buscar_prov();
     $('#form-crear').submit(e => {
         let nombre = $('#nombre').val();
@@ -13,12 +14,14 @@ $(document).ready(function () {
                 $('#add-prov').show(1000);
                 $('#add-prov').hide(2000);
                 $('#form-crear').trigger('reset');
+                buscar_prov();
             }
             if (response == 'noadd') {
                 $('#noadd-prov').hide('slow');
                 $('#noadd-prov').show(1000);
                 $('#noadd-prov').hide(2000);
                 $('#form-crear').trigger('reset');
+                buscar_prov();
             }
         });
         e.preventDefault();
@@ -57,10 +60,10 @@ $(document).ready(function () {
                 <button class="avatar btn btn-sm bg-info" title="Cambiar logo" data-toggle="modal" data-target="#cambiologo">
                     <i class="fas fa-image"></i>
                 </button>
-                <button class="avatar btn btn-sm btn-success" title="Editar información">
+                <button class="editar btn btn-sm btn-success" title="Editar información">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
-                <button class="avatar btn btn-sm btn-danger" title="Eliminar proveedor">
+                <button class="borrar btn btn-sm btn-danger" title="Eliminar proveedor">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
@@ -91,5 +94,99 @@ $(document).ready(function () {
         $('#nombre_logo').html(nombre);
         $('#id_logo_prov').val(id);
         $('#funcion').val(funcion);
+        $("#avatar").val(avatar);
     });
+
+
+    $("#form_logo").submit((e) => {
+        let formData = new FormData($("#form_logo")[0]);
+        $.ajax({
+            url: "../controlador/ProveedorController.php",
+            type: "POST",
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+        }).done(function (response) {
+            const json = JSON.parse(response);
+            if (json.alert == "edit") {
+                $("#logoactual").attr("src", json.ruta);
+                $("#edit-prov").hide("slow").show(1000).hide(2000);
+                $("#form_logo").trigger("reset");
+                buscar_prov();
+            }
+            if (json.alert == "noedit") {
+                $("#noedit-prov").hide("slow").show(1000).hide(2000);
+                $("#form_logo").trigger("reset");
+            }
+        });
+        e.preventDefault();
+    });
+
+
+    $(document).on("click", ".borrar", (e) => {
+        funcion = "borrar";
+        const elemento = $(e.currentTarget).closest("[provId]");
+        const id = $(elemento).attr("provId");
+        const nombre = $(elemento).attr("provNombre");
+        const avatar = $(elemento).attr("provAvatar");
+        console.log(id);
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger mr-1",
+            },
+            buttonsStyling: false,
+        });
+        swalWithBootstrapButtons
+            .fire({
+                title: "Estás seguro de eliminar el proveedor " + nombre + "?",
+                text: "No podrás revertir esto!",
+                imageUrl: avatar,
+                imageWidth: 100,
+                imageHeight: 100,
+                showCancelButton: true,
+                confirmButtonText: "Si, borrar proveedor",
+                cancelButtonText: "No, cancelar",
+                reverseButtons: true,
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    $.post(
+                        "../controlador/ProveedorController.php",
+                        { id, funcion },
+                        (response) => {
+                            if (response.trim() == "borrado") {
+                                swalWithBootstrapButtons.fire({
+                                    title: "Eliminado",
+                                    text: "El proveedor " + nombre + " ha sido eliminado",
+                                    icon: "success",
+                                });
+
+                                buscar_prov();
+                            } else {
+                                swalWithBootstrapButtons.fire({
+                                    title: "Error",
+                                    text:
+                                        "El proveedor " +
+                                        nombre +
+                                        " no ha sido eliminado porque tiene productos asociados",
+                                    icon: "error",
+                                });
+                            }
+                        }
+                    );
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelado",
+                        text: "El proveedor " + nombre + " no ha sido eliminado",
+                        icon: "error",
+                    });
+                }
+            });
+    });
+
+
+
+
 });
