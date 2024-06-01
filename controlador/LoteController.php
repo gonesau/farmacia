@@ -11,6 +11,12 @@ if ($_POST['funcion'] == 'crear_lote') {
     $lote->crear($id_producto, $proveedor, $stock, $vencimiento);
 }
 
+if ($_POST['funcion'] == 'editar') {
+    $id_lote = $_POST['id'];
+    $stock = $_POST['stock'];
+    $lote->editar($id_lote, $stock);
+}
+
 if ($_POST['funcion'] == 'buscar') {
     $lote->buscar();
     $json = array();
@@ -38,13 +44,6 @@ if ($_POST['funcion'] == 'buscar') {
                 $estado = 'warning';
             }
         }
-        // if ($mes > 3) {
-        //     $estado = 'light';
-        // } elseif ($mes <= 3) {
-        //     $estado = 'warning';
-        // } elseif ($mes <= 0 && $dia <= 0) {
-        //     $estado = 'danger';
-        // }
         $json[] = array(
             'id' => $objeto['id_lote'],
             'nombre' => $objeto['prod_nom'],
@@ -65,6 +64,11 @@ if ($_POST['funcion'] == 'buscar') {
     error_log(print_r($json, true)); // ver los datos en el log de errores
     $jsonstring = json_encode($json);
     echo $jsonstring;
+}
+
+if ($_POST['funcion'] == 'borrar') {
+    $id = $_POST['id'];
+    $lote->borrar($id);
 }
 
 // La funcion post sin agregar el vencimiento funciona correctamente
