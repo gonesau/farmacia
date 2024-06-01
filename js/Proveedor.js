@@ -1,31 +1,49 @@
 $(document).ready(function () {
     var funcion;
-    
+    var edit = false;
+
     buscar_prov();
     $('#form-crear').submit(e => {
+        let id = $('#id_edit_prov').val(); // Asegúrate de usar el ID correcto
         let nombre = $('#nombre').val();
         let telefono = $('#telefono').val();
         let correo = $('#correo').val();
         let direccion = $('#direccion').val();
-        funcion = 'crear';
-        $.post('../controlador/ProveedorController.php', { nombre, telefono, correo, direccion, funcion }, (response) => {
-            if (response == 'add') {
-                $('#add-prov').hide('slow');
-                $('#add-prov').show(1000);
-                $('#add-prov').hide(2000);
+        let funcion = edit ? 'editar' : 'crear'; // Corrección aquí
+    
+        $.post('../controlador/ProveedorController.php', { id, nombre, telefono, correo, direccion, funcion }, (response) => {
+            console.log(response); // Agrega esto para depurar la respuesta
+    
+            if (response.trim() === 'add') { // Usa .trim() para eliminar espacios
+                $('#add-prov').hide('slow').show(1000).hide(2000);
                 $('#form-crear').trigger('reset');
                 buscar_prov();
             }
-            if (response == 'noadd') {
-                $('#noadd-prov').hide('slow');
-                $('#noadd-prov').show(1000);
-                $('#noadd-prov').hide(2000);
+            if (response.trim() === 'noadd') {
+                $('#noadd-prov').hide('slow').show(1000).hide(2000);
+                $('#form-crear').trigger('reset');
+                buscar_prov();
+            }
+            if (response.trim() === 'edit') {
+                console.log('Proveedor editado');
+                $('#edit-prov').show();
+                setTimeout(() => { $('#edit-prov').hide(); }, 2000);
+                $('#form-crear').trigger('reset');
+                buscar_prov();
+            }
+            if (response.trim() === 'noedit') {
+                console.log('El proveedor no ha sido editado');
+                $('#noedit-prov').show();
+                setTimeout(() => { $('#noedit-prov').hide(); }, 2000);
                 $('#form-crear').trigger('reset');
                 buscar_prov();
             }
         });
         e.preventDefault();
     });
+    
+
+
     function buscar_prov(consulta) {
         funcion = 'buscar';
         $.post('../controlador/ProveedorController.php', { consulta, funcion }, (response) => {
@@ -60,7 +78,7 @@ $(document).ready(function () {
                 <button class="avatar btn btn-sm bg-info" title="Cambiar logo" data-toggle="modal" data-target="#cambiologo">
                     <i class="fas fa-image"></i>
                 </button>
-                <button class="editar btn btn-sm btn-success" title="Editar información">
+                <button class="editar btn btn-sm btn-success" title="Editar información" data-toggle="modal" data-target="#crearproveedor">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
                 <button class="borrar btn btn-sm btn-danger" title="Eliminar proveedor">
@@ -84,6 +102,8 @@ $(document).ready(function () {
             buscar_prov();
         }
     });
+
+
     $(document).on('click', '.avatar', (e) => {
         funcion = 'cambiar_logo';
         const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
@@ -96,6 +116,25 @@ $(document).ready(function () {
         $('#funcion').val(funcion);
         $("#avatar").val(avatar);
     });
+
+
+    $(document).on('click', '.editar', (e) => {
+        const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
+        const id = $(elemento).attr('provID');
+        const nombre = $(elemento).attr('provNombre');
+        const direccion = $(elemento).attr('provDireccion');
+        const telefono = $(elemento).attr('provTelefono');
+        const correo = $(elemento).attr('provCorreo');
+        $('#id_logo_prov').val(id);
+        $('#nombre').val(nombre);
+        $('#telefono').val(telefono);
+        $('#correo').val(correo);
+        $('#direccion').val(direccion);
+        edit = true;
+
+
+    });
+
 
 
     $("#form_logo").submit((e) => {
