@@ -19,8 +19,20 @@ $(document).ready(function () {
                     const dia = lote.dia !== undefined ? lote.dia : 0;
 
                     template += `
-                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                    <div class="card bg-ligth d-flex flex-fill">
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                    `;
+                    if (lote.estado == 'light') {
+                        template += `<div class="card bg-light">`;
+                    }
+                    if (lote.estado == 'danger') {
+                        template += `<div class="card bg-danger">`;
+                    }
+                    if (lote.estado == 'warning') {
+                        template += `<div class="card bg-warning">`;
+                    }
+
+                    // template += `<div class="card bg-ligth d-flex flex-fill">`;
+                    template += `
                         <div class="card-header border-bottom-0">
                             <i class="fas fa-lg fa-cubes mr-1"></i>${lote.stock}
                         </div>

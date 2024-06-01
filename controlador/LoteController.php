@@ -16,18 +16,35 @@ if ($_POST['funcion'] == 'buscar') {
     $json = array();
     $fecha_actual = new DateTime();
     foreach ($lote->objetos as $objeto) {
-        //
+        // Forma correcta de usar DateTime
+        // Se obtiene un error de esta forma
+        // $vencimiento = new DateTime(($objeto->vencimiento));
+        // El error es que en json[] no se logra convertir
+        // fecha_vencimiento a string
         $fecha_vencimiento = new DateTime($objeto['vencimiento']);
         $diferencia = $fecha_vencimiento->diff($fecha_actual);
         $mes = $diferencia->m + ($diferencia->y * 12);
         $dia = $diferencia->d;
-        if ($mes > 3) {
-            $estado = 'light';
-        } elseif ($mes <= 3) {
-            $estado = 'warning';
-        } elseif ($mes <= 0 && $dia <= 0) {
+        $verificado = $diferencia->invert;
+        if ($verificado == 0) {
             $estado = 'danger';
+            $mes = $mes * (-1);
+            $dia = $dia * (-1);
+        } else {
+            if ($mes > 3) {
+                $estado = 'light';
+            }
+            if ($mes <= 3) {
+                $estado = 'warning';
+            }
         }
+        // if ($mes > 3) {
+        //     $estado = 'light';
+        // } elseif ($mes <= 3) {
+        //     $estado = 'warning';
+        // } elseif ($mes <= 0 && $dia <= 0) {
+        //     $estado = 'danger';
+        // }
         $json[] = array(
             'id' => $objeto['id_lote'],
             'nombre' => $objeto['prod_nom'],
@@ -42,6 +59,7 @@ if ($_POST['funcion'] == 'buscar') {
             'logo' => '../img/prod/' . $objeto['logo'],
             'mes' => $mes,
             'dia' => $dia,
+            'estado' => $estado,
         );
     }
     error_log(print_r($json, true)); // ver los datos en el log de errores
@@ -109,6 +127,3 @@ if ($_POST['funcion'] == 'buscar') {
 //         echo json_encode(array('error' => 'An error occurred'));
 //     }
 // }
-
-
-
