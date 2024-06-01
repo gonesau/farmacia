@@ -14,7 +14,20 @@ if ($_POST['funcion'] == 'crear_lote') {
 if ($_POST['funcion'] == 'buscar') {
     $lote->buscar();
     $json = array();
+    $fecha_actual = new DateTime();
     foreach ($lote->objetos as $objeto) {
+        //
+        $fecha_vencimiento = new DateTime($objeto['vencimiento']);
+        $diferencia = $fecha_vencimiento->diff($fecha_actual);
+        $mes = $diferencia->m + ($diferencia->y * 12);
+        $dia = $diferencia->d;
+        if ($mes > 3) {
+            $estado = 'light';
+        } elseif ($mes <= 3) {
+            $estado = 'warning';
+        } elseif ($mes <= 0 && $dia <= 0) {
+            $estado = 'danger';
+        }
         $json[] = array(
             'id' => $objeto['id_lote'],
             'nombre' => $objeto['prod_nom'],
@@ -27,12 +40,75 @@ if ($_POST['funcion'] == 'buscar') {
             'proveedor' => $objeto['proveedor'],
             'vencimiento' => $objeto['vencimiento'],
             'logo' => '../img/prod/' . $objeto['logo'],
+            'mes' => $mes,
+            'dia' => $dia,
         );
     }
-    error_log(print_r($json, true)); // Añadir esta línea para ver los datos en el log de errores
+    error_log(print_r($json, true)); // ver los datos en el log de errores
     $jsonstring = json_encode($json);
     echo $jsonstring;
 }
 
-?>
+// La funcion post sin agregar el vencimiento funciona correctamente
+// al agregar el vencimiento genera un error en Lote.js al renderizar
+// El error es: SyntaxError: Unexpected token '<', "<br />
+// <b>"... is not valid JSON
+// at JSON.parse (<anonymous>)
+
+// if ($_POST['funcion'] == 'buscar') {
+//     try {
+//         $lote->buscar();
+//         $json = array();
+//         $fecha_actual = new DateTime();
+//         foreach ($lote->objetos as $objeto) {
+//             try {
+//                 // Validar el formato de la fecha
+//                 $vencimiento = DateTime::createFromFormat('Y-m-d', $objeto['vencimiento']);
+//                 if ($vencimiento !== false) {
+//                     $diferencia = $vencimiento->diff($fecha_actual);
+//                     $mes = $diferencia->m + ($diferencia->y * 12); // Incluye años como meses
+//                     $dia = $diferencia->d;
+
+//                     if ($mes > 3) {
+//                         $estado = 'light';
+//                     } elseif ($mes <= 3 && $mes > 0) {
+//                         $estado = 'warning';
+//                     } elseif ($mes <= 0 && $dia <= 0) {
+//                         $estado = 'danger';
+//                     }
+
+//                     $json[] = array(
+//                         'id' => $objeto['id_lote'],
+//                         'nombre' => $objeto['prod_nom'],
+//                         'concentracion' => $objeto['concentracion'],
+//                         'adicional' => $objeto['adicional'],
+//                         'stock' => $objeto['stock'],
+//                         'laboratorio' => $objeto['lab_nom'],
+//                         'tipo' => $objeto['tipo_nom'],
+//                         'presentacion' => $objeto['pre_nom'],
+//                         'proveedor' => $objeto['proveedor'],
+//                         'vencimiento' => $objeto['vencimiento'],
+//                         'logo' => '../img/prod/' . $objeto['logo'],
+//                         'mes' => $mes,
+//                         'dia' => $dia,
+//                         'estado' => $estado,
+//                     );
+//                 } else {
+//                     throw new Exception('Formato de fecha inválido para el lote ID ' . $objeto['id_lote']);
+//                 }
+//             } catch (Exception $e) {
+//                 error_log("Error al procesar el lote ID {$objeto['id_lote']}: " . $e->getMessage());
+//                 continue; // Continuar con el siguiente objeto en caso de error
+//             }
+//         }
+//         header('Content-Type: application/json');
+//         echo json_encode($json);
+//     } catch (Exception $e) {
+//         error_log($e->getMessage());
+//         header('Content-Type: application/json');
+//         echo json_encode(array('error' => 'An error occurred'));
+//     }
+// }
+
+
 
