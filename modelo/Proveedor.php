@@ -66,7 +66,7 @@ class Proveedor
     {
         $sql = "SELECT id_proveedor FROM proveedor WHERE id_proveedor!=:id and nombre =:nombre";
         $query = $this->acceso->prepare($sql);
-        $query->execute(array(':id' => $id, ':nombre' => $nombre));
+        
         $this->objetos = $query->fetchAll();
         if (!empty($this->objetos)) {
             echo 'noedit';
@@ -78,4 +78,15 @@ class Proveedor
         }
     }
 
+
+    function rellenar_proveedores()
+    {
+        $sql = "SELECT * FROM proveedor order by nombre asc";
+        $query = $this->acceso->prepare($sql);
+        $query->execute();
+        $this->objetos = $query->fetchAll();
+        return $this->objetos;
+    }
+
 }
+?>
