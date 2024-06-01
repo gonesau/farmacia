@@ -108,6 +108,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="adm_lote.php" class="nav-link">
+              <i class="nav-icon fas fa-cubes"></i>
+              <p>
+                Gestión Lote
+              </p>
+            </a>
+          </li>
           <li class="nav-header">Compras</li>
           <li class="nav-item">
             <a href="adm_proveedor.php" class="nav-link">
