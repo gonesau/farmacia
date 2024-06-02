@@ -37,7 +37,7 @@ class Producto
         } else {
             $sql = "UPDATE producto SET nombre=:nombre, concentracion=:concentracion, adicional=:adicional, precio=:precio, prod_lab=:laboratorio, prod_tip=:tipo, prod_pre=:presentacion WHERE id_producto=:id";
             $query = $this->acceso->prepare($sql);
-            $query->execute(array(':nombre' => $nombre, ':concentracion' => $concentracion, ':adicional' => $adicional, ':laboratorio' => $laboratorio, ':tipo' => $tipo, ':presentacion' => $presentacion, ':precio' => $precio, ':id' => $id));
+            $query->execute(array(':id' => $id, ':nombre' => $nombre, ':concentracion' => $concentracion, ':adicional' => $adicional, ':laboratorio' => $laboratorio, ':tipo' => $tipo, ':presentacion' => $presentacion, ':precio' => $precio));
             echo 'edit';
         }
     }
@@ -78,14 +78,13 @@ class Producto
     }
 
     function borrar($id)
-    { 
+    {
         $sql = "DELETE FROM producto WHERE id_producto=:id";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id' => $id));
-        if(!empty($query->execute(array(':id' => $id)))){
+        if (!empty($query->execute(array(':id' => $id)))) {
             echo 'borrado';
-        }
-        else{
+        } else {
             echo 'noborrado';
         }
     }
@@ -99,4 +98,16 @@ class Producto
         return $this->objetos;
     }
 
+    function buscar_id($id)
+    {
+        $sql = "SELECT id_producto, producto.nombre as nombre, concentracion, adicional, precio, laboratorio.nombre as laboratorio, tipo_producto.nombre as tipo, presentacion.nombre as presentacion, producto.avatar, prod_lab, prod_tip, prod_pre
+        FROM producto
+        JOIN laboratorio on prod_lab=id_laboratorio
+        JOIN tipo_producto on prod_tip=id_tipo_prod
+        JOIN presentacion on prod_pre=id_presentacion WHERE id_producto=:id";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id' => $id));
+        $this->objetos = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $this->objetos;
+    }
 }

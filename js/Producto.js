@@ -89,7 +89,7 @@ $(document).ready(function () {
 		let presentacion = $("#presentacion").val();
 		if (edit == true) {
 			funcion = "editar";
-			edit = false;
+			// edit = false;
 		} else {
 			funcion = "crear";
 		}
@@ -107,6 +107,7 @@ $(document).ready(function () {
 				presentacion,
 			},
 			(response) => {
+				console.log(response);
 				if (response == "add") {
 					$("#add").hide("slow");
 					$("#add").show(1000);
@@ -133,7 +134,7 @@ $(document).ready(function () {
 					$("#noedit_prod").hide(2000);
 					$("#form-crear-producto").trigger("reset");
 				}
-				edit = false;
+				// edit = false;
 
 				buscar_producto();
 			}
@@ -272,7 +273,8 @@ $(document).ready(function () {
 
 	// Producto.js
 	$(document).on("click", ".editar", (e) => {
-		const elemento = $(e.currentTarget).closest("[prodId]");
+		// const elemento = $(e.currentTarget).closest("[prodId]");
+		const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
 		const id = $(elemento).attr("prodId");
 		const nombre = $(elemento).attr("prodNombre");
 		const concentracion = $(elemento).attr("prodConcentracion");

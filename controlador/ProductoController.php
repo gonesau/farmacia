@@ -27,7 +27,7 @@ if ($_POST['funcion'] == 'editar') {
     $tipo = $_POST['tipo'];
     $presentacion = $_POST['presentacion'];
     $producto->editar($id, $nombre, $concentracion, $adicional, $precio, $laboratorio, $tipo, $presentacion);
-    echo 'edit';
+    // echo 'edit';
 }
 
 
@@ -43,7 +43,7 @@ if ($_POST['funcion'] == 'buscar') {
 
         $producto->obtener_stock($objeto->id_producto);
         foreach ($producto->objetos as $obj) {
-            $total= $obj->total;
+            $total = $obj->total;
         }
 
         $json[] = array(
@@ -94,9 +94,46 @@ if ($_POST['funcion'] == 'cambiar_avatar') {
     }
 }
 
-if ($_POST['funcion'] == 'borrar'){
+if ($_POST['funcion'] == 'borrar') {
     $id = $_POST['id'];
     $producto->borrar($id);
-} 
+}
+
+if ($_POST['funcion'] == 'buscar_id') {
+    $id = $_POST['id_producto'];
+    $producto->buscar_id($id);
+    $json = array();
+    foreach ($producto->objetos as $objeto) {
+        //$producto->objetos contiene arrays
+        //se convierte a objetos antes de acceder a sus propiedades:
+        if (is_array($objeto)) {
+            $objeto = (object) $objeto;
+        }
+
+        $producto->obtener_stock($objeto->id_producto);
+        foreach ($producto->objetos as $obj) {
+            $total = $obj->total;
+        }
+
+        $json[] = array(
+            'id' => $objeto->id_producto,
+            'nombre' => $objeto->nombre,
+            'concentracion' => $objeto->concentracion,
+            'adicional' => $objeto->adicional,
+            'precio' => $objeto->precio,
+            'stock' => $total,
+            'laboratorio' => $objeto->laboratorio,
+            'tipo' => $objeto->tipo,
+            'presentacion' => $objeto->presentacion,
+            'laboratorio_id' => $objeto->prod_lab,
+            'tipo_id' => $objeto->prod_tip,
+            'presentacion_id' => $objeto->prod_pre,
+            'avatar' => '../img/prod/' . $objeto->avatar,
+        );
+    }
+    $jsonstring = json_encode($json[0]);
+    echo $jsonstring;
+}
+
 
 ?>
