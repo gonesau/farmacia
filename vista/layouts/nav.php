@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../css/select2.css">
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/main1.css">
-
+<link rel="stylesheet" href="../css/compra.css">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../css/css/all.min.css">
 <!-- Sweet Alert 2 -->
@@ -51,7 +51,7 @@
 
               </tbody>
             </table>
-            <a href="#" class="btn btn-danger btn-block">Procesar Compra</a>
+            <a href="#" id="procesar_pedido" class="btn btn-danger btn-block">Procesar Compra</a>
             <a href="#" id="vaciar_carrito" class="btn btn-primary btn-block">Vaciar carrito</a>
           </div>
         </li>
