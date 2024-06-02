@@ -4,8 +4,8 @@
 
 <!--select2-->
 <link rel="stylesheet" href="../css/select2.css">
-
 <link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/main1.css">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../css/css/all.min.css">
@@ -28,17 +28,14 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="../../index3.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
+          <a href="adm_catalogo.php" class="nav-link">Home</a>
         </li>
         <li class="nav-item dropdown" id="cat-carrito" style="display:none">
-          <img src="../img/cart_icon.png" height="400px" width="80px" class="nav-link dropdown-toggle" href="#"
+          <img src="../img/cart_icon.png" height="400px" width="65px" class="nav-link dropdown-toggle" href="#"
             id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           </img>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <table class="table table-hover text-nowrap p-0">
+            <table class="carro table table-hover text-nowrap p-0">
               <thead class="table-success">
                 <tr>
                   <th>Codigo</th>
@@ -54,7 +51,7 @@
               </tbody>
             </table>
             <a href="#" class="btn btn-danger btn-block">Procesar Compra</a>
-            <a href="#" class="btn btn-primary btn-block">Vaciar carrito</a>
+            <a href="#" id="vaciar_carrito" class="btn btn-primary btn-block">Vaciar carrito</a>
           </div>
         </li>
       </ul>
