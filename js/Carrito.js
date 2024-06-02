@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  Contar_productos();
   RecuperarLS_carrito();
   $(document).on("click", ".agregar-carrito", (e) => {
     const elemento = $(e.currentTarget).closest("[prodId]");
@@ -38,7 +39,7 @@ $(document).ready(function () {
         icon: "error",
         title: "Oops...",
         text: "El producto ya se encuentra en el carrito",
-        footer: 'Verifique el carrito de compras',
+        footer: "Verifique el carrito de compras",
       });
     } else {
       let template = `
@@ -53,6 +54,7 @@ $(document).ready(function () {
     `;
       $("#lista").append(template);
       AgregarLS(producto);
+      Contar_productos();
     }
   });
 
@@ -61,11 +63,13 @@ $(document).ready(function () {
     const id = $(elemento).attr("prodId");
     elemento.remove();
     Eliminar_producto_LS(id);
+    Contar_productos();
   });
 
   $(document).on("click", "#vaciar_carrito", (e) => {
     $("#lista").empty();
     Eliminar_LS();
+    Contar_productos();
   });
 
   function RecuperarLS() {
@@ -115,5 +119,15 @@ $(document).ready(function () {
 
   function Eliminar_LS() {
     localStorage.clear();
+  }
+
+  function Contar_productos() {
+    let productos;
+    let contador = 0;
+    productos = RecuperarLS();
+    productos.forEach((producto) => {
+      contador++;
+    });
+    $("#contador").html(contador);
   }
 });

@@ -79,3 +79,14 @@
   }
   
   
+  .imagen-carrito{
+    position: relative ;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .contador{
+    position: absolute;
+    top: 0px;
+    right: 3px;
+  }

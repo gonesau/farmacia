@@ -31,8 +31,9 @@
           <a href="adm_catalogo.php" class="nav-link">Home</a>
         </li>
         <li class="nav-item dropdown" id="cat-carrito" style="display:none">
-          <img src="../img/cart_icon.png" height="400px" width="65px" class="nav-link dropdown-toggle" href="#"
+          <img src="../img/cart_icon.png" height="400px" width="65px" class="imagen-carrito nav-link dropdown-toggle" href="#"
             id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="badge badge-danger contador" id="contador"></span>
           </img>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <table class="carro table table-hover text-nowrap p-0">

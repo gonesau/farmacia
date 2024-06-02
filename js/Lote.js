@@ -6,7 +6,6 @@ $(document).ready(function () {
     function buscar_lote(consulta) {
         let funcion = "buscar";
         $.post("../controlador/LoteController.php", { consulta, funcion }, (response) => {
-            console.log(response); // Añadir esta línea para ver los datos en la consola
             //El try es para identificar errores
             try {
                 const lotes = JSON.parse(response);
