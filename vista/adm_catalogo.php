@@ -97,3 +97,4 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
 ?>
 
 <script src="../js/Catalogo.js"></script>
+<script src="../js/Carrito.js"></script>
