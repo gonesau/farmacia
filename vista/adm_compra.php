@@ -96,21 +96,22 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                                         <span class="info-box-icon"><i class="fas fa-tag"></i></span>
                                                         <div class="info-box-content">
                                                             <span class="info-box-text text-left ">SUB TOTAL</span>
-                                                            <span class="info-box-number" id="subtotal">10</span>
+                                                            <span class="info-box-number" id="subtotal">0.00</span>
                                                         </div>
                                                     </div>
                                                     <div class="info-box mb-3 bg-warning">
                                                         <span class="info-box-icon"><i class="fas fa-tag"></i></span>
                                                         <div class="info-box-content">
-                                                            <span class="info-box-text text-left ">IGV</span>
-                                                            <span class="info-box-number" id="con_igv">2</span>
+                                                            <span class="info-box-text text-left ">IVA</span>
+                                                            <span class="info-box-number" id="con_iva">0.00</span>
                                                         </div>
                                                     </div>
                                                     <div class="info-box mb-3 bg-info">
                                                         <span class="info-box-icon"><i class="fas fa-tag"></i></span>
                                                         <div class="info-box-content">
                                                             <span class="info-box-text text-left ">SIN DESCUENTO</span>
-                                                            <span class="info-box-number" id="total_sin_descuento">12</span>
+                                                            <span class="info-box-number"
+                                                                id="total_sin_descuento">0.00</span>
                                                         </div>
                                                     </div>
                                                 </div>
