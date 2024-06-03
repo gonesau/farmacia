@@ -269,21 +269,28 @@ $(document).ready(function () {
 
   function calcularTotal() {
     let productos, subtotal, con_iva, total_sin_descuento;
+    let pago, vuelto, descuento;
     let total = 0, iva = 0.13;
     productos = RecuperarLS();
     productos.forEach(producto => {
       let subtotal_producto = Number(producto.precio * producto.cantidad);
       total = total + subtotal_producto;
     });
-    console.log(total);
+    pago = $('#pago').val();
+    descuento = $('#descuento').val();
+    // console.log(total);
     total_sin_descuento = total.toFixed(2);
     con_iva = parseFloat(total * iva).toFixed(2);
-    console.log(con_iva);
     subtotal = parseFloat(total - con_iva).toFixed(2);
-    console.log(subtotal);
+
     $('#subtotal').html(subtotal);
     $('#con_iva').html(con_iva);
     $('#total_sin_descuento').html(total_sin_descuento);
+
+    total = total - descuento;
+    vuelto = pago - total;
+    $('#total').html(total.toFixed(2));
+    $('#vuelto').html(vuelto);
   }
 
 });

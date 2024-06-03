@@ -140,7 +140,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                                                 class="ion ion-ios-cart-outline"></i></span>
                                                         <div class="info-box-content">
                                                             <span class="info-box-text text-left ">TOTAL</span>
-                                                            <span class="info-box-number" id="total">12</span>
+                                                            <span class="info-box-number" id="total">0.00</span>
                                                         </div>
                                                     </div>
                                                 </div>
