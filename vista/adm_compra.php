@@ -170,7 +170,7 @@ if ($_SESSION['us_tipo'] == 1 || $_SESSION['us_tipo'] == 3) {
                                                                 class="fas fa-money-bill-wave"></i></span>
                                                         <div class="info-box-content">
                                                             <span class="info-box-text text-left ">VUELTO</span>
-                                                            <span class="info-box-number" id="vuelto">3</span>
+                                                            <span class="info-box-number" id="vuelto">0.00</span>
                                                         </div>
                                                     </div>
                                                 </div>

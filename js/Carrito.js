@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  calcularTotal();
   Contar_productos();
   RecuperarLS_carrito();
   RecuperarLS_carrito_compra();
@@ -67,6 +68,7 @@ $(document).ready(function () {
     elemento.remove();
     Eliminar_producto_LS(id);
     Contar_productos();
+    calcularTotal();
   });
 
   $(document).on("click", "#vaciar_carrito", (e) => {
@@ -283,14 +285,15 @@ $(document).ready(function () {
     con_iva = parseFloat(total * iva).toFixed(2);
     subtotal = parseFloat(total - con_iva).toFixed(2);
 
+    total = total - descuento;
+    vuelto = pago - total;
+
     $('#subtotal').html(subtotal);
     $('#con_iva').html(con_iva);
     $('#total_sin_descuento').html(total_sin_descuento);
 
-    total = total - descuento;
-    vuelto = pago - total;
     $('#total').html(total.toFixed(2));
-    $('#vuelto').html(vuelto);
+    $('#vuelto').html(vuelto.toFixed(2));
   }
 
 });
