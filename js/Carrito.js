@@ -90,7 +90,7 @@ $(document).ready(function () {
     if (localStorage.getItem("productos") === null) {
       productos = [];
     } else {
-      productos = JSON.parse(localStorage.getItem("productos"));
+      productos = JSON.parse(localStorage.getItem("productos")) || [];
     }
     return productos;
   }
@@ -279,7 +279,6 @@ $(document).ready(function () {
     producto = $(this).closest("tr"); // Obtener el elemento tr más cercano que contiene el input
     id = $(producto).attr("prodId");
     cantidad = $(this).val(); // Obtener el valor del input
-    console.log(cantidad);
     montos = document.querySelectorAll(".subtotales");
     productos = RecuperarLS();
     productos.forEach(function (prod, index) {
@@ -343,6 +342,7 @@ $(document).ready(function () {
     let nombre, dni;
     nombre = $('#cliente').val();
     dni = $('#dni').val();
+
     if (RecuperarLS().length == 0) {
       Swal.fire({
         icon: 'error',
@@ -360,14 +360,71 @@ $(document).ready(function () {
         text: 'Debe ingresar el nombre del cliente',
       });
     } else {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Se realiza la compra',
-        showConfirmButton: false,
-        timer: 1500,
+      VerificarElStock().then(result => {
+        let conflictoStock = false;
+        let mensajeError = '';
+
+        result.forEach(item => {
+          if (!item.suficiente) {
+            conflictoStock = true;
+            mensajeError += `Producto: ${item.nombre}, Cantidad Solicitada: ${item.cantidad_solicitada}, Stock Disponible: ${item.stock_disponible}\n`;
+          }
+        });
+
+        if (!conflictoStock) {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Se realiza la compra',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Hay conflicto en el stock:\n' + mensajeError
+          });
+        }
+      }).catch(error => {
+        console.error('Error en VerificarStock:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrió un error al verificar el stock',
+        });
       });
     }
+  }
 
+  async function VerificarStock() {
+    let productos;
+    funcion = 'verificar_stock';
+    productos = RecuperarLS();
+    const response = await fetch('../controlador/ProductoController.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'funcion=' + funcion + '&&productos=' + JSON.stringify(productos)
+    });
+    let error = await response.text();
+    return error;
+  }
+
+  async function VerificarElStock() {
+    const funcion = 'verificar_stock';
+    const productos = RecuperarLS();
+    const response = await fetch('../controlador/ProductoController.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'funcion=' + funcion + '&productos=' + JSON.stringify(productos)
+    });
+    const result = await response.json();
+    return result;
+    /* result.forEach(item => {
+      console.log(`ID Producto: ${item.id}`);
+      console.log(`Cantidad Solicitada: ${item.cantidad_solicitada}`);
+      console.log(`Stock Disponible: ${item.stock_disponible}`);
+      console.log(`Suficiente: ${item.suficiente ? 'Sí' : 'No'}`);
+    }); */
   }
 });

@@ -133,5 +133,68 @@ if ($_POST['funcion'] == 'buscar_id') {
     echo $jsonstring;
 }
 
+if ($_POST['funcion'] == 'verificar_stock') {
+    $result = [];
+    $productos = json_decode($_POST['productos']);
+    foreach ($productos as $objeto) {
+        $stocks = $producto->obtener_stock($objeto->id);
+        $total = 0;
+        if (!empty($stocks)) {
+            foreach ($stocks as $stock) {
+                $total += $stock->total; // Suma los valores de total
+            }
+        }
+        $result[] = [
+            'id' => $objeto->id,
+            'nombre' => $objeto->nombre,
+            'cantidad_solicitada' => $objeto->cantidad,
+            'stock_disponible' => $total,
+            'suficiente' => ($total >= $objeto->cantidad && $objeto->cantidad > 0)
+        ];
+    }
+    echo json_encode($result);
+}
+
+/* if ($_POST['funcion'] == 'verificar_stock') {
+    $error = 0;
+    $productos = json_decode($_POST['productos'], true);
+    foreach ($productos as $objeto) {
+        $producto->obtener_stock($objeto->id);
+        foreach ($productos->objetos as $obj) {
+            $total = $obj->total;
+        }
+        if ($total >= $objeto->cantidad && $objeto->cantidad > 0) {
+            $error = $error + 0;
+        } else {
+            $error = $error + 1;
+        }
+    }
+    echo $error;
+} */
+/* 
+if ($_POST['funcion'] == 'verificar_stock') {
+    $error = 0;
+    $productos = json_decode($_POST['productos']);
+    foreach ($productos as $objeto) {
+        $stock = $producto->obtener_stock($objeto->id);
+        $total = 0;
+        if (isset($stock->objetos)) {
+            foreach ($stock->objetos as $obj) {
+                $total += $obj->total; // Suma los valores de total
+            }
+        }
+        if ($total >= $objeto->cantidad && $objeto->cantidad > 0) {
+            $error += 0;
+        } else {
+            $error += 1;
+        }
+    }
+    echo $error;
+}
+ */
+
+
+
+
 
 ?>
