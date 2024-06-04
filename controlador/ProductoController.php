@@ -104,10 +104,8 @@ if ($_POST['funcion'] == 'buscar_id') {
     $producto->buscar_id($id);
     $json = array();
     foreach ($producto->objetos as $objeto) {
-        //$producto->objetos contiene arrays
-        //se convierte a objetos antes de acceder a sus propiedades:
-        if (is_array($objeto)) {
-            $objeto = (object) $objeto;
+        if (is_array($objeto)) { //$producto->objetos contiene arrays
+            $objeto = (object) $objeto; //se convierte a objetos antes de acceder a sus propiedades:
         }
 
         $producto->obtener_stock($objeto->id_producto);
