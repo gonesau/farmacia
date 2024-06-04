@@ -360,7 +360,7 @@ $(document).ready(function () {
         text: 'Debe ingresar el nombre del cliente',
       });
     } else {
-      VerificarElStock().then(result => {
+      VerificarStock().then(result => {
         let conflictoStock = false;
         let mensajeError = '';
 
@@ -372,12 +372,16 @@ $(document).ready(function () {
         });
 
         if (!conflictoStock) {
+          Registrar_compra(nombre, dni);
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Se realiza la compra',
+            title: 'Se realizo la compra',
             showConfirmButton: false,
             timer: 1500,
+          }).then(function () {
+            Eliminar_LS();
+            location.href = '../vista/adm_catalogo.php';
           });
         } else {
           Swal.fire({
@@ -396,21 +400,21 @@ $(document).ready(function () {
       });
     }
   }
+  /* 
+    async function VerificarStock() {
+      let productos;
+      funcion = 'verificar_stock';
+      productos = RecuperarLS();
+      const response = await fetch('../controlador/ProductoController.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'funcion=' + funcion + '&&productos=' + JSON.stringify(productos)
+      });
+      let error = await response.text();
+      return error;
+    } */
 
   async function VerificarStock() {
-    let productos;
-    funcion = 'verificar_stock';
-    productos = RecuperarLS();
-    const response = await fetch('../controlador/ProductoController.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'funcion=' + funcion + '&&productos=' + JSON.stringify(productos)
-    });
-    let error = await response.text();
-    return error;
-  }
-
-  async function VerificarElStock() {
     const funcion = 'verificar_stock';
     const productos = RecuperarLS();
     const response = await fetch('../controlador/ProductoController.php', {
@@ -427,4 +431,15 @@ $(document).ready(function () {
       console.log(`Suficiente: ${item.suficiente ? 'Sí' : 'No'}`);
     }); */
   }
+
+  function Registrar_compra(nombre, dui) {
+    funcion = 'registrar_compra';
+    let total = $('#total').get(0).textContent;
+    let productos = RecuperarLS();
+    let json = JSON.stringify(productos);
+    $.post('../controlador/CompraController.php', { funcion, total, nombre, dui, json }, (response) => {
+      console.log(response);
+    });
+  }
+
 });
