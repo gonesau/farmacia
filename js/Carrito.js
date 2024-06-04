@@ -81,6 +81,10 @@ $(document).ready(function () {
     Procesar_pedido();
   });
 
+  $(document).on("click", "#procesar-compra", (e) => {
+    Procesar_compra();
+  });
+
   function RecuperarLS() {
     let productos;
     if (localStorage.getItem("productos") === null) {
@@ -335,4 +339,35 @@ $(document).ready(function () {
     $('#vuelto').html(vuelto.toFixed(2));
   }
 
+  function Procesar_compra() {
+    let nombre, dni;
+    nombre = $('#cliente').val();
+    dni = $('#dni').val();
+    if (RecuperarLS().length == 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No hay productos, debe seleccionar algunos!',
+      })
+        .then(function () {
+          location.href = '../vista/adm_catalogo.php';
+        });
+
+    } else if (nombre == '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Debe ingresar el nombre del cliente',
+      });
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Se realiza la compra',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
+  }
 });
