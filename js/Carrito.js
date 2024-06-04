@@ -97,52 +97,52 @@ $(document).ready(function () {
     localStorage.setItem("productos", JSON.stringify(productos));
   }
 
-  /*   
-  //Versión sin método POST y local Storage
-    function RecuperarLS_carrito() {
-      let productos;
-      productos = RecuperarLS();
-      productos.forEach((producto) => {
-        let template = `
-                    <tr prodId = "${producto.id}">
-                        <td>${producto.id}</td>
-                        <td>${producto.nombre}</td>
-                        <td>${producto.concentracion}</td>
-                        <td>${producto.adicional}</td>
-                        <td>${producto.precio}</td>
-                        <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
-                    </tr>
-                `;
-        $("#lista").append(template);
-      });
-    }
-   */
 
+  //Versión solo Local Storage
   function RecuperarLS_carrito() {
-    let productos, id_producto;
+    let productos;
     productos = RecuperarLS();
-    funcion = "buscar_id";
-    productos.forEach(producto => {
-      id_producto = producto.id;
-      $.post('../controlador/ProductoController.php', { funcion, id_producto }, (response) => {
-        console.log(response);
-        let template_carrito = '';
-        let json = JSON.parse(response);
-        template_carrito = `
-            <tr prodId="${json.id}">
-              <td>${json.id}</td>
-              <td>${json.nombre}</td>
-              <td>${json.concentracion}</td>
-              <td>${json.adicional}</td>
-              <td>${json.precio}</td>
-              <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
-            </tr>
-          `;
-        $('#lista').append(template_carrito);
-      });
+    productos.forEach((producto) => {
+      let template = `
+                      <tr prodId = "${producto.id}">
+                          <td>${producto.id}</td>
+                          <td>${producto.nombre}</td>
+                          <td>${producto.concentracion}</td>
+                          <td>${producto.adicional}</td>
+                          <td>${producto.precio}</td>
+                          <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
+                      </tr>
+                  `;
+      $("#lista").append(template);
     });
   }
 
+  //Versión de POST más local Storage
+  /*   function RecuperarLS_carrito() {
+      let productos, id_producto;
+      productos = RecuperarLS();
+      funcion = "buscar_id";
+      productos.forEach(producto => {
+        id_producto = producto.id;
+        $.post('../controlador/ProductoController.php', { funcion, id_producto }, (response) => {
+          //console.log(response);
+          let template_carrito = '';
+          let json = JSON.parse(response);
+          template_carrito = `
+                <tr prodId="${json.id}">
+                  <td>${json.id}</td>
+                  <td>${json.nombre}</td>
+                  <td>${json.concentracion}</td>
+                  <td>${json.adicional}</td>
+                  <td>${json.precio}</td>
+                  <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
+                </tr>
+              `;
+          $('#lista').append(template_carrito);
+        });
+      });
+    }
+   */
 
   function Eliminar_producto_LS(id) {
     let productos;
@@ -184,47 +184,79 @@ $(document).ready(function () {
     }
   }
 
+  //Versión solo Local Storage
   function RecuperarLS_carrito_compra() {
-    let productos = RecuperarLS();
-    let funcion = "buscar_id";
-
-    productos.forEach((producto, index) => {
-      let id_producto = producto.id;
-      $.post('../controlador/ProductoController.php', { funcion, id_producto }, (response) => {
-        console.log(response);
-        let json = JSON.parse(response);
-
-        // Actualizar el precio en localStorage
-        productos[index].precio = json.precio;
-
-        // Crear el template con los datos del servidor
-        let template_compra = `
-                <tr prodId="${producto.id}" prodPrecio="${json.precio}">
-                    <td>${json.nombre}</td>
-                    <td>${json.stock}</td>
-                    <td>${json.precio}</td>
-                    <td>${json.concentracion}</td>
-                    <td>${json.adicional}</td>
-                    <td>${json.laboratorio}</td>
-                    <td>${json.presentacion}</td>
-                    <td>
-                        <input type="number" min="1" class="form-control cantidad_producto" value="${producto.cantidad}">
-                    </td>
-                    <td class="subtotales">
-                        <h5>${(json.precio * producto.cantidad).toFixed(2)}</h5>
-                    </td>
-                    <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
-                </tr>
-            `;
-        $('#lista-compra').append(template_compra);
-
-        // Actualizar el localStorage con el nuevo precio
-        localStorage.setItem('productos', JSON.stringify(productos));
-      });
+    let productos;
+    productos = RecuperarLS();
+    let template = '';
+    productos.forEach((producto) => {
+      template = `
+                    <tr prodId = "${producto.id}">
+                        <td>${producto.nombre}</td>
+                        <td>${producto.stock}</td>
+                        <td>${producto.precio}</td>
+                        <td>${producto.concentracion}</td>
+                        <td>${producto.adicional}</td>
+                        <td>${producto.laboratorio}</td>
+                        <td>${producto.presentacion}</td>
+                        <td>
+                            <input type="number" min="1" class="form-control cantidad_producto" value="${producto.cantidad}">
+                        </td>
+                        <td class="subtotales">
+                        <h5>${(producto.precio * producto.cantidad).toFixed(2)}</h5>
+                        </td>
+                        <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
+                    </tr>
+                `;
+      $("#lista-compra").append(template);
     });
-  }
+  };
 
-
+  //Versión de POST más local Storage
+  //de RecuperarLS_carrito_compra()
+  /* 
+    function RecuperarLS_carrito_compra() {
+      let productos = RecuperarLS();
+      //console.log(productos);
+      let funcion = "buscar_id";
+  
+      productos.forEach((producto, index) => {
+        let id_producto = producto.id;
+        console.log(producto.cantidad);
+        $.post('../controlador/ProductoController.php', { funcion, id_producto }, (response) => {
+          //console.log(response);
+          let json = JSON.parse(response);
+  
+          // Actualizar el precio en localStorage
+          productos[index].precio = json.precio;
+  
+          // Crear el template con los datos del servidor
+          let template_compra = `
+                    <tr prodId="${producto.id}" prodPrecio="${json.precio}">
+                        <td>${json.nombre}</td>
+                        <td>${json.stock}</td>
+                        <td>${json.precio}</td>
+                        <td>${json.concentracion}</td>
+                        <td>${json.adicional}</td>
+                        <td>${json.laboratorio}</td>
+                        <td>${json.presentacion}</td>
+                        <td>
+                            <input type="number" min="1" class="form-control cantidad_producto" value="${producto.cantidad}">
+                        </td>
+                        <td class="subtotales">
+                            <h5>${(json.precio * producto.cantidad).toFixed(2)}</h5>
+                        </td>
+                        <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
+                    </tr>
+                `;
+          $('#lista-compra').append(template_compra);
+  
+          // Actualizar el localStorage con el nuevo precio
+          localStorage.setItem('productos', JSON.stringify(productos));
+        });
+      });
+    };
+   */
 
   $(document).on('click', '#actualizar', (e) => {
     let productos, precios;
@@ -237,87 +269,60 @@ $(document).ready(function () {
     calcularTotal();
   });
 
-  /*
-    $(document).on('input', '.cantidad_producto', function () {
-      let productoFila = $(this).closest('tr');
-      let id_producto = productoFila.attr('prodId');
-      let nueva_cantidad = $(this).val();
-      let nuevo_precio = parseFloat(productoFila.attr('prodPrecio'));
-  
-      // Actualizar la cantidad en localStorage
-      let productos = RecuperarLS();
-      productos.forEach((producto) => {
-        if (producto.id == id_producto) {
-          producto.cantidad = nueva_cantidad;
-          producto.precio = nuevo_precio; // Asegurarse de que el precio esté actualizado
-        }
-      });
-      localStorage.setItem('productos', JSON.stringify(productos));
-  
-      // Actualizar el subtotal con el nuevo precio
-      let subtotal = nuevo_precio * nueva_cantidad;
-      productoFila.find('.subtotales h5').text(subtotal.toFixed(2));
-  
-      // Recalcular el total general
-      calcularTotal();
-    });
-  */
-
-  /* 
-    $('#cp input').on("input", function () {
-      let id, cantidad, producto, productos, montos;
-      producto = $(this).closest("tr"); // Obtener el elemento tr más cercano que contiene el input
-      id = $(producto).attr("prodId");
-      //cantidad = $(this).val(); // Obtener el valor del input
-      cantidad = document.querySelector('input').value();
-      montos = document.querySelectorAll(".subtotales");
-      productos = RecuperarLS();
-      productos.forEach(function (prod, index) {
-        if (prod.id === id) {
-          console.log('a');
-          prod.cantidad = cantidad;
-          montos[index].innerHTML = `<h5>${cantidad * productos[index].precio}</h5>`;
-        }
-      });
-      localStorage.setItem('productos', JSON.stringify(productos));
-      calcularTotal();
-    }); */
-
+  //versión original
   $('#cp input').on("input", function () {
     let id, cantidad, producto, productos, montos;
     producto = $(this).closest("tr"); // Obtener el elemento tr más cercano que contiene el input
     id = $(producto).attr("prodId");
     cantidad = $(this).val(); // Obtener el valor del input
+    console.log(cantidad);
     montos = document.querySelectorAll(".subtotales");
     productos = RecuperarLS();
     productos.forEach(function (prod, index) {
       if (prod.id === id) {
         prod.cantidad = cantidad;
-        montos[index].innerHTML = `<h5>${cantidad * prod.precio}</h5>`; // Usar el precio del producto actualizado
+        montos[index].innerHTML = `<h5>${(cantidad * productos[index].precio).toFixed(2)}</h5>`;
       }
     });
     localStorage.setItem("productos", JSON.stringify(productos));
     calcularTotal();
   });
 
-  function calcularTotal() {
-    let productos = RecuperarLS();
-    let subtotal = 0, con_iva, total_sin_descuento;
-    let pago, vuelto, descuento;
-    let total = 0;
-    const iva = 0.13;
 
-    productos.forEach(producto => {
-      let subtotal_producto = Number(producto.precio) * Number(producto.cantidad);
-      total += subtotal_producto;
+  /* 
+  $('#cp input').keyup((e) => {
+    let id, cantidad, producto, montos;
+    producto = $(this)[0].activeElement.parentElement.parentElement;
+    id = $(producto).attr('prodId');
+    cantidad = producto.querySelector('input').value();
+    montos = document.querySelectorAll('.subtotales');
+    productos = RecuperarLS();
+    productos.forEach(function (prod, indice) {
+      if (prod.id === id) {
+        prod.cantidad = cantidad;
+        montos[indice].innerHTML = `<h5>${cantidad * productos[indice].precio}</h5>`;
+      }
     });
+    localStorage.setItem('productos', JSON.stringify(productos));
+  });
+ */
 
-    pago = parseFloat($('#pago').val()) || 0;
-    descuento = parseFloat($('#descuento').val()) || 0;
+  //Versión original de calcularTotal()
+  function calcularTotal() {
+    let productos, subtotal, con_iva, total_sin_descuento;
+    let pago, vuelto, descuento;
+    let total = 0, iva = 0.13;
+    productos = RecuperarLS();
+    productos.forEach(producto => {
+      let subtotal_producto = Number(producto.precio * producto.cantidad);
+      total = total + subtotal_producto;
+    });
+    pago = $('#pago').val();
 
+    descuento = $('#descuento').val();
     total_sin_descuento = total.toFixed(2);
-    con_iva = (total * iva).toFixed(2);
-    subtotal = (total - parseFloat(con_iva)).toFixed(2);
+    con_iva = parseFloat(total * iva).toFixed(2);
+    subtotal = parseFloat(total - con_iva).toFixed(2);
 
     total = total - descuento;
     vuelto = pago - total;
@@ -325,6 +330,7 @@ $(document).ready(function () {
     $('#subtotal').html(subtotal);
     $('#con_iva').html(con_iva);
     $('#total_sin_descuento').html(total_sin_descuento);
+
     $('#total').html(total.toFixed(2));
     $('#vuelto').html(vuelto.toFixed(2));
   }
