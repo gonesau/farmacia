@@ -98,6 +98,7 @@ $(document).ready(function () {
   }
 
   /*   
+  //Versión sin método POST y local Storage
     function RecuperarLS_carrito() {
       let productos;
       productos = RecuperarLS();
@@ -117,9 +118,6 @@ $(document).ready(function () {
     }
    */
 
-  //NO FUNCIONAL !!!
-  //Obtiene los datos por medio de una consulta
-  // function RecuperarLS_carrito();
   function RecuperarLS_carrito() {
     let productos, id_producto;
     productos = RecuperarLS();
@@ -186,76 +184,6 @@ $(document).ready(function () {
     }
   }
 
-  /* 
-    function RecuperarLS_carrito_compra() {
-      let productos;
-      productos = RecuperarLS();
-      // let template = '';
-      productos.forEach((producto) => {
-        template = `
-                    <tr prodId = "${producto.id}">
-                        <td>${producto.nombre}</td>
-                        <td>${producto.stock}</td>
-                        <td>${producto.precio}</td>
-                        <!--<td class="precio">${producto.precio}</td>-->
-                        <td>${producto.concentracion}</td>
-                        <td>${producto.adicional}</td>
-                        <td>${producto.laboratorio}</td>
-                        <td>${producto.presentacion}</td>
-                        <td>
-                            <input type="number" min="1" class="form-control cantidad_producto" value="${producto.cantidad}">
-                        </td>
-                        <td class="subtotales">
-                        <h5>${producto.precio * producto.cantidad}</h5>
-                        </td>
-                        <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
-                    </tr>
-                `;
-        $("#lista-compra").append(template);
-      });
-    }
-   */
-
-  //NO FUNCIONAL !!!
-  //Obtiene los datos realizando una consulta a la base de datos
-  //Obteniendo principalmente el precio actualizado del producto
-  //Al momento que se hace la consulta, pero no se ejecuta el calculo de los subtotales
-  //function RecuperarLS_carrito_compra
-  /* function RecuperarLS_carrito_compra() {
-    let productos, id_producto;
-    productos = RecuperarLS();
-    funcion = "buscar_id";
-    productos.forEach(producto => {
-      id_producto = producto.id;
-      $.post('../controlador/ProductoController.php', { funcion, id_producto }, (response) => {
-        console.log(response);
-        let template_compra = '';
-        let json = JSON.parse(response);
-        template_compra = `
-                <tr prodId = "${producto.id}" prodPrecio="${producto.cantidad}">
-                  <td>${json.nombre}</td>
-                  <td>${json.stock}</td>
-                  <td>${json.precio}</td>
-                  <td>${json.concentracion}</td>
-                  <td>${json.adicional}</td>
-                  <td>${json.laboratorio}</td>
-                  <td>${json.presentacion}</td>
-                  <td>
-                      <input type="number" min="1" class="form-control 
-                      cantidad_producto" value="${producto.cantidad}">
-                  </td>
-                  <td class="subtotales">
-                    <h5>${json.precio * producto.cantidad}</h5>
-                  </td>
-                  <td><button class="borrar-producto btn btn-danger"><i class="fas fa-times-circle"></i></button></td>
-                </tr>
-                `;
-        $('#lista-compra').append(template_compra);
-      });
-    });
-  };
- */
-
   function RecuperarLS_carrito_compra() {
     let productos = RecuperarLS();
     let funcion = "buscar_id";
@@ -309,55 +237,32 @@ $(document).ready(function () {
     calcularTotal();
   });
 
-  $(document).on('input', '.cantidad_producto', function () {
-    let productoFila = $(this).closest('tr');
-    let id_producto = productoFila.attr('prodId');
-    let nueva_cantidad = $(this).val();
-    let nuevo_precio = parseFloat(productoFila.attr('prodPrecio'));
-
-    // Actualizar la cantidad en localStorage
-    let productos = RecuperarLS();
-    productos.forEach((producto) => {
-      if (producto.id == id_producto) {
-        producto.cantidad = nueva_cantidad;
-      }
-    });
-    localStorage.setItem('productos', JSON.stringify(productos));
-
-    // Actualizar el subtotal con el nuevo precio
-    let subtotal = nuevo_precio * nueva_cantidad;
-    productoFila.find('.subtotales h5').text(subtotal.toFixed(2));
-
-    // Recalcular el total general
-    calcularTotal();
-  });
-
-
-
-  /* 
-  $(document).ready(function () {
-    $('#cp').on("input", "input.cantidad_producto", function () {
-      let id, cantidad, producto, productos, montos;
-
-      producto = $(this).closest("tr"); // Obtener el elemento tr más cercano que contiene el input
-      id = $(producto).attr("prodId");
-      cantidad = $(this).val(); // Obtener el valor del input
-      // montos = document.querySelectorAll(".subtotales");
-      productos = RecuperarLS();
-      productos.forEach(function (prod) {
-        if (prod.id == id) {
-          prod.cantidad = cantidad;
-          // Encuentra el subtotal correspondiente a este producto y actualízalo
-          $(producto).find(".subtotales h5").text(cantidad * prod.precio);
+  /*
+    $(document).on('input', '.cantidad_producto', function () {
+      let productoFila = $(this).closest('tr');
+      let id_producto = productoFila.attr('prodId');
+      let nueva_cantidad = $(this).val();
+      let nuevo_precio = parseFloat(productoFila.attr('prodPrecio'));
+  
+      // Actualizar la cantidad en localStorage
+      let productos = RecuperarLS();
+      productos.forEach((producto) => {
+        if (producto.id == id_producto) {
+          producto.cantidad = nueva_cantidad;
+          producto.precio = nuevo_precio; // Asegurarse de que el precio esté actualizado
         }
       });
-
       localStorage.setItem('productos', JSON.stringify(productos));
+  
+      // Actualizar el subtotal con el nuevo precio
+      let subtotal = nuevo_precio * nueva_cantidad;
+      productoFila.find('.subtotales h5').text(subtotal.toFixed(2));
+  
+      // Recalcular el total general
       calcularTotal();
     });
-  });
+  */
 
- */
   /* 
     $('#cp input').on("input", function () {
       let id, cantidad, producto, productos, montos;
@@ -376,24 +281,43 @@ $(document).ready(function () {
       });
       localStorage.setItem('productos', JSON.stringify(productos));
       calcularTotal();
+    }); */
+
+  $('#cp input').on("input", function () {
+    let id, cantidad, producto, productos, montos;
+    producto = $(this).closest("tr"); // Obtener el elemento tr más cercano que contiene el input
+    id = $(producto).attr("prodId");
+    cantidad = $(this).val(); // Obtener el valor del input
+    montos = document.querySelectorAll(".subtotales");
+    productos = RecuperarLS();
+    productos.forEach(function (prod, index) {
+      if (prod.id === id) {
+        prod.cantidad = cantidad;
+        montos[index].innerHTML = `<h5>${cantidad * prod.precio}</h5>`; // Usar el precio del producto actualizado
+      }
     });
-   */
+    localStorage.setItem("productos", JSON.stringify(productos));
+    calcularTotal();
+  });
 
   function calcularTotal() {
-    let productos, subtotal, con_iva, total_sin_descuento;
+    let productos = RecuperarLS();
+    let subtotal = 0, con_iva, total_sin_descuento;
     let pago, vuelto, descuento;
-    let total = 0, iva = 0.13;
-    productos = RecuperarLS();
+    let total = 0;
+    const iva = 0.13;
+
     productos.forEach(producto => {
-      let subtotal_producto = Number(producto.precio * producto.cantidad);
-      total = total + subtotal_producto;
+      let subtotal_producto = Number(producto.precio) * Number(producto.cantidad);
+      total += subtotal_producto;
     });
-    pago = $('#pago').val();
-    descuento = $('#descuento').val();
-    // console.log(total);
+
+    pago = parseFloat($('#pago').val()) || 0;
+    descuento = parseFloat($('#descuento').val()) || 0;
+
     total_sin_descuento = total.toFixed(2);
-    con_iva = parseFloat(total * iva).toFixed(2);
-    subtotal = parseFloat(total - con_iva).toFixed(2);
+    con_iva = (total * iva).toFixed(2);
+    subtotal = (total - parseFloat(con_iva)).toFixed(2);
 
     total = total - descuento;
     vuelto = pago - total;
@@ -401,53 +325,8 @@ $(document).ready(function () {
     $('#subtotal').html(subtotal);
     $('#con_iva').html(con_iva);
     $('#total_sin_descuento').html(total_sin_descuento);
-
     $('#total').html(total.toFixed(2));
     $('#vuelto').html(vuelto.toFixed(2));
   }
 
 });
-
-
-/*
-  $('#cp').keyup((e) => {
-    let id, cantidad, producto, productos, montos, precio;
-    producto = $(this)[0].activeElement.parentElement.parentElement;
-    id = $(producto).attr("prodId");
-    precio = $(producto).attr("prodPrecio");
-    cantidad = producto.querySelector('input').value(); // Obtener el valor del input
-    montos = document.querySelectorAll(".subtotales");
-    productos = RecuperarLS();
-    productos.forEach(function (prod, indice) {
-      if (prod.id === id) {
-        prod.cantidad = cantidad;
-        prod.precio = precio;
-        montos[indice].innerHTML = `
-        <h5>${cantidad * precio}</h5>
-        `;
-      }
-    });
-    localStorage.setItem('productos', JSON.stringify(productos));
-  });
- */
-
-
-/*
-  $('#cp').keyup((e) => {
-    let id, cantidad, producto, productos, montos;
-    // producto = $(this)[0].activeElement.parentElement.parentElement;
-    producto = $(this).closest("tr");
-    id = $(producto).attr("prodId");
-    cantidad = producto.querySelector('input').value(); // Obtener el valor del input
-    montos = document.querySelectorAll(".subtotales");
-    productos = RecuperarLS();
-    productos.forEach(function (prod, index) {
-      if (prod.id === id) {
-        prod.cantidad = cantidad;
-        montos[index].innerHTML = `<h5>${cantidad * productos[index].precio}</h5>`;
-      }
-    });
-    localStorage.setItem("productos", JSON.stringify(productos));
-  });
- 
- */
