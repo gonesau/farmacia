@@ -12,8 +12,47 @@ if ($_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo'] == 1) {
     $objUsuario = new usuario();
     ?>
 
-    <!-- Modal Crear lote-->
-
+    <!-- Modal Detalle de venta-->
+    <div class="modal fade" id="vista_venta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title fs-5">Detalle venta</h3>
+                        <button data-dismiss="modal" aria-label="close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="codigo_venta">Codigo venta :</label>
+                            <span id="codigo_venta"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha">Fecha:</label>
+                            <span id="fecha"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="cliente">Cliente: </label>
+                            <span id="cliente"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="dui">DUI:</label>
+                            <span id="dui"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="vendedor">Vendedor: </label>
+                            <span id="vendedor"></span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" data-dismiss="modal"
+                            class="btn btn-outline-secondary float-right m-1">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Encabezado de la página -->

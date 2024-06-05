@@ -4,7 +4,7 @@ $(document).ready(function () {
         console.log(JSON.parse(response));
     });
 
-    $('#tabla_venta').DataTable({
+    let datatable = $('#tabla_venta').DataTable({
         "ajax": {
             "url": "../controlador/VentaController.php",
             "method": "POST",
@@ -20,13 +20,22 @@ $(document).ready(function () {
             {
                 "defaultContent":
                     `
-                      <button class="btn btn-secondary btn-sm"> <i class="fas fa-print"></i></buttton> 
-                      <button class="btn btn-success btn-sm"> <i class="fas fa-search"></i></buttton>   
-                      <button class="btn btn-danger btn-sm"> <i class="fas fa-window-close"></i></buttton>
+                      <button class="btn btn-secondary btn-sm"><i class="fas fa-print"></i></buttton> 
+                      <button class="ver btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#vista_venta"><i class="fas fa-search"></i></buttton>   
+                      <button class="btn btn-danger btn-sm"><i class="fas fa-window-close"></i></buttton>
                     `
             }
         ],
         "language": espanol
+    });
+
+    $('#tabla_venta tbody').on('click', '.ver', function () {
+        let datos = datatable.row($(this).parents()).data();
+        $('#codigo_venta').html(datos.id_venta);
+        $('#fecha').html(datos.fecha);
+        $('#cliente').html(datos.cliente);
+        $('#dui').html(datos.dui);
+        $('#vendedor').html(datos.vendedor);
     });
 });
 
