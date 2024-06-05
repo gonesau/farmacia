@@ -1,5 +1,5 @@
 <?php
-include 'Conexion.php';
+include_once 'Conexion.php';
 class Venta
 {
     var $objetos;
@@ -27,9 +27,10 @@ class Venta
 
     function borrar($id_venta)
     {
-        $sql = "DELETE FROM venta WHERE id_venta:id_venta";
+        $sql = "DELETE FROM venta WHERE id_venta=:id_venta";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id_venta' => $id_venta));
+        echo 'delete';
     }
 
     function buscar()
@@ -40,4 +41,28 @@ class Venta
         $this->objetos = $query->fetchall();
         return $this->objetos;
     }
+
+    function verificar($id_venta, $id_usuario)
+    {
+        $sql = "SELECT * FROM venta WHERE vendedor=:id_usuario and id_venta=:id_venta";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id_usuario' => $id_usuario, ':id_venta' => $id_venta));
+        $this->objetos = $query->fetchall();
+        if (!empty($this->objetos)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    function recuperar_vendedor($id_venta)
+    {
+        $sql = "SELECT us_tipo FROM venta JOIN usuario on id_usuario=vendedor WHERE id_venta=:id_venta";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id_venta' => $id_venta));
+        $this->objetos = $query->fetchall();
+        return $this->objetos;
+    }
+
+
 }

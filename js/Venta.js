@@ -20,15 +20,62 @@ $(document).ready(function () {
             {
                 "defaultContent":
                     `
-                      <button class="btn btn-secondary btn-sm"><i class="fas fa-print"></i></buttton> 
-                      <button class="ver btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#vista_venta"><i class="fas fa-search"></i></buttton>   
-                      <button class="btn btn-danger btn-sm"><i class="fas fa-window-close"></i></buttton>
+                      <button class="btn btn-secondary btn-sm m-1"><i class="fas fa-print"></i></buttton> 
+                      <button class="ver btn btn-success btn-sm m-1" type="button" data-toggle="modal" data-target="#vista_venta"><i class="fas fa-search"></i></buttton>   
+                      <button class="borrar btn btn-danger btn-sm m-1"><i class="fas fa-window-close"></i></buttton>
                     `
             }
         ],
         "language": espanol
     });
 
+    $('#tabla_venta tbody').on('click', '.borrar', function () {
+        let datos = datatable.row($(this).parents()).data();
+        let id = datos.id_venta;
+        funcion = "borrar_venta";
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success m-1",
+                cancelButton: "btn btn-danger m-1"
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+            title: "¿Estás seguro de eliminar la venta: #" + id + '?',
+            text: "No se puede revertir",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, borrar",
+            cancelButtonText: "No, cancelar",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post('../controlador/DetalleVentaController.php', { funcion, id }, (response) => {
+                    if (response == 'delete') {
+                        swalWithBootstrapButtons.fire({
+                            title: "Eliminado",
+                            text: "La venta: #" + id + " ha sido eliminada",
+                            icon: "success"
+                        });
+                    } else if (response == 'nodelete') {
+                        swalWithBootstrapButtons.fire({
+                            title: "No eliminado",
+                            text: "No tienes permisos sobre esta venta",
+                            icon: "error"
+                        });
+                    }
+                });
+
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "No eliminado",
+                    text: "La venta no se eliminó",
+                    icon: "error"
+                });
+            }
+        });
+
+    });
     $('#tabla_venta tbody').on('click', '.ver', function () {
         let datos = datatable.row($(this).parents()).data();
         let id = datos.id_venta;
