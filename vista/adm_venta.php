@@ -51,6 +51,7 @@ if ($_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo'] == 1) {
                                     <th>DUI</th>
                                     <th>Total</th>
                                     <th>Vendedor</th>
+                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
