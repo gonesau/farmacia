@@ -4,6 +4,7 @@
 
 <!--select2-->
 <link rel="stylesheet" href="../css/select2.css">
+<link rel="stylesheet" href="../css/datatables.css">
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/main1.css">
 <link rel="stylesheet" href="../css/compra.css">
@@ -31,9 +32,10 @@
           <a href="adm_catalogo.php" class="nav-link">Home</a>
         </li>
         <li class="nav-item dropdown" id="cat-carrito" style="display:none">
-          <img src="../img/cart_icon.png" height="400px" width="65px" class="imagen-carrito nav-link dropdown-toggle" href="#"
-            id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="badge badge-danger contador" id="contador"></span>
+          <img src="../img/cart_icon.png" height="400px" width="65px" class="imagen-carrito nav-link dropdown-toggle"
+            href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+          <span class="badge badge-danger contador" id="contador"></span>
           </img>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <table class="carro table table-hover text-nowrap p-0">
@@ -108,8 +110,15 @@
                 </p>
               </a>
             </li>
-
-
+            <li class="nav-header">Ventas</li>
+            <li class="nav-item">
+              <a href="adm_venta.php" class="nav-link">
+                <i class="nav-icon fas fa-notes-medical"></i>
+                <p>
+                  Listar ventas
+                </p>
+              </a>
+            </li>
             <li class="nav-header">Almacen</li>
             <li class="nav-item">
               <a href="adm_producto.php" class="nav-link">
