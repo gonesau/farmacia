@@ -1,8 +1,8 @@
 $(document).ready(function () {
     let funcion = "listar";
-    $.post('../controlador/VentaController.php', { funcion }, (response) => {
+    /* $.post('../controlador/VentaController.php', { funcion }, (response) => {
         console.log(JSON.parse(response));
-    });
+    }); */
 
     let datatable = $('#tabla_venta').DataTable({
         "ajax": {
@@ -31,11 +31,35 @@ $(document).ready(function () {
 
     $('#tabla_venta tbody').on('click', '.ver', function () {
         let datos = datatable.row($(this).parents()).data();
+        let id = datos.id_venta;
+        funcion = "ver";
         $('#codigo_venta').html(datos.id_venta);
         $('#fecha').html(datos.fecha);
         $('#cliente').html(datos.cliente);
         $('#dui').html(datos.dui);
         $('#vendedor').html(datos.vendedor);
+        $('#total').html(datos.total);
+        $.post('../controlador/VentaProductoController.php', { funcion, id }, (response) => {
+            let registros = JSON.parse(response);
+            let template = "";
+            $('#registros').html(template);
+            registros.forEach(registro => {
+                template += `
+                    <tr>
+                        <td>${registro.cantidad}</td>
+                        <td>${registro.precio}</td>
+                        <td>${registro.producto}</td>
+                        <td>${registro.concentracion}</td>
+                        <td>${registro.adicional}</td>
+                        <td>${registro.laboratorio}</td>
+                        <td>${registro.presentacion}</td>
+                        <td>${registro.tipo}</td>
+                        <td>${registro.subtotal}</td>
+                    </tr>
+                `;
+                $('#registros').html(template);
+            });
+        });
     });
 });
 

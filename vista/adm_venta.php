@@ -44,6 +44,28 @@ if ($_SESSION['us_tipo'] == 3 || $_SESSION['us_tipo'] == 1) {
                             <label for="vendedor">Vendedor: </label>
                             <span id="vendedor"></span>
                         </div>
+                        <table class="table table-hover text-nowrap">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Producto</th>
+                                    <th>Concentracion</th>
+                                    <th>Adicional</th>
+                                    <th>Laboratorio</th>
+                                    <th>Presentacion</th>
+                                    <th>Tipo</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registros" class="table-warning">
+
+                            </tbody>
+                        </table>
+                        <div class="float-right input-group-append">
+                            <h3 class="m-3">Total: </h3>
+                            <h3 id="total" class="m-3"></h3>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="button" data-dismiss="modal"
