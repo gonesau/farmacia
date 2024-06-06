@@ -19,9 +19,9 @@ function getHTML($id_venta)
             <h1>Comprobante de pago</h1>
             <div id="company" class="clearfix">
                 <div id="negocio">Farmanet</div>
-                <div>Direccion Numero ###, <br> Ciudad, San Salvador</div>
-                <div>(305)</div>
-                <div><a href="mailto:company@example.com">Company@example.com</a></div>
+                <div>Direccion Mostserrat, Edificio Las Veraneras Local #12, <br> Ciudad, San Salvador</div>
+                <div>(503)</div>
+                <div><a href="mailto:company@example.com">farmaciaUdev@farmacia.com.sv</a></div>
             </div>';
     foreach ($venta->objetos as $objeto) {
         $plantilla .= '
@@ -76,15 +76,15 @@ function getHTML($id_venta)
         $plantilla .= '
                     <tr>
                         <td colspan="8" class="grand total">SUBTOTAL</td>
-                        <td class="grand total">S/.' . $sub . '</td>
+                        <td class="grand total">$' . $sub . '</td>
                         </tr>
                     <tr>
                         <td colspan="8" class="grand total">IVA(13%)</td>
-                        <td class="grand total">S/.' . $iva . '</td>
+                        <td class="grand total">$' . $iva . '</td>
                     </tr>
                     <tr>
                         <td colspan="8" class="grand total">TOTAL</td>
-                        <td class="grand total">S/.' . $objeto->total . '</td>
+                        <td class="grand total">$' . $objeto->total . '</td>
                     </tr>
         ';
     }
