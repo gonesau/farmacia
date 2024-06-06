@@ -1,10 +1,15 @@
 <?php
 require_once ('../vendor/autoload.php');
+require_once ('../modelo/Pdf.php');
 
 $id_venta = $_POST['id'];
-$mpdf = new \Mpdf\Mpdf();
-$mpdf->WriteHTML('<h1>Hello world!</h1>');
+$html = getHTML($id_venta);
+$css = file_get_contents("../css/pdf.css");
 
-$mpdf->Output("../pdf/pdf-" . $id_venta . "pdf", "F");
+$mpdf = new \Mpdf\Mpdf();
+$mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+$mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+
+$mpdf->Output("../pdf/pdf-" . $id_venta . ".pdf", "F");
 
 ?>

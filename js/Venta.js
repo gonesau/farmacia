@@ -33,7 +33,7 @@ $(document).ready(function () {
         let datos = datatable.row($(this).parents()).data();
         let id = datos.id_venta;
         $.post('../controlador/PDFController.php', { id }, (response) => {
-            console.log(response);
+            //console.log(response);
             window.open('../pdf/pdf-' + id + '.pdf', '_blank');
         });
     });
