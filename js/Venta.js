@@ -20,7 +20,7 @@ $(document).ready(function () {
             {
                 "defaultContent":
                     `
-                      <button class="btn btn-secondary btn-sm m-1"><i class="fas fa-print"></i></buttton> 
+                      <button class="imprimir btn btn-secondary btn-sm m-1"><i class="fas fa-print"></i></buttton> 
                       <button class="ver btn btn-success btn-sm m-1" type="button" data-toggle="modal" data-target="#vista_venta"><i class="fas fa-search"></i></buttton>   
                       <button class="borrar btn btn-danger btn-sm m-1"><i class="fas fa-window-close"></i></buttton>
                     `
@@ -29,6 +29,14 @@ $(document).ready(function () {
         "language": espanol
     });
 
+    $('#tabla_venta tbody').on('click', '.imprimir', function () {
+        let datos = datatable.row($(this).parents()).data();
+        let id = datos.id_venta;
+        $.post('../controlador/PDFController.php', { id }, (response) => {
+            console.log(response);
+            window.open('../pdf/pdf-' + id + '.pdf', '_blank');
+        });
+    });
     $('#tabla_venta tbody').on('click', '.borrar', function () {
         let datos = datatable.row($(this).parents()).data();
         let id = datos.id_venta;
