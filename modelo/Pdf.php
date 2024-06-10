@@ -72,22 +72,23 @@ function getHTML($id_venta)
     foreach ($calculos->objetos as $objeto) {
         $iva = $objeto->total * 0.13;
         $sub = $objeto->total - $iva;
-
+    
         $plantilla .= '
                     <tr>
                         <td colspan="8" class="grand total">SUBTOTAL</td>
-                        <td class="grand total">$' . $sub . '</td>
-                        </tr>
+                        <td class="grand total">$' . number_format($sub, 2) . '</td>
+                    </tr>
                     <tr>
-                        <td colspan="8" class="grand total">IVA(13%)</td>
-                        <td class="grand total">$' . $iva . '</td>
+                        <td colspan="8" class="grand total">IVA (13%)</td>
+                        <td class="grand total">$' . number_format($iva, 2) . '</td>
                     </tr>
                     <tr>
                         <td colspan="8" class="grand total">TOTAL</td>
-                        <td class="grand total">$' . $objeto->total . '</td>
+                        <td class="grand total">$' . number_format($objeto->total, 2) . '</td>
                     </tr>
         ';
     }
+    
     $plantilla .= '
                 </tbody>
             </table>

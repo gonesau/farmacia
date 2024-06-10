@@ -2,12 +2,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
 header {
-    background-color: #f2f2f2;
-    padding: 10px 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
     text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 #logo img {
@@ -15,40 +17,51 @@ header {
 }
 
 h1 {
-    margin-top: 0;
+    margin: 0;
+    font-size: 24px;
 }
 
 #company {
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: center;
+    font-size: 12px;
 }
 
 #project {
     margin: 20px 0;
+    font-size: 12px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
-th,
-td {
+th, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    font-size: 12px;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+td {
+    background-color: #fff;
 }
 
 .total {
     font-weight: bold;
+    background-color: #f1f1f1;
 }
 
 #notices {
     margin-top: 30px;
+    font-size: 10px;
 }
 
 .notice {
@@ -60,7 +73,8 @@ footer {
     padding: 10px;
     background-color: #333;
     color: #fff;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    font-size: 10px;
 }
